@@ -11,9 +11,9 @@
         android:id="@+id/txtMi"
         android:layout_width="204dp"
         android:layout_height="104dp"
-        android:background="@color/design_default_color_secondary"
         android:gravity="center"
         android:text="0"
+        android:textColor="@color/design_default_color_secondary"
         android:textSize="85sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/txtVi"
@@ -29,7 +29,7 @@
         android:layout_width="204dp"
         android:layout_height="104dp"
         android:gravity="center"
-        android:text="999"
+        android:text="0"
         android:textSize="85sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0.05"/>
@@ -269,6 +269,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/btn0"
+        app:layout_constraintVertical_bias="0.83"
+        app:layout_constraintHorizontal_bias="0.5"/>
+
+    <Button
+        android:id="@+id/btnClear"
+        android:layout_width="98dp"
+        android:layout_height="68dp"
+        android:text="Clear"
+        android:textSize="18sp"
+        android:background="#303030"
+        app:layout_constraintEnd_toStartOf="@id/btn0"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_bias="0.83"
         app:layout_constraintHorizontal_bias="0.5"/>
 
