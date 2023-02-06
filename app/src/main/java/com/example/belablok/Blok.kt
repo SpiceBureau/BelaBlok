@@ -41,11 +41,7 @@ class Blok : AppCompatActivity() {
             txtMi.setBackgroundResource(0)
         }
 
-        btn0.setOnClickListener {
-            if (pointsDirectionFlag == 0){
-                txtMi.text = txtMi.text + 0.toString()
-            }
-        }
+
 
     }
 }
