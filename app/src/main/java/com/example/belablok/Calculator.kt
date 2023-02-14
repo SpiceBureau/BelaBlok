@@ -14,6 +14,8 @@ class Calculator : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.calculator_activity)
 
+        
+
         val txtMi: TextView = findViewById(R.id.txtMi)
         val txtVi: TextView = findViewById(R.id.txtVi)
         val ctv20: TextView = findViewById(R.id.ctv20)
