@@ -14,17 +14,20 @@
         <activity
             android:name=".ListView"
             android:exported="true"
-            android:label="@string/title_activity_list_view">
+            android:label="@string/title_activity_list">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Calculator"
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+            android:label="@string/title_calculator"
             android:exported="true">
         </activity>
     </application>
 
 </manifest>
+
+
