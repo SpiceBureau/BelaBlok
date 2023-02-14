@@ -1,23 +1,18 @@
 package com.example.belablok
 
-import android.content.Context
 import android.graphics.Color
-import android.opengl.Visibility
 import android.os.Bundle
 import android.text.Editable
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
-import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
-import org.w3c.dom.Text
 
 
-class Blok : AppCompatActivity() {
+class Calculator : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.calculator_activity)
 
         val txtMi: TextView = findViewById(R.id.txtMi)
         val txtVi: TextView = findViewById(R.id.txtVi)
