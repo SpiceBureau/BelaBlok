@@ -2,8 +2,10 @@ package com.example.belablok
 
 import android.content.Context
 import android.graphics.Color
+import android.opengl.Visibility
 import android.os.Bundle
 import android.text.Editable
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -19,6 +21,9 @@ class Blok : AppCompatActivity() {
 
         val txtMi: TextView = findViewById(R.id.txtMi)
         val txtVi: TextView = findViewById(R.id.txtVi)
+        val ctv20: TextView = findViewById(R.id.ctv20)
+        val ctv50: TextView = findViewById(R.id.ctv50)
+        val ctv100: TextView = findViewById(R.id.ctv100)
         val btn1: Button = findViewById(R.id.btn1)
         val btn2: Button = findViewById(R.id.btn2)
         val btn3: Button = findViewById(R.id.btn3)
@@ -32,8 +37,15 @@ class Blok : AppCompatActivity() {
         val btnDel: Button = findViewById(R.id.btnDel)
         val btnClear: Button = findViewById(R.id.btnClear)
         val btn20: Button = findViewById(R.id.btn20Calls)
+        val btn50: Button = findViewById(R.id.btn50Calls)
+        val btn100: Button = findViewById(R.id.btn100Calls)
+        val btn150: Button = findViewById(R.id.btn150Calls)
+        val btn200: Button = findViewById(R.id.btn200Calls)
         val btnStiljonz: Button = findViewById(R.id.btnŠtiljonž)
 
+        var numOf20Calls = 0
+        var numOf50Calls = 0
+        var numOf100Calls = 0
 
 
 
@@ -263,7 +275,6 @@ class Blok : AppCompatActivity() {
             var charCount = editable?.length
             if (charCount == null){
                 charCount = if (!pointsDirectionFlag){ txtMi.length() } else { txtVi.length() }
-                //Toast.makeText(this, charCount.toString(), Toast.LENGTH_SHORT).show()
             }
             if (charCount > 0) {
                 editable?.delete(charCount - 1, charCount)
@@ -298,6 +309,14 @@ class Blok : AppCompatActivity() {
 
             btnStiljonz.setTextColor(Color.parseColor("#03DAC6"))
         }
+        btn20.setOnClickListener {
+            numOf20Calls += 1
+            ctv20.text = numOf20Calls.toString()
+            ctv20.elevation = 2.0F
+        }
+        btn50.setOnClickListener {
+            showHide(ctv50)
+        }
     }
 
     private fun pad(pointsDirectionFlag: Boolean): Pair<String, String> {
@@ -305,6 +324,15 @@ class Blok : AppCompatActivity() {
             Pair("0", "162")
         } else{
             Pair("162", "0")
+        }
+    }
+    private fun showHide(view: View) {
+        view.visibility = if (view.visibility == View.VISIBLE){
+            Toast.makeText(this, "here", Toast.LENGTH_SHORT).show()
+            View.GONE
+        } else{
+            Toast.makeText(this, "there", Toast.LENGTH_SHORT).show()
+            View.A
         }
     }
 }
