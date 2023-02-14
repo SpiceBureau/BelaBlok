@@ -30,17 +30,21 @@
         android:layout_height="104dp"
         android:gravity="center"
         android:text="0"
+        android:textColor="@color/white"
         android:textSize="85sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0.05"/>
 
-    <Button
+    <TextView
         android:id="@+id/btn20Calls"
         android:layout_width="124dp"
         android:layout_height="92dp"
         android:background="#303030"
         android:text="20"
+        android:gravity="center"
         android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btn50Calls"
         app:layout_constraintHorizontal_bias="0.5"
@@ -48,13 +52,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.25" />
 
-    <Button
+    <TextView
         android:id="@+id/btn50Calls"
         android:layout_width="124dp"
         android:layout_height="92dp"
         android:text="50"
         android:textSize="32sp"
-        android:background="#303030"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,13 +68,15 @@
         app:layout_constraintVertical_bias="0.25"
         app:layout_constraintHorizontal_bias="0.5"/>
 
-    <Button
+    <TextView
         android:id="@+id/btn100Calls"
         android:layout_width="124dp"
         android:layout_height="92dp"
         android:text="100"
         android:textSize="32sp"
-        android:background="#303030"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/btn50Calls"
@@ -81,6 +89,7 @@
         android:layout_width="124dp"
         android:layout_height="92dp"
         android:text="150"
+        android:textStyle="bold"
         android:textSize="32sp"
         android:background="#303030"
         app:layout_constraintTop_toTopOf="parent"
@@ -95,6 +104,7 @@
         android:layout_width="124dp"
         android:layout_height="92dp"
         android:text="200"
+        android:textStyle="bold"
         android:textSize="32sp"
         android:background="#303030"
         app:layout_constraintTop_toTopOf="parent"
@@ -110,6 +120,7 @@
         android:layout_height="92dp"
         android:text="Štiljonž"
         android:textSize="18sp"
+        android:textStyle="bold"
         android:background="#303030"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -312,16 +323,17 @@
         app:layout_constraintVertical_bias="0.97" />
 
     <TextView
+        android:id="@+id/ctv20"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:text="1"
-        android:textStyle="bold"
+        android:text="0"
         android:elevation="2dp"
+        android:visibility="invisible"
+        android:textStyle="bold"
         android:textSize="15sp"
         android:background="@drawable/circle_textview"
         android:textColor="@android:color/white"
         android:gravity="center"
-        android:id="@+id/ctv20"
         app:layout_constraintBottom_toBottomOf="@id/btn20Calls"
         app:layout_constraintEnd_toEndOf="@id/btn20Calls"
         app:layout_constraintHorizontal_bias="0.9"
@@ -333,10 +345,10 @@
     <TextView
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:visibility="visible"
         android:text=""
         android:textStyle="bold"
         android:elevation="2dp"
+        android:visibility="invisible"
         android:textSize="15sp"
         android:background="@drawable/circle_textview"
         android:textColor="@android:color/white"
@@ -353,10 +365,9 @@
     <TextView
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:visibility="invisible"
         android:text=""
         android:textStyle="bold"
-        android:elevation="2dp"
+        android:visibility="invisible"
         android:textSize="15sp"
         android:background="@drawable/circle_textview"
         android:textColor="@android:color/white"

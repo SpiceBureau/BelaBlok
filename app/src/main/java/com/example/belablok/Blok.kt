@@ -36,9 +36,9 @@ class Blok : AppCompatActivity() {
         val btn0: Button = findViewById(R.id.btn0)
         val btnDel: Button = findViewById(R.id.btnDel)
         val btnClear: Button = findViewById(R.id.btnClear)
-        val btn20: Button = findViewById(R.id.btn20Calls)
-        val btn50: Button = findViewById(R.id.btn50Calls)
-        val btn100: Button = findViewById(R.id.btn100Calls)
+        val btn20: TextView = findViewById(R.id.btn20Calls)
+        val btn50: TextView = findViewById(R.id.btn50Calls)
+        val btn100: TextView = findViewById(R.id.btn100Calls)
         val btn150: Button = findViewById(R.id.btn150Calls)
         val btn200: Button = findViewById(R.id.btn200Calls)
         val btnStiljonz: Button = findViewById(R.id.btnŠtiljonž)
@@ -301,6 +301,12 @@ class Blok : AppCompatActivity() {
             txtMi.text = "0"
             txtVi.text = "0"
             btnStiljonz.setTextColor(Color.WHITE)
+            numOf20Calls = 0
+            numOf50Calls = 0
+            numOf100Calls = 0
+            showHide(ctv20)
+            showHide(ctv50)
+            showHide(ctv100)
         }
         btnStiljonz.setOnClickListener {
             val (newMiPoints, newViPoints) = pad(pointsDirectionFlag)
@@ -310,12 +316,28 @@ class Blok : AppCompatActivity() {
             btnStiljonz.setTextColor(Color.parseColor("#03DAC6"))
         }
         btn20.setOnClickListener {
+            if (numOf20Calls == 0){
+                showHide(ctv20)
+            }
             numOf20Calls += 1
             ctv20.text = numOf20Calls.toString()
-            ctv20.elevation = 2.0F
+
         }
         btn50.setOnClickListener {
-            showHide(ctv50)
+            if (numOf50Calls == 0){
+                showHide(ctv50)
+            }
+            numOf50Calls += 1
+            ctv50.text = numOf50Calls.toString()
+
+        }
+        btn100.setOnClickListener {
+            if (numOf100Calls == 0){
+                showHide(ctv100)
+            }
+            numOf100Calls += 1
+            ctv100.text = numOf100Calls.toString()
+
         }
     }
 
@@ -327,12 +349,6 @@ class Blok : AppCompatActivity() {
         }
     }
     private fun showHide(view: View) {
-        view.visibility = if (view.visibility == View.VISIBLE){
-            Toast.makeText(this, "here", Toast.LENGTH_SHORT).show()
-            View.GONE
-        } else{
-            Toast.makeText(this, "there", Toast.LENGTH_SHORT).show()
-            View.A
-        }
+        view.visibility = if (view.visibility == View.VISIBLE){View.GONE} else{View.VISIBLE}
     }
 }
