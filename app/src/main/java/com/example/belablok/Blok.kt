@@ -266,6 +266,7 @@ class Blok : AppCompatActivity() {
                 else { txtMi.text = miPoints.toString() }
             }
         }
+
         btnDel.setOnClickListener {
             val editable: Editable? = if (!pointsDirectionFlag){
                 txtMi.editableText
@@ -301,13 +302,16 @@ class Blok : AppCompatActivity() {
             txtMi.text = "0"
             txtVi.text = "0"
             btnStiljonz.setTextColor(Color.WHITE)
+            btn150.setTextColor(Color.WHITE)
+            btn200.setTextColor(Color.WHITE)
             numOf20Calls = 0
             numOf50Calls = 0
             numOf100Calls = 0
-            showHide(ctv20)
-            showHide(ctv50)
-            showHide(ctv100)
+            if (ctv20.visibility == View.VISIBLE){showHide(ctv20)}
+            if (ctv50.visibility == View.VISIBLE){showHide(ctv50)}
+            if (ctv100.visibility == View.VISIBLE){showHide(ctv100)}
         }
+
         btnStiljonz.setOnClickListener {
             val (newMiPoints, newViPoints) = pad(pointsDirectionFlag)
             txtVi.text = newViPoints
@@ -339,10 +343,16 @@ class Blok : AppCompatActivity() {
             ctv100.text = numOf100Calls.toString()
 
         }
+        btn150.setOnClickListener {
+            btn150.setTextColor(Color.parseColor("#03DAC6"))
+        }
+        btn200.setOnClickListener {
+            btn200.setTextColor(Color.parseColor("#03DAC6"))
+        }
     }
 
     private fun pad(pointsDirectionFlag: Boolean): Pair<String, String> {
-        return if (!pointsDirectionFlag){
+        return if (pointsDirectionFlag){
             Pair("0", "162")
         } else{
             Pair("162", "0")
