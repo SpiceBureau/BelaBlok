@@ -1,3 +1,7 @@
 package com.example.belablok
 
-class GameRound(val miPoints: Int?, val viPoints: Int?) {}
+import java.lang.Math.abs
+
+class GameRound(val miPoints: String, val viPoints: String) {
+    val delta = kotlin.math.abs(Integer.parseInt(miPoints) - Integer.parseInt(viPoints))
+}

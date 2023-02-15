@@ -3,12 +3,12 @@ package com.example.belablok
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.Gson
 
 
 class Calculator : AppCompatActivity() {
@@ -371,8 +371,8 @@ class Calculator : AppCompatActivity() {
 
         btnDone.setOnClickListener {
             val intent = Intent()
-            intent.putExtra("miPoints", txtMi.text.toString())
-            intent.putExtra("viPoints", txtVi.text.toString())
+            val data = Gson().toJson(GameRound(txtMi.text.toString(), txtVi.text.toString()))
+            intent.putExtra("miPoints", data)
             setResult(RESULT_OK, intent)
             finish()
         }

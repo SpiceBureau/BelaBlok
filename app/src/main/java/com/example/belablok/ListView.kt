@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
+import com.google.gson.Gson
 
 
 class ListView : ComponentActivity() {
@@ -46,9 +47,8 @@ class ListView : ComponentActivity() {
         if (result.resultCode == Activity.RESULT_OK) {
             // There are no request codes
             val data: Intent? = result.data
-            val newGameRound = GameRound(Integer.parseInt(data?.getStringExtra("miPoints").toString()), Integer.parseInt(
-                data?.getStringExtra("viPoints").toString()
-            ))
+
+            val newGameRound = Gson().fromJson(data?.getStringExtra("miPoints"), GameRound::class.java)
             gameRounds.add(newGameRound)
             customAdapter.notifyDataSetChanged()
         }
