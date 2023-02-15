@@ -1,11 +1,13 @@
 package com.example.belablok
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 
@@ -14,13 +16,16 @@ class Calculator : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.calculator_activity)
 
-        
+        supportActionBar?.hide()
 
         val txtMi: TextView = findViewById(R.id.txtMi)
         val txtVi: TextView = findViewById(R.id.txtVi)
-        val ctv20: TextView = findViewById(R.id.ctv20)
-        val ctv50: TextView = findViewById(R.id.ctv50)
-        val ctv100: TextView = findViewById(R.id.ctv100)
+        val ctv20MI: TextView = findViewById(R.id.ctvMI20)
+        val ctv20VI: TextView = findViewById(R.id.ctvVI20)
+        val ctv50MI: TextView = findViewById(R.id.ctv50MI)
+        val ctv50VI: TextView = findViewById(R.id.ctv50VI)
+        val ctv100MI: TextView = findViewById(R.id.ctv100MI)
+        val ctv100VI: TextView = findViewById(R.id.ctv100VI)
         val btn1: Button = findViewById(R.id.btn1)
         val btn2: Button = findViewById(R.id.btn2)
         val btn3: Button = findViewById(R.id.btn3)
@@ -31,8 +36,10 @@ class Calculator : AppCompatActivity() {
         val btn8: Button = findViewById(R.id.btn8)
         val btn9: Button = findViewById(R.id.btn9)
         val btn0: Button = findViewById(R.id.btn0)
-        val btnDel: Button = findViewById(R.id.btnDel)
+        val btnPad: Button = findViewById(R.id.btnPad)
         val btnClear: Button = findViewById(R.id.btnClear)
+        val btnReturn: Button = findViewById(R.id.btnBack)
+        val btnDone: Button = findViewById(R.id.btnDone)
         val btn20: TextView = findViewById(R.id.btn20Calls)
         val btn50: TextView = findViewById(R.id.btn50Calls)
         val btn100: TextView = findViewById(R.id.btn100Calls)
@@ -40,23 +47,26 @@ class Calculator : AppCompatActivity() {
         val btn200: Button = findViewById(R.id.btn200Calls)
         val btnStiljonz: Button = findViewById(R.id.btnŠtiljonž)
 
-        var numOf20Calls = 0
-        var numOf50Calls = 0
-        var numOf100Calls = 0
+        var numOf20CallsMI = 0
+        var numOf20CallsVI = 0
 
+        var numOf50CallsMI = 0
+        var numOf50CallsVI = 0
 
+        var numOf100CallsMI = 0
+        var numOf100CallsVI = 0
 
         var pointsDirectionFlag = false // 0 = Mi || 1 = Vi
 
 
         txtMi.setOnClickListener{
             pointsDirectionFlag = false
-            txtMi.setTextColor(Color.parseColor("#03DAC6"))
+            txtMi.setTextColor(getColor(R.color.miColor))
             txtVi.setTextColor(Color.WHITE)
         }
         txtVi.setOnClickListener{
             pointsDirectionFlag = true
-            txtVi.setTextColor(Color.parseColor("#03DAC6"))
+            txtVi.setTextColor(getColor(R.color.viColor))
             txtMi.setTextColor(Color.WHITE)
         }
 
@@ -264,35 +274,14 @@ class Calculator : AppCompatActivity() {
             }
         }
 
-        btnDel.setOnClickListener {
-            val editable: Editable? = if (!pointsDirectionFlag){
-                txtMi.editableText
-            } else {
-                txtVi.editableText
+        btnPad.setOnClickListener {
+            if (pointsDirectionFlag){
+                txtMi.text = "162"
+                txtVi.text = "0"
             }
-            var charCount = editable?.length
-            if (charCount == null){
-                charCount = if (!pointsDirectionFlag){ txtMi.length() } else { txtVi.length() }
-            }
-            if (charCount > 0) {
-                editable?.delete(charCount - 1, charCount)
-            }
-            if (editable != null) {
-                if (editable.isEmpty()) {
-                    if (!pointsDirectionFlag) { txtMi.text = "0" } else { txtVi.text = "0" }
-                }
-            }
-            if (!pointsDirectionFlag){
-                val miPoints: Int = Integer.parseInt(txtMi.text.toString())
-                val viPoints = 162 - miPoints
-                if (viPoints < 0){ txtVi.text = "0" }
-                else { txtVi.text = viPoints.toString() }
-            }
-            else {
-                val viPoints: Int = Integer.parseInt(txtVi.text.toString())
-                val miPoints = 162 - viPoints
-                if (miPoints < 0){ txtMi.text = "0" }
-                else { txtMi.text = miPoints.toString() }
+            else{
+                txtMi.text = "0"
+                txtVi.text = "162"
             }
         }
         btnClear.setOnClickListener {
@@ -301,12 +290,18 @@ class Calculator : AppCompatActivity() {
             btnStiljonz.setTextColor(Color.WHITE)
             btn150.setTextColor(Color.WHITE)
             btn200.setTextColor(Color.WHITE)
-            numOf20Calls = 0
-            numOf50Calls = 0
-            numOf100Calls = 0
-            if (ctv20.visibility == View.VISIBLE){showHide(ctv20)}
-            if (ctv50.visibility == View.VISIBLE){showHide(ctv50)}
-            if (ctv100.visibility == View.VISIBLE){showHide(ctv100)}
+            numOf20CallsMI = 0
+            numOf20CallsVI = 0
+            numOf50CallsMI = 0
+            numOf50CallsVI = 0
+            numOf100CallsMI = 0
+            numOf100CallsVI = 0
+            if (ctv20MI.visibility == View.VISIBLE){showHide(ctv20MI)}
+            if (ctv20VI.visibility == View.VISIBLE){showHide(ctv20VI)}
+            if (ctv50MI.visibility == View.VISIBLE){showHide(ctv50MI)}
+            if (ctv50VI.visibility == View.VISIBLE){showHide(ctv50VI)}
+            if (ctv100MI.visibility == View.VISIBLE){showHide(ctv100MI)}
+            if (ctv100VI.visibility == View.VISIBLE){showHide(ctv100VI)}
         }
 
         btnStiljonz.setOnClickListener {
@@ -314,37 +309,72 @@ class Calculator : AppCompatActivity() {
             txtVi.text = newViPoints
             txtMi.text = newMiPoints
 
-            btnStiljonz.setTextColor(Color.parseColor("#03DAC6"))
+            if (pointsDirectionFlag){btnStiljonz.setTextColor(getColor(R.color.viColor))}
+            else {btnStiljonz.setTextColor(getColor(R.color.miColor))}
         }
         btn20.setOnClickListener {
-            if (numOf20Calls == 0){
-                showHide(ctv20)
+            if (pointsDirectionFlag){ // VI
+                if (numOf20CallsVI == 0){
+                    showHide(ctv20VI)
+                }
+                numOf20CallsVI += 1
+                ctv20VI.text = numOf20CallsVI.toString()
             }
-            numOf20Calls += 1
-            ctv20.text = numOf20Calls.toString()
-
+            else{ // MI
+                if (numOf20CallsMI == 0){
+                    showHide(ctv20MI)
+                }
+                numOf20CallsMI += 1
+                ctv20MI.text = numOf20CallsMI.toString()
+            }
         }
         btn50.setOnClickListener {
-            if (numOf50Calls == 0){
-                showHide(ctv50)
+            if (pointsDirectionFlag){ // VI
+                if (numOf50CallsVI == 0){
+                    showHide(ctv50VI)
+                }
+                numOf50CallsVI += 1
+                ctv50VI.text = numOf50CallsVI.toString()
             }
-            numOf50Calls += 1
-            ctv50.text = numOf50Calls.toString()
-
+            else{ // MI
+                if (numOf50CallsMI == 0){
+                    showHide(ctv50MI)
+                }
+                numOf50CallsMI += 1
+                ctv50MI.text = numOf50CallsMI.toString()
+            }
         }
         btn100.setOnClickListener {
-            if (numOf100Calls == 0){
-                showHide(ctv100)
+            if (pointsDirectionFlag){ // VI
+                if (numOf100CallsVI == 0){
+                    showHide(ctv100VI)
+                }
+                numOf100CallsVI += 1
+                ctv100VI.text = numOf100CallsVI.toString()
             }
-            numOf100Calls += 1
-            ctv100.text = numOf100Calls.toString()
-
+            else{ // MI
+                if (numOf100CallsMI == 0){
+                    showHide(ctv100MI)
+                }
+                numOf100CallsMI += 1
+                ctv100MI.text = numOf100CallsMI.toString()
+            }
         }
         btn150.setOnClickListener {
-            btn150.setTextColor(Color.parseColor("#03DAC6"))
+            if (pointsDirectionFlag){btn150.setTextColor(getColor(R.color.viColor))}
+            else {btn150.setTextColor(getColor(R.color.miColor))}
         }
         btn200.setOnClickListener {
-            btn200.setTextColor(Color.parseColor("#03DAC6"))
+            if (pointsDirectionFlag){btn200.setTextColor(getColor(R.color.viColor))}
+            else {btn200.setTextColor(getColor(R.color.miColor))}
+        }
+
+        btnDone.setOnClickListener {
+            val intent = Intent()
+            intent.putExtra("miPoints", txtMi.text.toString())
+            intent.putExtra("viPoints", txtVi.text.toString())
+            setResult(RESULT_OK, intent)
+            finish()
         }
     }
 
