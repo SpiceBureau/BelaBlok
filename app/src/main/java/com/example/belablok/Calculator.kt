@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,13 @@ class Calculator : AppCompatActivity() {
         setContentView(R.layout.calculator_activity)
 
         supportActionBar?.hide()
+
+        var gameRound = GameRound()
+        val newGameFlag = intent.getStringExtra("newGameRound")?.let { checkIfNewGame(it) }
+
+        if (!newGameFlag!!){
+            gameRound = Gson().fromJson(intent.getStringExtra("gameRound"), GameRound::class.java)
+        }
 
         val txtMi: TextView = findViewById(R.id.txtMi)
         val txtVi: TextView = findViewById(R.id.txtVi)
@@ -46,17 +54,46 @@ class Calculator : AppCompatActivity() {
         val btn150: Button = findViewById(R.id.btn150Calls)
         val btn200: Button = findViewById(R.id.btn200Calls)
         val btnStiljonz: Button = findViewById(R.id.btnŠtiljonž)
-
-        var numOf20CallsMI = 0
-        var numOf20CallsVI = 0
-
-        var numOf50CallsMI = 0
-        var numOf50CallsVI = 0
-
-        var numOf100CallsMI = 0
-        var numOf100CallsVI = 0
+        val hercButton: ImageView = findViewById(R.id.Herc)
+        val karaButton: ImageView = findViewById(R.id.Kara)
+        val trefButton: ImageView = findViewById(R.id.Tref)
+        val pikButton: ImageView = findViewById(R.id.Pik)
 
         var pointsDirectionFlag = false // 0 = Mi || 1 = Vi
+
+        if (!newGameFlag){
+            txtMi.text = gameRound.miPoints.toString()
+            txtVi.text = gameRound.viPoints.toString()
+
+            ctv20MI.text = gameRound.numOf20CallsMi.toString()
+            if (gameRound.numOf20CallsMi != 0){ showHide(ctv20MI) }
+            ctv20VI.text = gameRound.numOf20CallsVi.toString()
+            if (gameRound.numOf20CallsVi != 0){ showHide(ctv20VI) }
+
+            ctv50MI.text = gameRound.numOf50CallsMi.toString()
+            if (gameRound.numOf50CallsMi != 0){ showHide(ctv50MI) }
+            ctv50VI.text = gameRound.numOf50CallsVi.toString()
+            if (gameRound.numOf50CallsVi != 0){ showHide(ctv50VI) }
+
+            ctv100MI.text = gameRound.numOf100CallsMi.toString()
+            if (gameRound.numOf100CallsMi != 0){ showHide(ctv100MI) }
+            ctv100VI.text = gameRound.numOf100CallsVi.toString()
+            if (gameRound.numOf100CallsVi != 0){ showHide(ctv100VI) }
+
+            if (gameRound.numOf150CallsMi == 1){ btn150.setTextColor(getColor(R.color.miColor)) }
+            if (gameRound.numOf150CallsVi == 1){ btn150.setTextColor(getColor(R.color.viColor)) }
+
+            if (gameRound.numOf200CallsMi == 1){ btn200.setTextColor(getColor(R.color.miColor)) }
+            if (gameRound.numOf200CallsVi == 1){ btn200.setTextColor(getColor(R.color.viColor)) }
+
+            if (gameRound.stiljaMi == 1){ btnStiljonz.setTextColor(getColor(R.color.miColor)) }
+            if (gameRound.stiljaVi == 1){ btnStiljonz.setTextColor(getColor(R.color.viColor)) }
+
+            if(gameRound.adut == "herc"){ hercButton.setImageResource(R.drawable.herc) }
+            if(gameRound.adut == "tref"){ trefButton.setImageResource(R.drawable.tref) }
+            if(gameRound.adut == "kara"){ karaButton.setImageResource(R.drawable.kara) }
+            if(gameRound.adut == "pik"){ pikButton.setImageResource(R.drawable.pik) }
+        }
 
 
         txtMi.setOnClickListener{
@@ -70,6 +107,62 @@ class Calculator : AppCompatActivity() {
             txtMi.setTextColor(Color.WHITE)
         }
 
+        hercButton.setOnClickListener{
+            if (gameRound.adut == "herc"){
+                hercButton.setImageResource(R.drawable.herc_white)
+                gameRound.adut = "null"
+            }
+            else {
+                hercButton.setImageResource(R.drawable.herc)
+                gameRound.adut = "herc"
+
+                trefButton.setImageResource(R.drawable.tref_white)
+                pikButton.setImageResource(R.drawable.pik_white)
+                karaButton.setImageResource(R.drawable.kara_white)
+            }
+        }
+        karaButton.setOnClickListener{
+            if (gameRound.adut == "kara"){
+                karaButton.setImageResource(R.drawable.kara_white)
+                gameRound.adut = "null"
+            }
+            else{
+                karaButton.setImageResource(R.drawable.kara)
+                gameRound.adut = "kara"
+
+                trefButton.setImageResource(R.drawable.tref_white)
+                pikButton.setImageResource(R.drawable.pik_white)
+                hercButton.setImageResource(R.drawable.herc_white)
+            }
+        }
+        pikButton.setOnClickListener {
+            if (gameRound.adut == "pik"){
+                pikButton.setImageResource(R.drawable.pik_white)
+                gameRound.adut = "null"
+            }
+            else{
+                pikButton.setImageResource(R.drawable.pik)
+                gameRound.adut = "pik"
+
+                trefButton.setImageResource(R.drawable.tref_white)
+                karaButton.setImageResource(R.drawable.kara_white)
+                hercButton.setImageResource(R.drawable.herc_white)
+            }
+        }
+        trefButton.setOnClickListener {
+            if (gameRound.adut == "tref"){
+                trefButton.setImageResource(R.drawable.tref_white)
+                gameRound.adut = "null"
+            }
+            else{
+                trefButton.setImageResource(R.drawable.tref)
+                gameRound.adut = "tref"
+
+                hercButton.setImageResource(R.drawable.herc_white)
+                karaButton.setImageResource(R.drawable.kara_white)
+                pikButton.setImageResource(R.drawable.pik_white)
+            }
+        }
         btn0.setOnClickListener {
             if (!pointsDirectionFlag) {
                 if (txtMi.text.toString() == "0"){ txtMi.text = "0" }
@@ -278,10 +371,12 @@ class Calculator : AppCompatActivity() {
             if (pointsDirectionFlag){
                 txtMi.text = "162"
                 txtVi.text = "0"
+                gameRound.padVi = 1
             }
             else{
                 txtMi.text = "0"
                 txtVi.text = "162"
+                gameRound.padMi = 1
             }
         }
         btnClear.setOnClickListener {
@@ -290,12 +385,16 @@ class Calculator : AppCompatActivity() {
             btnStiljonz.setTextColor(Color.WHITE)
             btn150.setTextColor(Color.WHITE)
             btn200.setTextColor(Color.WHITE)
-            numOf20CallsMI = 0
-            numOf20CallsVI = 0
-            numOf50CallsMI = 0
-            numOf50CallsVI = 0
-            numOf100CallsMI = 0
-            numOf100CallsVI = 0
+            hercButton.setImageResource(R.drawable.herc_white)
+            trefButton.setImageResource(R.drawable.tref_white)
+            pikButton.setImageResource(R.drawable.pik_white)
+            karaButton.setImageResource(R.drawable.kara_white)
+            gameRound.numOf20CallsMi = 0
+            gameRound.numOf20CallsVi = 0
+            gameRound.numOf50CallsMi = 0
+            gameRound.numOf50CallsVi = 0
+            gameRound.numOf100CallsMi = 0
+            gameRound.numOf100CallsVi = 0
             if (ctv20MI.visibility == View.VISIBLE){showHide(ctv20MI)}
             if (ctv20VI.visibility == View.VISIBLE){showHide(ctv20VI)}
             if (ctv50MI.visibility == View.VISIBLE){showHide(ctv50MI)}
@@ -309,70 +408,90 @@ class Calculator : AppCompatActivity() {
             txtVi.text = newViPoints
             txtMi.text = newMiPoints
 
-            if (pointsDirectionFlag){btnStiljonz.setTextColor(getColor(R.color.viColor))}
-            else {btnStiljonz.setTextColor(getColor(R.color.miColor))}
+            if (pointsDirectionFlag){
+                gameRound.stiljaVi = 1
+                btnStiljonz.setTextColor(getColor(R.color.viColor))
+            }
+            else{
+                gameRound.stiljaMi = 1
+                btnStiljonz.setTextColor(getColor(R.color.miColor))
+            }
         }
         btn20.setOnClickListener {
             if (pointsDirectionFlag){ // VI
-                if (numOf20CallsVI == 0){
+                if (gameRound.numOf20CallsVi == 0){
                     showHide(ctv20VI)
                 }
-                numOf20CallsVI += 1
-                ctv20VI.text = numOf20CallsVI.toString()
+                gameRound.numOf20CallsVi += 1
+                ctv20VI.text = gameRound.numOf20CallsVi.toString()
             }
             else{ // MI
-                if (numOf20CallsMI == 0){
+                if (gameRound.numOf20CallsMi == 0){
                     showHide(ctv20MI)
                 }
-                numOf20CallsMI += 1
-                ctv20MI.text = numOf20CallsMI.toString()
+                gameRound.numOf20CallsMi += 1
+                ctv20MI.text = gameRound.numOf20CallsMi.toString()
             }
         }
         btn50.setOnClickListener {
             if (pointsDirectionFlag){ // VI
-                if (numOf50CallsVI == 0){
+                if (gameRound.numOf50CallsVi == 0){
                     showHide(ctv50VI)
                 }
-                numOf50CallsVI += 1
-                ctv50VI.text = numOf50CallsVI.toString()
+                gameRound.numOf50CallsVi += 1
+                ctv50VI.text = gameRound.numOf50CallsVi.toString()
             }
             else{ // MI
-                if (numOf50CallsMI == 0){
+                if (gameRound.numOf50CallsMi == 0){
                     showHide(ctv50MI)
                 }
-                numOf50CallsMI += 1
-                ctv50MI.text = numOf50CallsMI.toString()
+                gameRound.numOf50CallsMi += 1
+                ctv50MI.text = gameRound.numOf50CallsMi.toString()
             }
         }
         btn100.setOnClickListener {
             if (pointsDirectionFlag){ // VI
-                if (numOf100CallsVI == 0){
+                if (gameRound.numOf100CallsVi == 0){
                     showHide(ctv100VI)
                 }
-                numOf100CallsVI += 1
-                ctv100VI.text = numOf100CallsVI.toString()
+                gameRound.numOf100CallsVi += 1
+                ctv100VI.text = gameRound.numOf100CallsVi.toString()
             }
             else{ // MI
-                if (numOf100CallsMI == 0){
+                if (gameRound.numOf100CallsMi == 0){
                     showHide(ctv100MI)
                 }
-                numOf100CallsMI += 1
-                ctv100MI.text = numOf100CallsMI.toString()
+                gameRound.numOf100CallsMi += 1
+                ctv100MI.text = gameRound.numOf100CallsMi.toString()
             }
         }
         btn150.setOnClickListener {
-            if (pointsDirectionFlag){btn150.setTextColor(getColor(R.color.viColor))}
-            else {btn150.setTextColor(getColor(R.color.miColor))}
+            if (pointsDirectionFlag){
+                gameRound.numOf150CallsVi = 1
+                btn150.setTextColor(getColor(R.color.viColor))
+            }
+            else {
+                gameRound.numOf150CallsMi = 1
+                btn150.setTextColor(getColor(R.color.miColor))
+            }
         }
         btn200.setOnClickListener {
-            if (pointsDirectionFlag){btn200.setTextColor(getColor(R.color.viColor))}
-            else {btn200.setTextColor(getColor(R.color.miColor))}
+            if (pointsDirectionFlag){
+                gameRound.numOf200CallsVi = 1
+                btn200.setTextColor(getColor(R.color.viColor))
+            }
+            else {
+                gameRound.numOf200CallsMi = 1
+                btn200.setTextColor(getColor(R.color.miColor))
+            }
         }
 
         btnDone.setOnClickListener {
             val intent = Intent()
-            val data = Gson().toJson(GameRound(txtMi.text.toString(), txtVi.text.toString()))
-            intent.putExtra("miPoints", data)
+            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
+            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
+            val data = Gson().toJson(gameRound)
+            intent.putExtra("gameRound", data)
             setResult(RESULT_OK, intent)
             finish()
         }
@@ -387,5 +506,9 @@ class Calculator : AppCompatActivity() {
     }
     private fun showHide(view: View) {
         view.visibility = if (view.visibility == View.VISIBLE){View.GONE} else{View.VISIBLE}
+    }
+
+    private fun checkIfNewGame(flag: String): Boolean {
+        return flag == "true"
     }
 }
