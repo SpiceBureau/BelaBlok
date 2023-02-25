@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toStartOf="@+id/txtVi"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0" />
 
     <TextView
         android:id="@+id/txtVi"
@@ -33,7 +33,64 @@
         android:textColor="@color/white"
         android:textSize="85sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.05"/>
+        app:layout_constraintVertical_bias="0"/>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/Herc"
+        app:layout_constraintTop_toTopOf="@id/txtMi"
+        app:layout_constraintBottom_toBottomOf="@id/btn20Calls"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/hercb_lack"
+        app:layout_constraintVertical_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:tint="@color/white">
+    </ImageView>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/Tref"
+        app:layout_constraintTop_toTopOf="@id/txtMi"
+        app:layout_constraintBottom_toBottomOf="@id/btn20Calls"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/tref_black"
+        app:layout_constraintVertical_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:tint="@color/white">
+    </ImageView>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/Pik"
+        app:layout_constraintTop_toTopOf="@id/txtMi"
+        app:layout_constraintBottom_toBottomOf="@id/btn20Calls"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/pik_black"
+        app:layout_constraintVertical_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:tint="@color/white">
+    </ImageView>
+
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/Kara"
+        app:layout_constraintTop_toTopOf="@id/txtMi"
+        app:layout_constraintBottom_toBottomOf="@id/btn20Calls"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/kara_black"
+        app:layout_constraintVertical_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:tint="@color/white">
+    </ImageView>
+
 
     <TextView
         android:id="@+id/btn20Calls"
