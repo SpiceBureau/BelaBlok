@@ -18,12 +18,22 @@
         app:layout_constraintVertical_bias="0">
     </ListView>
 
+    <View
+        android:layout_width="370dp"
+        android:layout_height="1dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/listView"
+        app:layout_constraintBottom_toTopOf="@id/tvMiPoints"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0"/>
+
     <TextView
-        android:layout_width="45dp"
+        android:layout_width="51dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:id="@+id/tvMiPointsToWin"
-        android:text="0"
+        android:text="1001"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@id/listView"
@@ -35,7 +45,23 @@
     </TextView>
 
     <TextView
-        android:layout_width="95dp"
+        android:layout_width="45dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/tvPointDifference"
+        android:text="0"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/listView"
+        app:layout_constraintBottom_toTopOf="@id/tvNG"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0.5">
+    </TextView>
+
+    <TextView
+        android:layout_width="118dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:id="@+id/tvMiPoints"
@@ -52,7 +78,7 @@
     </TextView>
 
     <TextView
-        android:layout_width="95dp"
+        android:layout_width="118dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:id="@+id/tvViPoints"
@@ -69,11 +95,11 @@
     </TextView>
 
     <TextView
-        android:layout_width="45dp"
+        android:layout_width="51dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:id="@+id/tvViPointsToWin"
-        android:text="0"
+        android:text="1001"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@id/listView"

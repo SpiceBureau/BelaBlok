@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.gson.Gson
+import java.lang.Math.abs
 
 
 class ListView : ComponentActivity() {
@@ -23,6 +24,7 @@ class ListView : ComponentActivity() {
     lateinit var tvViPoints: TextView
     lateinit var tvMiPointsToWin: TextView
     lateinit var tvViPointsToWin: TextView
+    lateinit var tvPointDifference: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +38,7 @@ class ListView : ComponentActivity() {
         tvViPoints = findViewById(R.id.tvViPoints)
         tvMiPointsToWin = findViewById(R.id.tvMiPointsToWin)
         tvViPointsToWin = findViewById(R.id.tvViPointsToWin)
+        tvPointDifference = findViewById(R.id.tvPointDifference)
 
         listView = findViewById(R.id.listView)
         customAdapter = MyListAdapter(this, R.layout.listview_item, gameRounds)
@@ -120,5 +123,7 @@ class ListView : ComponentActivity() {
 
         tvMiPointsToWin.text = (1001 - miPointsSum).toString()
         tvViPointsToWin.text = (1001 - viPointsSum).toString()
+
+        tvPointDifference.text = (abs(miPointsSum- viPointsSum)).toString()
     }
 }
