@@ -23,7 +23,7 @@
         android:layout_height="1dp"
         android:background="@color/white"
         app:layout_constraintTop_toBottomOf="@id/listView"
-        app:layout_constraintBottom_toTopOf="@id/tvMiPoints"
+        app:layout_constraintBottom_toBottomOf="@id/listView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0"/>
@@ -35,12 +35,12 @@
         android:id="@+id/tvMiPointsToWin"
         android:text="1001"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/listView"
         app:layout_constraintBottom_toTopOf="@id/tvNG"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintHorizontal_bias="0.015"
         app:layout_constraintVertical_bias="0.5">
     </TextView>
 
@@ -51,7 +51,7 @@
         android:id="@+id/tvPointDifference"
         android:text="0"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/listView"
         app:layout_constraintBottom_toTopOf="@id/tvNG"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +73,7 @@
         app:layout_constraintBottom_toTopOf="@id/tvNG"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintVertical_bias="0.5">
     </TextView>
 
@@ -90,7 +90,7 @@
         app:layout_constraintBottom_toTopOf="@id/tvNG"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintVertical_bias="0.5">
     </TextView>
 
@@ -101,12 +101,12 @@
         android:id="@+id/tvViPointsToWin"
         android:text="1001"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintTop_toBottomOf="@id/listView"
         app:layout_constraintBottom_toTopOf="@id/tvNG"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintHorizontal_bias="0.985" 
         app:layout_constraintVertical_bias="0.5">
     </TextView>
 

@@ -2,9 +2,11 @@ package com.example.belablok
 
 import MyListAdapter
 import android.R.attr.value
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
 import android.widget.ListView
 import android.widget.TextView
@@ -27,6 +29,7 @@ class ListView : ComponentActivity() {
     lateinit var tvPointDifference: TextView
 
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.listview_activity)
@@ -63,6 +66,7 @@ class ListView : ComponentActivity() {
             customAdapter.notifyDataSetChanged()
             true
         }
+
     }
 
     private fun openSomeActivityForResult(data: String) {
@@ -124,6 +128,6 @@ class ListView : ComponentActivity() {
         tvMiPointsToWin.text = (1001 - miPointsSum).toString()
         tvViPointsToWin.text = (1001 - viPointsSum).toString()
 
-        tvPointDifference.text = (abs(miPointsSum- viPointsSum)).toString()
+        val pointDifference = (abs(miPointsSum- viPointsSum)).toString()
     }
 }
