@@ -6,39 +6,97 @@
     android:background="@color/base_background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvMiMatchPoints"
-        android:text="0"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/listView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-    </TextView>
-
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="647dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvNG"
+        android:layout_height="657dp"
+        android:transcriptMode="alwaysScroll"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvMiMatchPoints">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0">
     </ListView>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="45dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/tvMiPointsToWin"
+        android:text="0"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/listView"
+        app:layout_constraintBottom_toTopOf="@id/tvNG"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintVertical_bias="0.5">
+    </TextView>
+
+    <TextView
+        android:layout_width="95dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/tvMiPoints"
+        android:text="0"
+        android:textStyle="bold"
+        android:textColor="@color/miColor"
+        android:textSize="50sp"
+        app:layout_constraintTop_toBottomOf="@id/listView"
+        app:layout_constraintBottom_toTopOf="@id/tvNG"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintVertical_bias="0.5">
+    </TextView>
+
+    <TextView
+        android:layout_width="95dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/tvViPoints"
+        android:text="0"
+        android:textStyle="bold"
+        android:textSize="50sp"
+        android:textColor="@color/viColor"
+        app:layout_constraintTop_toBottomOf="@id/listView"
+        app:layout_constraintBottom_toTopOf="@id/tvNG"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintVertical_bias="0.5">
+    </TextView>
+
+    <TextView
+        android:layout_width="45dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:id="@+id/tvViPointsToWin"
+        android:text="0"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/listView"
+        app:layout_constraintBottom_toTopOf="@id/tvNG"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.96"
+        app:layout_constraintVertical_bias="0.5">
+    </TextView>
+
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tvNG"
+        android:gravity="center"
+        android:textColor="@color/white"
         android:text="NEW GAME"
         android:textSize="40sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/listView"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.5">
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0.98">
     </TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>

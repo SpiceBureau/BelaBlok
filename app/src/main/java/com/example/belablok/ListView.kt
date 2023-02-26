@@ -19,6 +19,11 @@ class ListView : ComponentActivity() {
     var gameRounds = mutableListOf<GameRound>()
     lateinit var listView: ListView
     lateinit var customAdapter: MyListAdapter
+    lateinit var tvMiPoints: TextView
+    lateinit var tvViPoints: TextView
+    lateinit var tvMiPointsToWin: TextView
+    lateinit var tvViPointsToWin: TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +32,11 @@ class ListView : ComponentActivity() {
         this.actionBar?.hide()
 
         val tvNG: TextView = findViewById(R.id.tvNG)
+        tvMiPoints = findViewById(R.id.tvMiPoints)
+        tvViPoints = findViewById(R.id.tvViPoints)
+        tvMiPointsToWin = findViewById(R.id.tvMiPointsToWin)
+        tvViPointsToWin = findViewById(R.id.tvViPointsToWin)
+
         listView = findViewById(R.id.listView)
         customAdapter = MyListAdapter(this, R.layout.listview_item, gameRounds)
 
@@ -44,6 +54,9 @@ class ListView : ComponentActivity() {
         }
         listView.setOnItemLongClickListener { adapterView, view, i, l ->
             gameRounds.removeAt(i)
+
+            updateScoreBoard()
+
             customAdapter.notifyDataSetChanged()
             true
         }
@@ -74,6 +87,9 @@ class ListView : ComponentActivity() {
                     break
                 }
             }
+
+            updateScoreBoard()
+
             customAdapter.notifyDataSetChanged()
         }
     }
@@ -85,7 +101,24 @@ class ListView : ComponentActivity() {
 
             val newGameRound = Gson().fromJson(data?.getStringExtra("gameRound"), GameRound::class.java)
             gameRounds.add(newGameRound)
+
+            updateScoreBoard()
+
             customAdapter.notifyDataSetChanged()
         }
+    }
+
+    private fun updateScoreBoard(){
+        var miPointsSum = 0
+        var viPointsSum = 0
+        for (gr in gameRounds){
+            miPointsSum += gr.getMiPointsSum()
+            viPointsSum += gr.getViPointsSum()
+        }
+        tvMiPoints.text = miPointsSum.toString()
+        tvViPoints.text = viPointsSum.toString()
+
+        tvMiPointsToWin.text = (1001 - miPointsSum).toString()
+        tvViPointsToWin.text = (1001 - viPointsSum).toString()
     }
 }

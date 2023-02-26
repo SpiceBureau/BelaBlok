@@ -7,14 +7,24 @@
     android:background="@color/base_background"
     tools:context=".Calculator">
 
+    <View
+        android:layout_width="370dp"
+        android:layout_height="1dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/txtMi"
+        app:layout_constraintBottom_toTopOf="@id/Pik"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.5"/>
+
     <TextView
         android:id="@+id/txtMi"
         android:layout_width="204dp"
-        android:layout_height="104dp"
+        android:layout_height="115dp"
         android:gravity="center"
         android:text="0"
         android:textColor="@color/design_default_color_secondary"
-        android:textSize="85sp"
+        android:textSize="95sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/txtVi"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,11 +37,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/txtMi"
         android:layout_width="204dp"
-        android:layout_height="104dp"
+        android:layout_height="115dp"
         android:gravity="center"
         android:text="0"
         android:textColor="@color/white"
-        android:textSize="85sp"
+        android:textSize="95sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_bias="0"/>
 
@@ -44,7 +54,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/herc_white"
-        app:layout_constraintVertical_bias="0.6"
+        app:layout_constraintVertical_bias="0.63"
         app:layout_constraintHorizontal_bias="0.2">
     </ImageView>
 
@@ -57,7 +67,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/tref_white"
-        app:layout_constraintVertical_bias="0.6"
+        app:layout_constraintVertical_bias="0.63"
         app:layout_constraintHorizontal_bias="0.4">
     </ImageView>
 
@@ -70,7 +80,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/pik_white"
-        app:layout_constraintVertical_bias="0.6"
+        app:layout_constraintVertical_bias="0.63"
         app:layout_constraintHorizontal_bias="0.6">
     </ImageView>
 
@@ -83,7 +93,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/kara_white"
-        app:layout_constraintVertical_bias="0.6"
+        app:layout_constraintVertical_bias="0.63"
         app:layout_constraintHorizontal_bias="0.8">
     </ImageView>
 
@@ -103,7 +113,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.29" />
+        app:layout_constraintVertical_bias="0.32" />
 
     <TextView
         android:id="@+id/btn50Calls"
@@ -118,7 +128,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.29"
+        app:layout_constraintVertical_bias="0.32"
         app:layout_constraintHorizontal_bias="0.5"/>
 
     <TextView
@@ -134,7 +144,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/btn50Calls"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.29"
+        app:layout_constraintVertical_bias="0.32"
         app:layout_constraintHorizontal_bias="0.5"/>
 
     <Button
@@ -151,7 +161,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btn200Calls"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.39"/>
+        app:layout_constraintVertical_bias="0.42"/>
 
     <Button
         android:stateListAnimator="@null"
@@ -166,7 +176,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.39"
+        app:layout_constraintVertical_bias="0.42"
         app:layout_constraintHorizontal_bias="0.5"/>
 
     <Button
@@ -182,7 +192,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/btn200Calls"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="0.39"
+        app:layout_constraintVertical_bias="0.42"
         app:layout_constraintHorizontal_bias="0.5"/>
 
     <Button
