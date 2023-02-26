@@ -29,13 +29,20 @@ class MyListAdapter(
             val tvVi = v.findViewById<View>(R.id.tvVi) as TextView
             val imPadMi = v.findViewById<View>(R.id.imPadMi) as ImageView
             val imPadVi = v.findViewById<View>(R.id.imPadVi) as ImageView
+            val imAdut = v.findViewById<View>(R.id.imAdut) as ImageView
 
             tvMi.text = oneGameRound.getMiPointsSum().toString()
             tvVi.text = oneGameRound.getViPointsSum().toString()
 
+            imPadMi.visibility = View.INVISIBLE
+            imPadVi.visibility = View.INVISIBLE
             if (oneGameRound.padMi == 1){ showHide(imPadMi) }
             if (oneGameRound.padVi == 1){ showHide(imPadVi) }
 
+            if (oneGameRound.adut == "herc"){ imAdut.setImageResource(R.drawable.herc) }
+            if (oneGameRound.adut == "tref"){ imAdut.setImageResource(R.drawable.tref) }
+            if (oneGameRound.adut == "kara"){ imAdut.setImageResource(R.drawable.kara) }
+            if (oneGameRound.adut == "pik"){ imAdut.setImageResource(R.drawable.pik) }
         }
         return v!!
     }

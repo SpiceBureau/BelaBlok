@@ -511,4 +511,8 @@ class Calculator : AppCompatActivity() {
     private fun checkIfNewGame(flag: String): Boolean {
         return flag == "true"
     }
+
+    private fun checkPad(gameRound: GameRound){
+        TODO()
+    }
 }
