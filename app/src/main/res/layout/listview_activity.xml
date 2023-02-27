@@ -29,13 +29,13 @@
         app:layout_constraintVertical_bias="0"/>
 
     <TextView
-        android:layout_width="51dp"
+        android:layout_width="47dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:id="@+id/tvMiPointsToWin"
         android:text="1001"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/listView"
         app:layout_constraintBottom_toTopOf="@id/tvNG"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,7 @@
         android:id="@+id/tvPointDifference"
         android:text="0"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/listView"
         app:layout_constraintBottom_toTopOf="@id/tvNG"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,7 +61,7 @@
     </TextView>
 
     <TextView
-        android:layout_width="118dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:id="@+id/tvMiPoints"
@@ -78,7 +78,7 @@
     </TextView>
 
     <TextView
-        android:layout_width="118dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:id="@+id/tvViPoints"
@@ -95,18 +95,18 @@
     </TextView>
 
     <TextView
-        android:layout_width="51dp"
+        android:layout_width="47dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:id="@+id/tvViPointsToWin"
         android:text="1001"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/listView"
         app:layout_constraintBottom_toTopOf="@id/tvNG"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.985" 
+        app:layout_constraintHorizontal_bias="0.985"
         app:layout_constraintVertical_bias="0.5">
     </TextView>
 

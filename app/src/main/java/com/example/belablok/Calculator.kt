@@ -395,6 +395,12 @@ class Calculator : AppCompatActivity() {
             gameRound.numOf50CallsVi = 0
             gameRound.numOf100CallsMi = 0
             gameRound.numOf100CallsVi = 0
+            gameRound.numOf150CallsMi = 0
+            gameRound.numOf150CallsVi = 0
+            gameRound.numOf200CallsMi = 0
+            gameRound.numOf200CallsVi = 0
+            gameRound.stiljaMi = 0
+            gameRound.stiljaVi = 0
             if (ctv20MI.visibility == View.VISIBLE){showHide(ctv20MI)}
             if (ctv20VI.visibility == View.VISIBLE){showHide(ctv20VI)}
             if (ctv50MI.visibility == View.VISIBLE){showHide(ctv50MI)}
@@ -409,11 +415,13 @@ class Calculator : AppCompatActivity() {
             txtMi.text = newMiPoints
 
             if (pointsDirectionFlag){
+                gameRound.stiljaMi = 0
                 gameRound.stiljaVi = 1
                 btnStiljonz.setTextColor(getColor(R.color.viColor))
             }
             else{
                 gameRound.stiljaMi = 1
+                gameRound.stiljaVi = 0
                 btnStiljonz.setTextColor(getColor(R.color.miColor))
             }
         }
@@ -467,21 +475,25 @@ class Calculator : AppCompatActivity() {
         }
         btn150.setOnClickListener {
             if (pointsDirectionFlag){
+                gameRound.numOf150CallsMi = 0
                 gameRound.numOf150CallsVi = 1
                 btn150.setTextColor(getColor(R.color.viColor))
             }
             else {
                 gameRound.numOf150CallsMi = 1
+                gameRound.numOf150CallsVi = 0
                 btn150.setTextColor(getColor(R.color.miColor))
             }
         }
         btn200.setOnClickListener {
             if (pointsDirectionFlag){
+                gameRound.numOf150CallsMi = 0
                 gameRound.numOf200CallsVi = 1
                 btn200.setTextColor(getColor(R.color.viColor))
             }
             else {
                 gameRound.numOf200CallsMi = 1
+                gameRound.numOf150CallsVi = 0
                 btn200.setTextColor(getColor(R.color.miColor))
             }
         }

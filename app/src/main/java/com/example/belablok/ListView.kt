@@ -125,9 +125,11 @@ class ListView : ComponentActivity() {
         tvMiPoints.text = miPointsSum.toString()
         tvViPoints.text = viPointsSum.toString()
 
-        tvMiPointsToWin.text = (1001 - miPointsSum).toString()
-        tvViPointsToWin.text = (1001 - viPointsSum).toString()
+        tvMiPointsToWin.text = if ((1001 - miPointsSum) > 0) (1001 - miPointsSum).toString() else "0"
+        tvViPointsToWin.text = if ((1001 - viPointsSum) > 0) (1001 - viPointsSum).toString() else "0"
 
-        val pointDifference = (abs(miPointsSum- viPointsSum)).toString()
+        val pointDifference = (kotlin.math.abs(miPointsSum - viPointsSum)).toString()
+
+        tvPointDifference.text = pointDifference
     }
 }
