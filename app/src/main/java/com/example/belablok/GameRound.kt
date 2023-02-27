@@ -3,6 +3,11 @@ package com.example.belablok
 import java.lang.Math.abs
 
 class GameRound {
+
+    var matchPointsListItemFlag = false
+    var miMatchPoints = 0
+    var viMatchPoints = 0
+
     var miPoints: Int = 0
     var viPoints: Int = 0
     var adut: String = "null"

@@ -6,15 +6,11 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.MotionEvent
-import android.view.View
 import android.widget.ListView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.gson.Gson
-import java.lang.Math.abs
 
 
 class ListView : ComponentActivity() {
@@ -27,7 +23,11 @@ class ListView : ComponentActivity() {
     lateinit var tvMiPointsToWin: TextView
     lateinit var tvViPointsToWin: TextView
     lateinit var tvPointDifference: TextView
+    lateinit var tvViMatchPoints: TextView
+    lateinit var tvMiMatchPoints: TextView
 
+    var miMatchPoints = 0
+    var viMatchPoints = 0
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +42,8 @@ class ListView : ComponentActivity() {
         tvMiPointsToWin = findViewById(R.id.tvMiPointsToWin)
         tvViPointsToWin = findViewById(R.id.tvViPointsToWin)
         tvPointDifference = findViewById(R.id.tvPointDifference)
+        tvMiMatchPoints = findViewById(R.id.miMatchPoints)
+        tvViMatchPoints = findViewById(R.id.viMatchPoints)
 
         listView = findViewById(R.id.listView)
         customAdapter = MyListAdapter(this, R.layout.listview_item, gameRounds)
@@ -59,11 +61,11 @@ class ListView : ComponentActivity() {
             openSomeActivityForResult(data)
         }
         listView.setOnItemLongClickListener { adapterView, view, i, l ->
-            gameRounds.removeAt(i)
-
-            updateScoreBoard()
-
-            customAdapter.notifyDataSetChanged()
+            if (!gameRounds.get(i).matchPointsListItemFlag){
+                gameRounds.removeAt(i)
+                updateScoreBoard()
+                customAdapter.notifyDataSetChanged()
+            }
             true
         }
 
@@ -119,6 +121,10 @@ class ListView : ComponentActivity() {
         var miPointsSum = 0
         var viPointsSum = 0
         for (gr in gameRounds){
+            if (gr.matchPointsListItemFlag){
+                miPointsSum = 0
+                viPointsSum = 0
+            }
             miPointsSum += gr.getMiPointsSum()
             viPointsSum += gr.getViPointsSum()
         }
@@ -131,5 +137,25 @@ class ListView : ComponentActivity() {
         val pointDifference = (kotlin.math.abs(miPointsSum - viPointsSum)).toString()
 
         tvPointDifference.text = pointDifference
+
+        if ((miPointsSum >= 1001) or (viPointsSum >= 1001)) { setUpNewGame(miPointsSum, viPointsSum)}
+    }
+
+    private fun setUpNewGame(miPointsSum: Int, viPointsSum: Int) {
+        val matchPointListItem = GameRound()
+        if (miPointsSum >= 1001) { miMatchPoints += 1 }
+        if (viPointsSum >= 1001) { viMatchPoints += 1 }
+
+        matchPointListItem.miMatchPoints = miMatchPoints
+        matchPointListItem.viMatchPoints = viMatchPoints
+        matchPointListItem.matchPointsListItemFlag = true
+
+        gameRounds.add(matchPointListItem)
+
+        tvMiMatchPoints.text = miMatchPoints.toString()
+        tvViMatchPoints.text = viMatchPoints.toString()
+
+        tvMiPoints.text = "0"
+        tvViPoints.text = "0"
     }
 }

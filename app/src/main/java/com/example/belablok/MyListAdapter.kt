@@ -1,11 +1,14 @@
 import android.content.Context
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.graphics.Color
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getColor
 import com.example.belablok.Calculator
 import com.example.belablok.GameRound
 import com.example.belablok.R
@@ -31,18 +34,31 @@ class MyListAdapter(
             val imPadVi = v.findViewById<View>(R.id.imPadVi) as ImageView
             val imAdut = v.findViewById<View>(R.id.imAdut) as ImageView
 
-            tvMi.text = oneGameRound.getMiPointsSum().toString()
-            tvVi.text = oneGameRound.getViPointsSum().toString()
-
             imPadMi.visibility = View.INVISIBLE
             imPadVi.visibility = View.INVISIBLE
-            if (oneGameRound.padMi == 1){ showHide(imPadMi) }
-            if (oneGameRound.padVi == 1){ showHide(imPadVi) }
 
-            if (oneGameRound.adut == "herc"){ imAdut.setImageResource(R.drawable.herc) }
-            if (oneGameRound.adut == "tref"){ imAdut.setImageResource(R.drawable.tref) }
-            if (oneGameRound.adut == "kara"){ imAdut.setImageResource(R.drawable.kara) }
-            if (oneGameRound.adut == "pik"){ imAdut.setImageResource(R.drawable.pik) }
+            tvMi.setTextColor(Color.parseColor("#ffffff"))
+            tvVi.setTextColor(Color.parseColor("#ffffff"))
+
+            if (oneGameRound.matchPointsListItemFlag){
+                tvMi.text = oneGameRound.miMatchPoints.toString()
+                tvMi.setTextColor(Color.parseColor("#03dac6"))
+
+                tvVi.text = oneGameRound.viMatchPoints.toString()
+                tvVi.setTextColor(Color.parseColor("#da6b03"))
+            }
+            else{
+                tvMi.text = oneGameRound.getMiPointsSum().toString()
+                tvVi.text = oneGameRound.getViPointsSum().toString()
+
+                if (oneGameRound.padMi == 1){ showHide(imPadMi) }
+                if (oneGameRound.padVi == 1){ showHide(imPadVi) }
+
+                if (oneGameRound.adut == "herc"){ imAdut.setImageResource(R.drawable.herc) }
+                if (oneGameRound.adut == "tref"){ imAdut.setImageResource(R.drawable.tref) }
+                if (oneGameRound.adut == "kara"){ imAdut.setImageResource(R.drawable.kara) }
+                if (oneGameRound.adut == "pik"){ imAdut.setImageResource(R.drawable.pik) }
+            }
         }
         return v!!
     }
