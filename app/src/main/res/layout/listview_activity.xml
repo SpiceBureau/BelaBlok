@@ -111,6 +111,34 @@
     </TextView>
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:id="@+id/miMatchPoints"
+        android:textColor="@color/miColor"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@id/tvNG"
+        app:layout_constraintEnd_toEndOf="@id/tvNG"
+        app:layout_constraintTop_toTopOf="@id/tvNG"
+        app:layout_constraintBottom_toBottomOf="@id/tvNG"
+        app:layout_constraintHorizontal_bias="0.05">
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:id="@+id/viMatchPoints"
+        android:textColor="@color/viColor"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@id/tvNG"
+        app:layout_constraintEnd_toEndOf="@id/tvNG"
+        app:layout_constraintTop_toTopOf="@id/tvNG"
+        app:layout_constraintBottom_toBottomOf="@id/tvNG"
+        app:layout_constraintHorizontal_bias="0.95">
+    </TextView>
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tvNG"
