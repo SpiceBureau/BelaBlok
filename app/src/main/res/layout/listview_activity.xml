@@ -39,7 +39,7 @@
         app:layout_constraintTop_toBottomOf="@id/listView"
         app:layout_constraintBottom_toTopOf="@id/tvNG"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvMiPoints"
         app:layout_constraintHorizontal_bias="0.015"
         app:layout_constraintVertical_bias="0.5">
     </TextView>
@@ -54,8 +54,8 @@
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/listView"
         app:layout_constraintBottom_toTopOf="@id/tvNG"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvMiPoints"
+        app:layout_constraintEnd_toStartOf="@id/tvViPoints"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintVertical_bias="0.5">
     </TextView>
@@ -71,8 +71,8 @@
         android:textSize="50sp"
         app:layout_constraintTop_toBottomOf="@id/listView"
         app:layout_constraintBottom_toTopOf="@id/tvNG"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvMiPointsToWin"
+        app:layout_constraintEnd_toStartOf="@id/tvPointDifference"
         app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintVertical_bias="0.5">
     </TextView>
@@ -88,8 +88,8 @@
         android:textColor="@color/viColor"
         app:layout_constraintTop_toBottomOf="@id/listView"
         app:layout_constraintBottom_toTopOf="@id/tvNG"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvPointDifference"
+        app:layout_constraintEnd_toStartOf="@id/tvViPointsToWin"
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintVertical_bias="0.5">
     </TextView>
@@ -104,7 +104,7 @@
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/listView"
         app:layout_constraintBottom_toTopOf="@id/tvNG"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvViPoints"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.985"
         app:layout_constraintVertical_bias="0.5">
