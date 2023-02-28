@@ -4,11 +4,12 @@ import MyListAdapter
 import android.R.attr.value
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ListView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.gson.Gson
@@ -62,11 +63,22 @@ class ListView : ComponentActivity() {
             openSomeActivityForResult(data, i)
         }
         listView.setOnItemLongClickListener { adapterView, view, i, l ->
-            if (!gameRounds.get(i).matchPointsListItemFlag){
-                gameRounds.removeAt(i)
-                updateScoreBoard()
-                customAdapter.notifyDataSetChanged()
-            }
+
+            AlertDialog.Builder(this)
+                .setTitle("Delete round")
+                .setMessage("Are you sure you want to delete this round?") // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton("Yes",
+                    DialogInterface.OnClickListener { dialog, which ->
+                        if (!gameRounds[i].matchPointsListItemFlag){
+                            gameRounds.removeAt(i)
+                            updateScoreBoard()
+                            customAdapter.notifyDataSetChanged()
+                        }
+                    }) // A null listener allows the button to dismiss the dialog and take no further action.
+                .setNegativeButton("No", null)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show()
             true
         }
 
