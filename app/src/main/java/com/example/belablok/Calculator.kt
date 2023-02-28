@@ -22,7 +22,9 @@ class Calculator : AppCompatActivity() {
         var gameRound = GameRound()
         val newGameFlag = intent.getStringExtra("newGameRound")?.let { checkIfNewGame(it) }
 
+        var roundIndex = "-1"
         if (!newGameFlag!!){
+            roundIndex = intent.getStringExtra("index").toString()
             gameRound = Gson().fromJson(intent.getStringExtra("gameRound"), GameRound::class.java)
         }
 
@@ -401,6 +403,8 @@ class Calculator : AppCompatActivity() {
             gameRound.numOf200CallsVi = 0
             gameRound.stiljaMi = 0
             gameRound.stiljaVi = 0
+            gameRound.padMi = 0
+            gameRound.padVi = 0
             if (ctv20MI.visibility == View.VISIBLE){showHide(ctv20MI)}
             if (ctv20VI.visibility == View.VISIBLE){showHide(ctv20VI)}
             if (ctv50MI.visibility == View.VISIBLE){showHide(ctv50MI)}
@@ -504,6 +508,7 @@ class Calculator : AppCompatActivity() {
             gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
             val data = Gson().toJson(gameRound)
             intent.putExtra("gameRound", data)
+            intent.putExtra("index", roundIndex)
             setResult(RESULT_OK, intent)
             finish()
         }

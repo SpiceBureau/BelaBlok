@@ -33,12 +33,16 @@ class MyListAdapter(
             val imPadMi = v.findViewById<View>(R.id.imPadMi) as ImageView
             val imPadVi = v.findViewById<View>(R.id.imPadVi) as ImageView
             val imAdut = v.findViewById<View>(R.id.imAdut) as ImageView
-
-            imPadMi.visibility = View.INVISIBLE
-            imPadVi.visibility = View.INVISIBLE
+            val imStiljaMi = v.findViewById<View>(R.id.imStiljaMi) as ImageView
+            val imStiljaVi = v.findViewById<View>(R.id.imStlijaVi) as ImageView
 
             tvMi.setTextColor(Color.parseColor("#ffffff"))
             tvVi.setTextColor(Color.parseColor("#ffffff"))
+
+            imStiljaMi.visibility = View.INVISIBLE
+            imStiljaVi.visibility = View.INVISIBLE
+            imPadMi.visibility = View.INVISIBLE
+            imPadVi.visibility = View.INVISIBLE
 
             if (oneGameRound.matchPointsListItemFlag){
                 tvMi.text = oneGameRound.miMatchPoints.toString()
@@ -46,6 +50,8 @@ class MyListAdapter(
 
                 tvVi.text = oneGameRound.viMatchPoints.toString()
                 tvVi.setTextColor(Color.parseColor("#da6b03"))
+
+                imAdut.setImageResource(0)
             }
             else{
                 tvMi.text = oneGameRound.getMiPointsSum().toString()
@@ -53,6 +59,9 @@ class MyListAdapter(
 
                 if (oneGameRound.padMi == 1){ showHide(imPadMi) }
                 if (oneGameRound.padVi == 1){ showHide(imPadVi) }
+
+                if (oneGameRound.stiljaMi == 1){ showHide(imStiljaMi) }
+                if (oneGameRound.stiljaVi == 1){ showHide(imStiljaVi) }
 
                 if (oneGameRound.adut == "herc"){ imAdut.setImageResource(R.drawable.herc) }
                 if (oneGameRound.adut == "tref"){ imAdut.setImageResource(R.drawable.tref) }

@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ListView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.gson.Gson
@@ -57,8 +58,8 @@ class ListView : ComponentActivity() {
         listView.isClickable = true
         listView.setOnItemClickListener { adapterView, view, i, l ->
             val data = Gson().toJson(gameRounds[i])
-            gameRounds[i] = GameRound()
-            openSomeActivityForResult(data)
+            //gameRounds[i] = GameRound()
+            openSomeActivityForResult(data, i)
         }
         listView.setOnItemLongClickListener { adapterView, view, i, l ->
             if (!gameRounds.get(i).matchPointsListItemFlag){
@@ -71,9 +72,10 @@ class ListView : ComponentActivity() {
 
     }
 
-    private fun openSomeActivityForResult(data: String) {
+    private fun openSomeActivityForResult(data: String, i: Int) {
         val intent = Intent(this, Calculator::class.java)
         intent.putExtra("gameRound", data)
+        intent.putExtra("index", i.toString())
         intent.putExtra("newGameRound", "false")
         resultLauncher.launch(intent)
     }
@@ -90,17 +92,15 @@ class ListView : ComponentActivity() {
 
             val exsistingGameRound = Gson().fromJson(data?.getStringExtra("gameRound"), GameRound::class.java)
 
-            for (gr in gameRounds){
-                if (gr.miPoints == 0 && gr.viPoints == 0){
-                    gameRounds[gameRounds.indexOf(gr)] = exsistingGameRound
-                    break
-                }
-            }
+            gameRounds[data?.getStringExtra("index")?.let { Integer.parseInt(it) }!!] = exsistingGameRound
 
             updateScoreBoard()
 
             customAdapter.notifyDataSetChanged()
         }
+        /*if (result.resultCode == Activity.RESULT_CANCELED){
+            Toast.makeText(this, "Jelly", Toast.LENGTH_SHORT).show()
+        }*/
     }
 
     private var resultLauncherNG = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
