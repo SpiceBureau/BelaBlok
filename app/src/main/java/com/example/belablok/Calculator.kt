@@ -65,8 +65,8 @@ class Calculator : AppCompatActivity() {
         var pointsDirectionFlag = false // 0 = Mi || 1 = Vi
 
         if (!newGameFlag){
-            txtMi.text = gameRound.miPoints.toString()
-            txtVi.text = gameRound.viPoints.toString()
+            txtMi.text = gameRound.getMiPointsSum().toString()
+            txtVi.text = gameRound.getViPointsSum().toString()
 
             ctv20MI.text = gameRound.numOf20CallsMi.toString()
             if (gameRound.numOf20CallsMi != 0){ showHide(ctv20MI) }
@@ -168,7 +168,7 @@ class Calculator : AppCompatActivity() {
         }
         btn0.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (txtMi.text.toString() == "0"){ txtMi.text = "0" }
+                if (txtMi.text.toString() == "0") { txtMi.text = "0" }
                 else { txtMi.append("0") }
 
                 val miPoints: Int = Integer.parseInt(txtMi.text.toString())
@@ -187,6 +187,9 @@ class Calculator : AppCompatActivity() {
                 if (miPoints < 0){ txtMi.text = "0" }
                 else { txtMi.text = miPoints.toString() }
             }
+
+            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
+            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
         }
         btn1.setOnClickListener {
             if (!pointsDirectionFlag) {
@@ -208,6 +211,9 @@ class Calculator : AppCompatActivity() {
                 if (miPoints < 0){ txtMi.text = "0" }
                 else { txtMi.text = miPoints.toString() }
             }
+
+            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
+            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
         }
         btn2.setOnClickListener {
             if (!pointsDirectionFlag) {
@@ -228,6 +234,9 @@ class Calculator : AppCompatActivity() {
                 if (miPoints < 0){ txtMi.text = "0" }
                 else { txtMi.text = miPoints.toString() }
             }
+
+            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
+            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
         }
         btn3.setOnClickListener {
             if (!pointsDirectionFlag) {
@@ -248,6 +257,9 @@ class Calculator : AppCompatActivity() {
                 if (miPoints < 0){ txtMi.text = "0" }
                 else { txtMi.text = miPoints.toString() }
             }
+
+            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
+            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
         }
         btn4.setOnClickListener {
             if (!pointsDirectionFlag) {
@@ -268,6 +280,9 @@ class Calculator : AppCompatActivity() {
                 if (miPoints < 0){ txtMi.text = "0" }
                 else { txtMi.text = miPoints.toString() }
             }
+
+            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
+            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
         }
         btn5.setOnClickListener {
             if (!pointsDirectionFlag) {
@@ -288,6 +303,9 @@ class Calculator : AppCompatActivity() {
                 if (miPoints < 0){ txtMi.text = "0" }
                 else { txtMi.text = miPoints.toString() }
             }
+
+            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
+            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
         }
         btn6.setOnClickListener {
             if (!pointsDirectionFlag) {
@@ -308,6 +326,9 @@ class Calculator : AppCompatActivity() {
                 if (miPoints < 0){ txtMi.text = "0" }
                 else { txtMi.text = miPoints.toString() }
             }
+
+            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
+            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
         }
         btn7.setOnClickListener {
             if (!pointsDirectionFlag) {
@@ -328,6 +349,9 @@ class Calculator : AppCompatActivity() {
                 if (miPoints < 0){ txtMi.text = "0" }
                 else { txtMi.text = miPoints.toString() }
             }
+
+            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
+            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
         }
         btn8.setOnClickListener {
             if (!pointsDirectionFlag) {
@@ -348,6 +372,9 @@ class Calculator : AppCompatActivity() {
                 if (miPoints < 0){ txtMi.text = "0" }
                 else { txtMi.text = miPoints.toString() }
             }
+
+            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
+            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
         }
         btn9.setOnClickListener {
             if (!pointsDirectionFlag) {
@@ -368,6 +395,9 @@ class Calculator : AppCompatActivity() {
                 if (miPoints < 0){ txtMi.text = "0" }
                 else { txtMi.text = miPoints.toString() }
             }
+
+            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
+            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
         }
 
         btnPad.setOnClickListener {
@@ -416,8 +446,8 @@ class Calculator : AppCompatActivity() {
 
         btnStiljonz.setOnClickListener {
             val (newMiPoints, newViPoints) = pad(pointsDirectionFlag)
-            txtVi.text = newViPoints
-            txtMi.text = newMiPoints
+            gameRound.viPoints = newViPoints
+            gameRound.miPoints = newMiPoints
 
             if (pointsDirectionFlag){
                 gameRound.stiljaMi = 0
@@ -429,6 +459,9 @@ class Calculator : AppCompatActivity() {
                 gameRound.stiljaVi = 0
                 btnStiljonz.setTextColor(getColor(R.color.miColor))
             }
+
+            txtMi.text = gameRound.getMiPointsSum().toString()
+            txtVi.text = gameRound.getViPointsSum().toString()
         }
         btn20.setOnClickListener {
             if (pointsDirectionFlag){ // VI
@@ -445,6 +478,9 @@ class Calculator : AppCompatActivity() {
                 gameRound.numOf20CallsMi += 1
                 ctv20MI.text = gameRound.numOf20CallsMi.toString()
             }
+
+            txtMi.text = gameRound.getMiPointsSum().toString()
+            txtVi.text = gameRound.getViPointsSum().toString()
         }
         btn50.setOnClickListener {
             if (pointsDirectionFlag){ // VI
@@ -461,6 +497,9 @@ class Calculator : AppCompatActivity() {
                 gameRound.numOf50CallsMi += 1
                 ctv50MI.text = gameRound.numOf50CallsMi.toString()
             }
+
+            txtMi.text = gameRound.getMiPointsSum().toString()
+            txtVi.text = gameRound.getViPointsSum().toString()
         }
         btn100.setOnClickListener {
             if (pointsDirectionFlag){ // VI
@@ -477,6 +516,9 @@ class Calculator : AppCompatActivity() {
                 gameRound.numOf100CallsMi += 1
                 ctv100MI.text = gameRound.numOf100CallsMi.toString()
             }
+
+            txtMi.text = gameRound.getMiPointsSum().toString()
+            txtVi.text = gameRound.getViPointsSum().toString()
         }
         btn150.setOnClickListener {
             if (pointsDirectionFlag){
@@ -489,24 +531,28 @@ class Calculator : AppCompatActivity() {
                 gameRound.numOf150CallsVi = 0
                 btn150.setTextColor(getColor(R.color.miColor))
             }
+
+            txtMi.text = gameRound.getMiPointsSum().toString()
+            txtVi.text = gameRound.getViPointsSum().toString()
         }
         btn200.setOnClickListener {
             if (pointsDirectionFlag){
-                gameRound.numOf150CallsMi = 0
+                gameRound.numOf200CallsMi = 0
                 gameRound.numOf200CallsVi = 1
                 btn200.setTextColor(getColor(R.color.viColor))
             }
             else {
                 gameRound.numOf200CallsMi = 1
-                gameRound.numOf150CallsVi = 0
+                gameRound.numOf200CallsVi = 0
                 btn200.setTextColor(getColor(R.color.miColor))
             }
+
+            txtMi.text = gameRound.getMiPointsSum().toString()
+            txtVi.text = gameRound.getViPointsSum().toString()
         }
 
         btnDone.setOnClickListener {
             val intent = Intent()
-            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
-            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
             val data = Gson().toJson(gameRound)
             intent.putExtra("gameRound", data)
             intent.putExtra("index", roundIndex)
@@ -523,11 +569,11 @@ class Calculator : AppCompatActivity() {
         })
     }
 
-    private fun pad(pointsDirectionFlag: Boolean): Pair<String, String> {
+    private fun pad(pointsDirectionFlag: Boolean): Pair<Int, Int> {
         return if (pointsDirectionFlag){
-            Pair("0", "162")
+            Pair(0, 162)
         } else{
-            Pair("162", "0")
+            Pair(162, 0)
         }
     }
     private fun showHide(view: View) {
