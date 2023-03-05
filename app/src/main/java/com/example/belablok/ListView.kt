@@ -2,7 +2,6 @@ package com.example.belablok
 
 import MyListAdapter
 import android.R.attr.value
-import android.R.layout
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
@@ -29,6 +28,7 @@ class ListView : ComponentActivity() {
     lateinit var tvPointDifference: TextView
     lateinit var tvViMatchPoints: TextView
     lateinit var tvMiMatchPoints: TextView
+    lateinit var tvNG: TextView
 
     var miMatchPoints = 0
     var viMatchPoints = 0
@@ -40,7 +40,7 @@ class ListView : ComponentActivity() {
 
         this.actionBar?.hide()
 
-        val tvNG: TextView = findViewById(R.id.tvNG)
+        tvNG = findViewById(R.id.tvNG)
         tvMiPoints = findViewById(R.id.tvMiPoints)
         tvViPoints = findViewById(R.id.tvViPoints)
         tvMiPointsToWin = findViewById(R.id.tvMiPointsToWin)
@@ -97,6 +97,7 @@ class ListView : ComponentActivity() {
         val intent = Intent(this, Calculator::class.java)
         intent.putExtra("newGameRound", "true")
         resultLauncherNG.launch(intent)
+        overridePendingTransition(R.anim.left_right, R.anim.nothing)
     }
 
     private var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->

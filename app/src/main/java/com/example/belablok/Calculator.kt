@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 
@@ -511,7 +512,15 @@ class Calculator : AppCompatActivity() {
             intent.putExtra("index", roundIndex)
             setResult(RESULT_OK, intent)
             finish()
+            overridePendingTransition(R.anim.nothing, R.anim.left_rigt_exit)
         }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+                overridePendingTransition(R.anim.nothing, R.anim.right_left)
+            }
+        })
     }
 
     private fun pad(pointsDirectionFlag: Boolean): Pair<String, String> {
