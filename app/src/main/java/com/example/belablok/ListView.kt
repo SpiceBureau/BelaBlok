@@ -92,6 +92,7 @@ class ListView : ComponentActivity() {
         intent.putExtra("index", i.toString())
         intent.putExtra("newGameRound", "false")
         resultLauncher.launch(intent)
+        overridePendingTransition(R.anim.left_right, R.anim.nothing)
     }
     private fun openSomeActivityForResultNG() {
         val intent = Intent(this, Calculator::class.java)
