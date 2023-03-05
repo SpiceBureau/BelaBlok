@@ -2,6 +2,7 @@ package com.example.belablok
 
 import MyListAdapter
 import android.R.attr.value
+import android.R.layout
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
@@ -10,6 +11,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ListView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.gson.Gson
@@ -150,7 +152,7 @@ class ListView : ComponentActivity() {
 
         tvPointDifference.text = pointDifference
 
-        if ((miPointsSum >= 1001) or (viPointsSum >= 1001)) { setUpNewGame(miPointsSum, viPointsSum)}
+        if ((miPointsSum >= 1001) or (viPointsSum >= 1001)) { setUpNewGame(miPointsSum, viPointsSum) }
     }
 
     private fun setUpNewGame(miPointsSum: Int, viPointsSum: Int) {
@@ -169,5 +171,37 @@ class ListView : ComponentActivity() {
 
         tvMiPoints.text = "0"
         tvViPoints.text = "0"
+
+        //showAlertDialog()
+    }
+
+    private fun showAlertDialog() {
+        // Create an alert builder
+        val builder = AlertDialog.Builder(this)
+        builder.setView(R.layout.match_won_popup)
+        val alertDialog = builder.create()
+
+        val tvMiPoints = findViewById<TextView>(R.id.miPointsNum)
+        val tvViPoints = findViewById<TextView>(R.id.viPointsNum)
+
+        var miPointsSum = 0
+        var viPointsSum = 0
+
+        for (gr in gameRounds){
+            if (gr.matchPointsListItemFlag){
+                miPointsSum = 0
+                viPointsSum = 0
+            }
+            miPointsSum += gr.getMiPointsSum()
+            viPointsSum += gr.getViPointsSum()
+        }
+
+        tvMiPoints.text = miPointsSum.toString()
+        tvViPoints.text = viPointsSum.toString()
+
+        alertDialog.show()
+    }
+    private fun sendDialogDataToActivity(data: String) {
+        Toast.makeText(this, data, Toast.LENGTH_SHORT).show()
     }
 }
