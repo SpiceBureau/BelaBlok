@@ -405,11 +405,15 @@ class Calculator : AppCompatActivity() {
                 txtMi.text = "162"
                 txtVi.text = "0"
                 gameRound.padVi = 1
+                gameRound.miPoints = 162
+                gameRound.viPoints = 0
             }
             else{
                 txtMi.text = "0"
                 txtVi.text = "162"
                 gameRound.padMi = 1
+                gameRound.miPoints = 0
+                gameRound.viPoints = 162
             }
         }
         btnClear.setOnClickListener {
@@ -436,6 +440,8 @@ class Calculator : AppCompatActivity() {
             gameRound.stiljaVi = 0
             gameRound.padMi = 0
             gameRound.padVi = 0
+            gameRound.miPoints = 0
+            gameRound.viPoints = 0
             if (ctv20MI.visibility == View.VISIBLE){showHide(ctv20MI)}
             if (ctv20VI.visibility == View.VISIBLE){showHide(ctv20VI)}
             if (ctv50MI.visibility == View.VISIBLE){showHide(ctv50MI)}

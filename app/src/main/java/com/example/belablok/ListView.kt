@@ -35,6 +35,7 @@ class ListView : ComponentActivity() {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(com.google.android.material.R.style.Theme_AppCompat_DayNight_DarkActionBar)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.listview_activity)
 
