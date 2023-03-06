@@ -8,6 +8,8 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.View
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
@@ -84,9 +86,20 @@ class ListView : ComponentActivity() {
                 .show()
             true
         }
-
     }
 
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        return when (event.action) {
+            MotionEvent.ACTION_UP -> {
+                val myIntent = Intent(this, Stats::class.java)
+
+                resultLauncher.launch(myIntent)
+                overridePendingTransition(R.anim.up_down, R.anim.nothing)
+                true
+            }
+            else -> super.onTouchEvent(event)
+        }
+    }
     private fun openSomeActivityForResult(data: String, i: Int) {
         val intent = Intent(this, Calculator::class.java)
         intent.putExtra("gameRound", data)
@@ -115,9 +128,6 @@ class ListView : ComponentActivity() {
 
             customAdapter.notifyDataSetChanged()
         }
-        /*if (result.resultCode == Activity.RESULT_CANCELED){
-            Toast.makeText(this, "Jelly", Toast.LENGTH_SHORT).show()
-        }*/
     }
 
     private var resultLauncherNG = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->

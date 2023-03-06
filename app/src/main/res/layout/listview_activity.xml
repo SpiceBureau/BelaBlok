@@ -22,6 +22,7 @@
         android:layout_width="370dp"
         android:layout_height="1dp"
         android:background="@color/white"
+        android:id="@+id/seperator"
         app:layout_constraintTop_toBottomOf="@id/listView"
         app:layout_constraintBottom_toBottomOf="@id/listView"
         app:layout_constraintStart_toStartOf="parent"
