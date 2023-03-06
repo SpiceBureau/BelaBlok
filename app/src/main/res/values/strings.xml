@@ -3,4 +3,5 @@
     <string name="title_activity_list_view">ListView</string>
     <string name="title_calculator">Calculator</string>
     <string name="title_activity_list">ListView</string>
+    <string name="title_activity_stats">Stats</string>
 </resources>
