@@ -32,4 +32,12 @@ class GameHand {
     fun getViPointsSum(): Int {
         return Integer.parseInt(viPoints) + numOf20CallsVi*20 + numOf50CallsVi*50 + numOf100CallsVi*100 + numOf150CallsVi*150 + numOf200CallsVi*200 + stiljaVi*90
     }
+
+    fun geMiPointsFromCalls(): Int{
+        return numOf20CallsMi*20 + numOf50CallsMi*50 + numOf100CallsMi*100 + numOf150CallsMi*150 + numOf200CallsMi*200 + stiljaMi*90
+    }
+
+    fun getViPointsFromCalls(): Int{
+        return  numOf20CallsVi*20 + numOf50CallsVi*50 + numOf100CallsVi*100 + numOf150CallsVi*150 + numOf200CallsVi*200 + stiljaVi*90
+    }
 }

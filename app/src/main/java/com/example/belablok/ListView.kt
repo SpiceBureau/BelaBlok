@@ -5,10 +5,12 @@ import android.R.attr.value
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
+import android.view.Window
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
@@ -146,13 +148,16 @@ class ListView : ComponentActivity() {
     private fun updateScoreBoard(){
         var miPointsSum = 0
         var viPointsSum = 0
+
         for (gr in gameHands){
             if (gr.matchPointsListItemFlag){
                 miPointsSum = 0
                 viPointsSum = 0
             }
-            miPointsSum += gr.getMiPointsSum()
-            viPointsSum += gr.getViPointsSum()
+            else{
+                miPointsSum += gr.getMiPointsSum()
+                viPointsSum += gr.getViPointsSum()
+            }
         }
         tvMiPoints.text = miPointsSum.toString()
         tvViPoints.text = viPointsSum.toString()
@@ -160,9 +165,7 @@ class ListView : ComponentActivity() {
         tvMiPointsToWin.text = if ((1001 - miPointsSum) > 0) (1001 - miPointsSum).toString() else "0"
         tvViPointsToWin.text = if ((1001 - viPointsSum) > 0) (1001 - viPointsSum).toString() else "0"
 
-        val pointDifference = (kotlin.math.abs(miPointsSum - viPointsSum)).toString()
-
-        tvPointDifference.text = pointDifference
+        tvPointDifference.text = (kotlin.math.abs(miPointsSum - viPointsSum)).toString()
 
         if ((miPointsSum >= 1001) or (viPointsSum >= 1001)) { setUpNewGame(miPointsSum, viPointsSum) }
     }
@@ -184,36 +187,61 @@ class ListView : ComponentActivity() {
         tvMiPoints.text = "0"
         tvViPoints.text = "0"
 
-        //showAlertDialog()
+        showAlertDialog()
     }
 
     private fun showAlertDialog() {
         // Create an alert builder
-        val builder = AlertDialog.Builder(this)
-        builder.setView(R.layout.match_won_popup)
-        val alertDialog = builder.create()
-
-        val tvMiPoints = findViewById<TextView>(R.id.miPointsNum)
-        val tvViPoints = findViewById<TextView>(R.id.viPointsNum)
-
         var miPointsSum = 0
         var viPointsSum = 0
+        var miPointsSumNoCalls = 0
+        var viPointsSumNoCalls = 0
+        var miPointsSumFromCalls = 0
+        var viPointsSumFromCalls = 0
+
+
+        val matchWonDialog = Dialog(this)
+        matchWonDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
+        matchWonDialog.setCancelable(true)
+        matchWonDialog.setContentView(R.layout.match_won_popup)
+
+        val miPointsSumTv = matchWonDialog.findViewById<TextView>(R.id.miPointsSum)
+        val miPointsNoCallsTv = matchWonDialog.findViewById<TextView>(R.id.miPointsNoCalls)
+        val miPointsFromCallsTv = matchWonDialog.findViewById<TextView>(R.id.miPointsFromCalls)
+
+        val viPointsSumTv = matchWonDialog.findViewById<TextView>(R.id.viPointsSum)
+        val viPointsNoCallsTv = matchWonDialog.findViewById<TextView>(R.id.viPointsNoCalls)
+        val viPointsFromCallsTv = matchWonDialog.findViewById<TextView>(R.id.viPointsFromCalls)
 
         for (gr in gameHands){
             if (gr.matchPointsListItemFlag){
+                if (miMatchPoints + viMatchPoints <= gr.miMatchPoints + gr.viMatchPoints){ continue }
                 miPointsSum = 0
+                miPointsSumNoCalls = 0
+                miPointsSumFromCalls = 0
                 viPointsSum = 0
+                viPointsSumNoCalls = 0
+                viPointsSumFromCalls= 0
             }
-            miPointsSum += gr.getMiPointsSum()
-            viPointsSum += gr.getViPointsSum()
+            else{
+                miPointsSum += gr.getMiPointsSum()
+                miPointsSumNoCalls += Integer.parseInt(gr.miPoints)
+                miPointsSumFromCalls += gr.geMiPointsFromCalls()
+                viPointsSum += gr.getViPointsSum()
+                viPointsSumNoCalls += Integer.parseInt(gr.viPoints)
+                viPointsSumFromCalls += gr.getViPointsFromCalls()
+            }
         }
 
-        tvMiPoints.text = miPointsSum.toString()
-        tvViPoints.text = viPointsSum.toString()
+        miPointsSumTv.text = miPointsSum.toString()
+        miPointsFromCallsTv.text = miPointsSumFromCalls.toString()
+        miPointsNoCallsTv.text = miPointsSumNoCalls.toString()
 
-        alertDialog.show()
-    }
-    private fun sendDialogDataToActivity(data: String) {
-        Toast.makeText(this, data, Toast.LENGTH_SHORT).show()
+        viPointsSumTv.text = viPointsSum.toString()
+        viPointsFromCallsTv.text = viPointsSumFromCalls.toString()
+        viPointsNoCallsTv.text = viPointsSumNoCalls.toString()
+
+        matchWonDialog.show()
     }
 }
