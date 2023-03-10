@@ -30,8 +30,7 @@
             android:name=".Calculator"
             android:exported="true"
             android:label="@string/title_calculator"
-            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar">
-        </activity>
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
     </application>
 
 </manifest>

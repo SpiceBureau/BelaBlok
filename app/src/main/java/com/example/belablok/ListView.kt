@@ -235,12 +235,12 @@ class ListView : ComponentActivity() {
         }
 
         miPointsSumTv.text = miPointsSum.toString()
-        miPointsFromCallsTv.text = miPointsSumFromCalls.toString()
-        miPointsNoCallsTv.text = miPointsSumNoCalls.toString()
+        miPointsFromCallsTv.text = getString(R.string.popup_zvanja, miPointsSumFromCalls)
+        miPointsNoCallsTv.text = getString(R.string.popup_igra, miPointsSumNoCalls)
 
         viPointsSumTv.text = viPointsSum.toString()
-        viPointsFromCallsTv.text = viPointsSumFromCalls.toString()
-        viPointsNoCallsTv.text = viPointsSumNoCalls.toString()
+        viPointsFromCallsTv.text = getString(R.string.popup_zvanja, viPointsSumFromCalls)
+        viPointsNoCallsTv.text = getString(R.string.popup_igra, viPointsSumNoCalls)
 
         matchWonDialog.show()
     }

@@ -4,4 +4,6 @@
     <string name="title_calculator">Calculator</string>
     <string name="title_activity_list">ListView</string>
     <string name="title_activity_stats">Stats</string>
+    <string name="popup_zvanja">Zvanja: %1$d</string>
+    <string name="popup_igra">Igra: %1$d</string>
 </resources>
