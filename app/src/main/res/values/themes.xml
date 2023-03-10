@@ -19,4 +19,8 @@
     <style name="Theme.AppCompat.Launcher">
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
+
+    <style name="boldText">
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

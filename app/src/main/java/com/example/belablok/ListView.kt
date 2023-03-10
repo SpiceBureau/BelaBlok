@@ -9,7 +9,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
-import android.view.View
 import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
@@ -20,7 +19,7 @@ import com.google.gson.Gson
 
 class ListView : ComponentActivity() {
 
-    var gameRounds = mutableListOf<GameRound>()
+    var gameHands = mutableListOf<GameHand>()
     lateinit var listView: ListView
     lateinit var customAdapter: MyListAdapter
     lateinit var tvMiPoints: TextView
@@ -53,7 +52,7 @@ class ListView : ComponentActivity() {
         tvViMatchPoints = findViewById(R.id.viMatchPoints)
 
         listView = findViewById(R.id.listView)
-        customAdapter = MyListAdapter(this, R.layout.listview_item, gameRounds)
+        customAdapter = MyListAdapter(this, R.layout.listview_item, gameHands)
 
 
         tvNG.setOnClickListener {
@@ -63,7 +62,7 @@ class ListView : ComponentActivity() {
         listView.adapter = customAdapter
         listView.isClickable = true
         listView.setOnItemClickListener { adapterView, view, i, l ->
-            val data = Gson().toJson(gameRounds[i])
+            val data = Gson().toJson(gameHands[i])
             //gameRounds[i] = GameRound()
             openSomeActivityForResult(data, i)
         }
@@ -75,8 +74,8 @@ class ListView : ComponentActivity() {
                 // The dialog is automatically dismissed when a dialog button is clicked.
                 .setPositiveButton("Yes",
                     DialogInterface.OnClickListener { dialog, which ->
-                        if (!gameRounds[i].matchPointsListItemFlag){
-                            gameRounds.removeAt(i)
+                        if (!gameHands[i].matchPointsListItemFlag){
+                            gameHands.removeAt(i)
                             updateScoreBoard()
                             customAdapter.notifyDataSetChanged()
                         }
@@ -120,9 +119,9 @@ class ListView : ComponentActivity() {
             // There are no request codes
             val data: Intent? = result.data
 
-            val exsistingGameRound = Gson().fromJson(data?.getStringExtra("gameRound"), GameRound::class.java)
+            val exsistingGameHand = Gson().fromJson(data?.getStringExtra("gameRound"), GameHand::class.java)
 
-            gameRounds[data?.getStringExtra("index")?.let { Integer.parseInt(it) }!!] = exsistingGameRound
+            gameHands[data?.getStringExtra("index")?.let { Integer.parseInt(it) }!!] = exsistingGameHand
 
             updateScoreBoard()
 
@@ -135,8 +134,8 @@ class ListView : ComponentActivity() {
             // There are no request codes
             val data: Intent? = result.data
 
-            val newGameRound = Gson().fromJson(data?.getStringExtra("gameRound"), GameRound::class.java)
-            gameRounds.add(newGameRound)
+            val newGameHand = Gson().fromJson(data?.getStringExtra("gameRound"), GameHand::class.java)
+            gameHands.add(newGameHand)
 
             updateScoreBoard()
 
@@ -147,7 +146,7 @@ class ListView : ComponentActivity() {
     private fun updateScoreBoard(){
         var miPointsSum = 0
         var viPointsSum = 0
-        for (gr in gameRounds){
+        for (gr in gameHands){
             if (gr.matchPointsListItemFlag){
                 miPointsSum = 0
                 viPointsSum = 0
@@ -169,7 +168,7 @@ class ListView : ComponentActivity() {
     }
 
     private fun setUpNewGame(miPointsSum: Int, viPointsSum: Int) {
-        val matchPointListItem = GameRound()
+        val matchPointListItem = GameHand()
         if (miPointsSum >= 1001) { miMatchPoints += 1 }
         if (viPointsSum >= 1001) { viMatchPoints += 1 }
 
@@ -177,7 +176,7 @@ class ListView : ComponentActivity() {
         matchPointListItem.viMatchPoints = viMatchPoints
         matchPointListItem.matchPointsListItemFlag = true
 
-        gameRounds.add(matchPointListItem)
+        gameHands.add(matchPointListItem)
 
         tvMiMatchPoints.text = miMatchPoints.toString()
         tvViMatchPoints.text = viMatchPoints.toString()
@@ -200,7 +199,7 @@ class ListView : ComponentActivity() {
         var miPointsSum = 0
         var viPointsSum = 0
 
-        for (gr in gameRounds){
+        for (gr in gameHands){
             if (gr.matchPointsListItemFlag){
                 miPointsSum = 0
                 viPointsSum = 0

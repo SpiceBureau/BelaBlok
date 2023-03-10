@@ -1,8 +1,6 @@
 package com.example.belablok
 
-import java.lang.Math.abs
-
-class GameRound {
+class GameHand {
 
     var matchPointsListItemFlag = false
     var miMatchPoints = 0

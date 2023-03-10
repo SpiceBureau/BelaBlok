@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
@@ -20,13 +19,13 @@ class Calculator : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        var gameRound = GameRound()
+        var gameHand = GameHand()
         val newGameFlag = intent.getStringExtra("newGameRound")?.let { checkIfNewGame(it) }
 
         var roundIndex = "-1"
         if (!newGameFlag!!){
             roundIndex = intent.getStringExtra("index").toString()
-            gameRound = Gson().fromJson(intent.getStringExtra("gameRound"), GameRound::class.java)
+            gameHand = Gson().fromJson(intent.getStringExtra("gameRound"), GameHand::class.java)
         }
 
         val txtMi: TextView = findViewById(R.id.txtMi)
@@ -65,36 +64,36 @@ class Calculator : AppCompatActivity() {
         var pointsDirectionFlag = false // 0 = Mi || 1 = Vi
 
         if (!newGameFlag){
-            updatecalculator(txtMi, txtVi, gameRound)
+            updatecalculator(txtMi, txtVi, gameHand)
 
-            ctv20MI.text = gameRound.numOf20CallsMi.toString()
-            if (gameRound.numOf20CallsMi != 0){ showHide(ctv20MI) }
-            ctv20VI.text = gameRound.numOf20CallsVi.toString()
-            if (gameRound.numOf20CallsVi != 0){ showHide(ctv20VI) }
+            ctv20MI.text = gameHand.numOf20CallsMi.toString()
+            if (gameHand.numOf20CallsMi != 0){ showHide(ctv20MI) }
+            ctv20VI.text = gameHand.numOf20CallsVi.toString()
+            if (gameHand.numOf20CallsVi != 0){ showHide(ctv20VI) }
 
-            ctv50MI.text = gameRound.numOf50CallsMi.toString()
-            if (gameRound.numOf50CallsMi != 0){ showHide(ctv50MI) }
-            ctv50VI.text = gameRound.numOf50CallsVi.toString()
-            if (gameRound.numOf50CallsVi != 0){ showHide(ctv50VI) }
+            ctv50MI.text = gameHand.numOf50CallsMi.toString()
+            if (gameHand.numOf50CallsMi != 0){ showHide(ctv50MI) }
+            ctv50VI.text = gameHand.numOf50CallsVi.toString()
+            if (gameHand.numOf50CallsVi != 0){ showHide(ctv50VI) }
 
-            ctv100MI.text = gameRound.numOf100CallsMi.toString()
-            if (gameRound.numOf100CallsMi != 0){ showHide(ctv100MI) }
-            ctv100VI.text = gameRound.numOf100CallsVi.toString()
-            if (gameRound.numOf100CallsVi != 0){ showHide(ctv100VI) }
+            ctv100MI.text = gameHand.numOf100CallsMi.toString()
+            if (gameHand.numOf100CallsMi != 0){ showHide(ctv100MI) }
+            ctv100VI.text = gameHand.numOf100CallsVi.toString()
+            if (gameHand.numOf100CallsVi != 0){ showHide(ctv100VI) }
 
-            if (gameRound.numOf150CallsMi == 1){ btn150.setTextColor(getColor(R.color.miColor)) }
-            if (gameRound.numOf150CallsVi == 1){ btn150.setTextColor(getColor(R.color.viColor)) }
+            if (gameHand.numOf150CallsMi == 1){ btn150.setTextColor(getColor(R.color.miColor)) }
+            if (gameHand.numOf150CallsVi == 1){ btn150.setTextColor(getColor(R.color.viColor)) }
 
-            if (gameRound.numOf200CallsMi == 1){ btn200.setTextColor(getColor(R.color.miColor)) }
-            if (gameRound.numOf200CallsVi == 1){ btn200.setTextColor(getColor(R.color.viColor)) }
+            if (gameHand.numOf200CallsMi == 1){ btn200.setTextColor(getColor(R.color.miColor)) }
+            if (gameHand.numOf200CallsVi == 1){ btn200.setTextColor(getColor(R.color.viColor)) }
 
-            if (gameRound.stiljaMi == 1){ btnStiljonz.setTextColor(getColor(R.color.miColor)) }
-            if (gameRound.stiljaVi == 1){ btnStiljonz.setTextColor(getColor(R.color.viColor)) }
+            if (gameHand.stiljaMi == 1){ btnStiljonz.setTextColor(getColor(R.color.miColor)) }
+            if (gameHand.stiljaVi == 1){ btnStiljonz.setTextColor(getColor(R.color.viColor)) }
 
-            if(gameRound.adut == "herc"){ hercButton.setImageResource(R.drawable.herc) }
-            if(gameRound.adut == "tref"){ trefButton.setImageResource(R.drawable.tref) }
-            if(gameRound.adut == "kara"){ karaButton.setImageResource(R.drawable.kara) }
-            if(gameRound.adut == "pik"){ pikButton.setImageResource(R.drawable.pik) }
+            if(gameHand.adut == "herc"){ hercButton.setImageResource(R.drawable.herc) }
+            if(gameHand.adut == "tref"){ trefButton.setImageResource(R.drawable.tref) }
+            if(gameHand.adut == "kara"){ karaButton.setImageResource(R.drawable.kara) }
+            if(gameHand.adut == "pik"){ pikButton.setImageResource(R.drawable.pik) }
         }
 
 
@@ -110,13 +109,13 @@ class Calculator : AppCompatActivity() {
         }
 
         hercButton.setOnClickListener{
-            if (gameRound.adut == "herc"){
+            if (gameHand.adut == "herc"){
                 hercButton.setImageResource(R.drawable.herc_white)
-                gameRound.adut = "null"
+                gameHand.adut = "null"
             }
             else {
                 hercButton.setImageResource(R.drawable.herc)
-                gameRound.adut = "herc"
+                gameHand.adut = "herc"
 
                 trefButton.setImageResource(R.drawable.tref_white)
                 pikButton.setImageResource(R.drawable.pik_white)
@@ -124,13 +123,13 @@ class Calculator : AppCompatActivity() {
             }
         }
         karaButton.setOnClickListener{
-            if (gameRound.adut == "kara"){
+            if (gameHand.adut == "kara"){
                 karaButton.setImageResource(R.drawable.kara_white)
-                gameRound.adut = "null"
+                gameHand.adut = "null"
             }
             else{
                 karaButton.setImageResource(R.drawable.kara)
-                gameRound.adut = "kara"
+                gameHand.adut = "kara"
 
                 trefButton.setImageResource(R.drawable.tref_white)
                 pikButton.setImageResource(R.drawable.pik_white)
@@ -138,13 +137,13 @@ class Calculator : AppCompatActivity() {
             }
         }
         pikButton.setOnClickListener {
-            if (gameRound.adut == "pik"){
+            if (gameHand.adut == "pik"){
                 pikButton.setImageResource(R.drawable.pik_white)
-                gameRound.adut = "null"
+                gameHand.adut = "null"
             }
             else{
                 pikButton.setImageResource(R.drawable.pik)
-                gameRound.adut = "pik"
+                gameHand.adut = "pik"
 
                 trefButton.setImageResource(R.drawable.tref_white)
                 karaButton.setImageResource(R.drawable.kara_white)
@@ -152,13 +151,13 @@ class Calculator : AppCompatActivity() {
             }
         }
         trefButton.setOnClickListener {
-            if (gameRound.adut == "tref"){
+            if (gameHand.adut == "tref"){
                 trefButton.setImageResource(R.drawable.tref_white)
-                gameRound.adut = "null"
+                gameHand.adut = "null"
             }
             else{
                 trefButton.setImageResource(R.drawable.tref)
-                gameRound.adut = "tref"
+                gameHand.adut = "tref"
 
                 hercButton.setImageResource(R.drawable.herc_white)
                 karaButton.setImageResource(R.drawable.kara_white)
@@ -167,200 +166,200 @@ class Calculator : AppCompatActivity() {
         }
         btn0.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (gameRound.miPoints == "0") { gameRound.miPoints = "0" }
-                else { gameRound.miPoints += "0" }
+                if (gameHand.miPoints == "0") { gameHand.miPoints = "0" }
+                else { gameHand.miPoints += "0" }
                 
-                val pointDiff = (162 - Integer.parseInt(gameRound.miPoints))
-                gameRound.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                val pointDiff = (162 - Integer.parseInt(gameHand.miPoints))
+                gameHand.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             else {
-                if (gameRound.viPoints == "0") { gameRound.viPoints = "0" }
-                else { gameRound.viPoints += "0" }
+                if (gameHand.viPoints == "0") { gameHand.viPoints = "0" }
+                else { gameHand.viPoints += "0" }
 
-                val pointDiff = (162 - Integer.parseInt(gameRound.viPoints))
-                gameRound.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                val pointDiff = (162 - Integer.parseInt(gameHand.viPoints))
+                gameHand.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
 
-            updatecalculator(txtMi, txtVi, gameRound)
+            updatecalculator(txtMi, txtVi, gameHand)
         }
         btn1.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (gameRound.miPoints == "0") { gameRound.miPoints = "1" }
-                else { gameRound.miPoints += "1" }
+                if (gameHand.miPoints == "0") { gameHand.miPoints = "1" }
+                else { gameHand.miPoints += "1" }
 
-                val pointDiff = (162 - Integer.parseInt(gameRound.miPoints))
-                gameRound.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                val pointDiff = (162 - Integer.parseInt(gameHand.miPoints))
+                gameHand.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             else {
-                if (gameRound.viPoints == "0") { gameRound.viPoints = "1" }
-                else { gameRound.viPoints += "1" }
+                if (gameHand.viPoints == "0") { gameHand.viPoints = "1" }
+                else { gameHand.viPoints += "1" }
 
-                val pointDiff = (162 - Integer.parseInt(gameRound.viPoints))
-                gameRound.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                val pointDiff = (162 - Integer.parseInt(gameHand.viPoints))
+                gameHand.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             
-            updatecalculator(txtMi, txtVi, gameRound)
+            updatecalculator(txtMi, txtVi, gameHand)
         }
         btn2.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (gameRound.miPoints == "0") { gameRound.miPoints = "2" }
-                else { gameRound.miPoints += "2" }
+                if (gameHand.miPoints == "0") { gameHand.miPoints = "2" }
+                else { gameHand.miPoints += "2" }
 
-                val pointDiff = (162 - Integer.parseInt(gameRound.miPoints))
-                gameRound.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                val pointDiff = (162 - Integer.parseInt(gameHand.miPoints))
+                gameHand.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             else {
-                if (gameRound.viPoints == "0") { gameRound.viPoints = "2" }
-                else { gameRound.viPoints += "2" }
+                if (gameHand.viPoints == "0") { gameHand.viPoints = "2" }
+                else { gameHand.viPoints += "2" }
 
-                val pointDiff = (162 - Integer.parseInt(gameRound.viPoints))
-                gameRound.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                val pointDiff = (162 - Integer.parseInt(gameHand.viPoints))
+                gameHand.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             
-            updatecalculator(txtMi, txtVi, gameRound)
+            updatecalculator(txtMi, txtVi, gameHand)
         }
         btn3.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (gameRound.miPoints == "0") { gameRound.miPoints = "3" }
-                else { gameRound.miPoints += "3" }
+                if (gameHand.miPoints == "0") { gameHand.miPoints = "3" }
+                else { gameHand.miPoints += "3" }
 
-                val pointDiff = (162 - Integer.parseInt(gameRound.miPoints))
-                gameRound.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                val pointDiff = (162 - Integer.parseInt(gameHand.miPoints))
+                gameHand.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             else {
-                if (gameRound.viPoints == "0") { gameRound.viPoints = "3" }
-                else { gameRound.viPoints += "3" }
+                if (gameHand.viPoints == "0") { gameHand.viPoints = "3" }
+                else { gameHand.viPoints += "3" }
 
-                val pointDiff = (162 - Integer.parseInt(gameRound.viPoints))
-                gameRound.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                val pointDiff = (162 - Integer.parseInt(gameHand.viPoints))
+                gameHand.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             
-            updatecalculator(txtMi, txtVi, gameRound)
+            updatecalculator(txtMi, txtVi, gameHand)
         }
         btn4.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (gameRound.miPoints == "0") { gameRound.miPoints = "4" }
-                else { gameRound.miPoints += "4" }
+                if (gameHand.miPoints == "0") { gameHand.miPoints = "4" }
+                else { gameHand.miPoints += "4" }
 
-                val pointDiff = (162 - Integer.parseInt(gameRound.miPoints))
-                gameRound.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                val pointDiff = (162 - Integer.parseInt(gameHand.miPoints))
+                gameHand.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             else {
-                if (gameRound.viPoints == "0") { gameRound.viPoints = "4" }
-                else { gameRound.viPoints += "4" }
+                if (gameHand.viPoints == "0") { gameHand.viPoints = "4" }
+                else { gameHand.viPoints += "4" }
 
-                val pointDiff = (162 - Integer.parseInt(gameRound.viPoints))
-                gameRound.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                val pointDiff = (162 - Integer.parseInt(gameHand.viPoints))
+                gameHand.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             
-            updatecalculator(txtMi, txtVi, gameRound)
+            updatecalculator(txtMi, txtVi, gameHand)
         }
         btn5.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (gameRound.miPoints == "0") { gameRound.miPoints = "5" }
-                else { gameRound.miPoints += "5" }
+                if (gameHand.miPoints == "0") { gameHand.miPoints = "5" }
+                else { gameHand.miPoints += "5" }
 
-                val pointDiff = (162 - Integer.parseInt(gameRound.miPoints))
-                gameRound.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                val pointDiff = (162 - Integer.parseInt(gameHand.miPoints))
+                gameHand.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             else {
-                if (gameRound.viPoints == "0") { gameRound.viPoints = "5" }
-                else { gameRound.viPoints += "5" }
+                if (gameHand.viPoints == "0") { gameHand.viPoints = "5" }
+                else { gameHand.viPoints += "5" }
 
-                val pointDiff = (162 - Integer.parseInt(gameRound.viPoints))
-                gameRound.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                val pointDiff = (162 - Integer.parseInt(gameHand.viPoints))
+                gameHand.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
 
-            updatecalculator(txtMi, txtVi, gameRound)
+            updatecalculator(txtMi, txtVi, gameHand)
         }
         btn6.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (gameRound.miPoints == "0") { gameRound.miPoints = "6" }
-                else { gameRound.miPoints += "6" }
+                if (gameHand.miPoints == "0") { gameHand.miPoints = "6" }
+                else { gameHand.miPoints += "6" }
 
-                val pointDiff = (162 - Integer.parseInt(gameRound.miPoints))
-                gameRound.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                val pointDiff = (162 - Integer.parseInt(gameHand.miPoints))
+                gameHand.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             else {
-                if (gameRound.viPoints == "0") {
-                    gameRound.viPoints = "6"
+                if (gameHand.viPoints == "0") {
+                    gameHand.viPoints = "6"
                 } else {
-                    gameRound.viPoints += "6"
+                    gameHand.viPoints += "6"
 
-                    val pointDiff = (162 - Integer.parseInt(gameRound.viPoints))
-                    gameRound.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                    val pointDiff = (162 - Integer.parseInt(gameHand.viPoints))
+                    gameHand.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
                 }
             }
-            updatecalculator(txtMi, txtVi, gameRound)
+            updatecalculator(txtMi, txtVi, gameHand)
         }
         btn7.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (gameRound.miPoints == "0") { gameRound.miPoints = "7" }
-                else { gameRound.miPoints += "7" }
+                if (gameHand.miPoints == "0") { gameHand.miPoints = "7" }
+                else { gameHand.miPoints += "7" }
 
-                val pointDiff = (162 - Integer.parseInt(gameRound.miPoints))
-                gameRound.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                val pointDiff = (162 - Integer.parseInt(gameHand.miPoints))
+                gameHand.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             else {
-                if (gameRound.viPoints == "0") { gameRound.viPoints = "7" }
-                else { gameRound.viPoints += "7" }
+                if (gameHand.viPoints == "0") { gameHand.viPoints = "7" }
+                else { gameHand.viPoints += "7" }
 
-                val pointDiff = (162 - Integer.parseInt(gameRound.viPoints))
-                gameRound.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                val pointDiff = (162 - Integer.parseInt(gameHand.viPoints))
+                gameHand.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
 
-            updatecalculator(txtMi, txtVi, gameRound)
+            updatecalculator(txtMi, txtVi, gameHand)
         }
         btn8.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (gameRound.miPoints == "0") { gameRound.miPoints = "8" }
-                else { gameRound.miPoints += "8" }
+                if (gameHand.miPoints == "0") { gameHand.miPoints = "8" }
+                else { gameHand.miPoints += "8" }
 
-                val pointDiff = (162 - Integer.parseInt(gameRound.miPoints))
-                gameRound.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                val pointDiff = (162 - Integer.parseInt(gameHand.miPoints))
+                gameHand.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             else {
-                if (gameRound.viPoints == "0") { gameRound.viPoints = "8" }
-                else { gameRound.viPoints += "8" }
+                if (gameHand.viPoints == "0") { gameHand.viPoints = "8" }
+                else { gameHand.viPoints += "8" }
 
-                val pointDiff = (162 - Integer.parseInt(gameRound.viPoints))
-                gameRound.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                val pointDiff = (162 - Integer.parseInt(gameHand.viPoints))
+                gameHand.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
 
-            updatecalculator(txtMi, txtVi, gameRound)
+            updatecalculator(txtMi, txtVi, gameHand)
         }
         btn9.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (gameRound.miPoints == "0") { gameRound.miPoints = "9" }
-                else { gameRound.miPoints += "9" }
+                if (gameHand.miPoints == "0") { gameHand.miPoints = "9" }
+                else { gameHand.miPoints += "9" }
 
-                val pointDiff = (162 - Integer.parseInt(gameRound.miPoints))
-                gameRound.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                val pointDiff = (162 - Integer.parseInt(gameHand.miPoints))
+                gameHand.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             else {
-                if (gameRound.viPoints == "0") { gameRound.viPoints = "9" }
-                else { gameRound.viPoints += "9" }
+                if (gameHand.viPoints == "0") { gameHand.viPoints = "9" }
+                else { gameHand.viPoints += "9" }
 
-                val pointDiff = (162 - Integer.parseInt(gameRound.viPoints))
-                gameRound.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                val pointDiff = (162 - Integer.parseInt(gameHand.viPoints))
+                gameHand.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
 
-            updatecalculator(txtMi, txtVi, gameRound)
+            updatecalculator(txtMi, txtVi, gameHand)
         }
 
         btnPad.setOnClickListener {
             if (pointsDirectionFlag){
-                gameRound.padVi = 1
-                gameRound.miPoints = "162"
-                gameRound.viPoints = "0"
+                gameHand.padVi = 1
+                gameHand.miPoints = "162"
+                gameHand.viPoints = "0"
             }
             else{
-                gameRound.padMi = 1
-                gameRound.miPoints = "0"
-                gameRound.viPoints = "162"
+                gameHand.padMi = 1
+                gameHand.miPoints = "0"
+                gameHand.viPoints = "162"
             }
             
-            updatecalculator(txtMi, txtVi, gameRound)
+            updatecalculator(txtMi, txtVi, gameHand)
         }
         btnClear.setOnClickListener {
             btnStiljonz.setTextColor(Color.WHITE)
@@ -370,22 +369,22 @@ class Calculator : AppCompatActivity() {
             trefButton.setImageResource(R.drawable.tref_white)
             pikButton.setImageResource(R.drawable.pik_white)
             karaButton.setImageResource(R.drawable.kara_white)
-            gameRound.numOf20CallsMi = 0
-            gameRound.numOf20CallsVi = 0
-            gameRound.numOf50CallsMi = 0
-            gameRound.numOf50CallsVi = 0
-            gameRound.numOf100CallsMi = 0
-            gameRound.numOf100CallsVi = 0
-            gameRound.numOf150CallsMi = 0
-            gameRound.numOf150CallsVi = 0
-            gameRound.numOf200CallsMi = 0
-            gameRound.numOf200CallsVi = 0
-            gameRound.stiljaMi = 0
-            gameRound.stiljaVi = 0
-            gameRound.padMi = 0
-            gameRound.padVi = 0
-            gameRound.miPoints = "0"
-            gameRound.viPoints = "0"
+            gameHand.numOf20CallsMi = 0
+            gameHand.numOf20CallsVi = 0
+            gameHand.numOf50CallsMi = 0
+            gameHand.numOf50CallsVi = 0
+            gameHand.numOf100CallsMi = 0
+            gameHand.numOf100CallsVi = 0
+            gameHand.numOf150CallsMi = 0
+            gameHand.numOf150CallsVi = 0
+            gameHand.numOf200CallsMi = 0
+            gameHand.numOf200CallsVi = 0
+            gameHand.stiljaMi = 0
+            gameHand.stiljaVi = 0
+            gameHand.padMi = 0
+            gameHand.padVi = 0
+            gameHand.miPoints = "0"
+            gameHand.viPoints = "0"
             if (ctv20MI.visibility == View.VISIBLE){showHide(ctv20MI)}
             if (ctv20VI.visibility == View.VISIBLE){showHide(ctv20VI)}
             if (ctv50MI.visibility == View.VISIBLE){showHide(ctv50MI)}
@@ -393,113 +392,113 @@ class Calculator : AppCompatActivity() {
             if (ctv100MI.visibility == View.VISIBLE){showHide(ctv100MI)}
             if (ctv100VI.visibility == View.VISIBLE){showHide(ctv100VI)}
             
-            updatecalculator(txtMi, txtVi, gameRound)
+            updatecalculator(txtMi, txtVi, gameHand)
         }
 
         btnStiljonz.setOnClickListener {
             val (newMiPoints, newViPoints) = pad(pointsDirectionFlag)
-            gameRound.viPoints = newViPoints.toString()
-            gameRound.miPoints = newMiPoints.toString()
+            gameHand.viPoints = newViPoints.toString()
+            gameHand.miPoints = newMiPoints.toString()
 
             if (pointsDirectionFlag){
-                gameRound.stiljaMi = 0
-                gameRound.stiljaVi = 1
+                gameHand.stiljaMi = 0
+                gameHand.stiljaVi = 1
                 btnStiljonz.setTextColor(getColor(R.color.viColor))
             }
             else{
-                gameRound.stiljaMi = 1
-                gameRound.stiljaVi = 0
+                gameHand.stiljaMi = 1
+                gameHand.stiljaVi = 0
                 btnStiljonz.setTextColor(getColor(R.color.miColor))
             }
 
-           updatecalculator(txtMi, txtVi, gameRound)
+           updatecalculator(txtMi, txtVi, gameHand)
         }
         btn20.setOnClickListener {
             if (pointsDirectionFlag){ // VI
-                if (gameRound.numOf20CallsVi == 0){
+                if (gameHand.numOf20CallsVi == 0){
                     showHide(ctv20VI)
                 }
-                gameRound.numOf20CallsVi += 1
-                ctv20VI.text = gameRound.numOf20CallsVi.toString()
+                gameHand.numOf20CallsVi += 1
+                ctv20VI.text = gameHand.numOf20CallsVi.toString()
             }
             else{ // MI
-                if (gameRound.numOf20CallsMi == 0){
+                if (gameHand.numOf20CallsMi == 0){
                     showHide(ctv20MI)
                 }
-                gameRound.numOf20CallsMi += 1
-                ctv20MI.text = gameRound.numOf20CallsMi.toString()
+                gameHand.numOf20CallsMi += 1
+                ctv20MI.text = gameHand.numOf20CallsMi.toString()
             }
 
-            updatecalculator(txtMi, txtVi, gameRound)
+            updatecalculator(txtMi, txtVi, gameHand)
         }
         btn50.setOnClickListener {
             if (pointsDirectionFlag){ // VI
-                if (gameRound.numOf50CallsVi == 0){
+                if (gameHand.numOf50CallsVi == 0){
                     showHide(ctv50VI)
                 }
-                gameRound.numOf50CallsVi += 1
-                ctv50VI.text = gameRound.numOf50CallsVi.toString()
+                gameHand.numOf50CallsVi += 1
+                ctv50VI.text = gameHand.numOf50CallsVi.toString()
             }
             else{ // MI
-                if (gameRound.numOf50CallsMi == 0){
+                if (gameHand.numOf50CallsMi == 0){
                     showHide(ctv50MI)
                 }
-                gameRound.numOf50CallsMi += 1
-                ctv50MI.text = gameRound.numOf50CallsMi.toString()
+                gameHand.numOf50CallsMi += 1
+                ctv50MI.text = gameHand.numOf50CallsMi.toString()
             }
 
-            updatecalculator(txtMi, txtVi, gameRound)
+            updatecalculator(txtMi, txtVi, gameHand)
         }
         btn100.setOnClickListener {
             if (pointsDirectionFlag){ // VI
-                if (gameRound.numOf100CallsVi == 0){
+                if (gameHand.numOf100CallsVi == 0){
                     showHide(ctv100VI)
                 }
-                gameRound.numOf100CallsVi += 1
-                ctv100VI.text = gameRound.numOf100CallsVi.toString()
+                gameHand.numOf100CallsVi += 1
+                ctv100VI.text = gameHand.numOf100CallsVi.toString()
             }
             else{ // MI
-                if (gameRound.numOf100CallsMi == 0){
+                if (gameHand.numOf100CallsMi == 0){
                     showHide(ctv100MI)
                 }
-                gameRound.numOf100CallsMi += 1
-                ctv100MI.text = gameRound.numOf100CallsMi.toString()
+                gameHand.numOf100CallsMi += 1
+                ctv100MI.text = gameHand.numOf100CallsMi.toString()
             }
 
-            updatecalculator(txtMi, txtVi, gameRound)
+            updatecalculator(txtMi, txtVi, gameHand)
         }
         btn150.setOnClickListener {
             if (pointsDirectionFlag){
-                gameRound.numOf150CallsMi = 0
-                gameRound.numOf150CallsVi = 1
+                gameHand.numOf150CallsMi = 0
+                gameHand.numOf150CallsVi = 1
                 btn150.setTextColor(getColor(R.color.viColor))
             }
             else {
-                gameRound.numOf150CallsMi = 1
-                gameRound.numOf150CallsVi = 0
+                gameHand.numOf150CallsMi = 1
+                gameHand.numOf150CallsVi = 0
                 btn150.setTextColor(getColor(R.color.miColor))
             }
 
-            updatecalculator(txtMi, txtVi, gameRound)
+            updatecalculator(txtMi, txtVi, gameHand)
         }
         btn200.setOnClickListener {
             if (pointsDirectionFlag){
-                gameRound.numOf200CallsMi = 0
-                gameRound.numOf200CallsVi = 1
+                gameHand.numOf200CallsMi = 0
+                gameHand.numOf200CallsVi = 1
                 btn200.setTextColor(getColor(R.color.viColor))
             }
             else {
-                gameRound.numOf200CallsMi = 1
-                gameRound.numOf200CallsVi = 0
+                gameHand.numOf200CallsMi = 1
+                gameHand.numOf200CallsVi = 0
                 btn200.setTextColor(getColor(R.color.miColor))
             }
 
-            updatecalculator(txtMi, txtVi, gameRound)
+            updatecalculator(txtMi, txtVi, gameHand)
         }
 
         btnDone.setOnClickListener {
             val intent = Intent()
-            val data = Gson().toJson(gameRound)
+            val data = Gson().toJson(gameHand)
             intent.putExtra("gameRound", data)
             intent.putExtra("index", roundIndex)
             setResult(RESULT_OK, intent)
@@ -531,12 +530,12 @@ class Calculator : AppCompatActivity() {
         return flag == "true"
     }
 
-    private fun updatecalculator(txtMi: TextView, txtVi: TextView, gameRound: GameRound){
-        txtMi.text = gameRound.getMiPointsSum().toString()
-        txtVi.text = gameRound.getViPointsSum().toString()
+    private fun updatecalculator(txtMi: TextView, txtVi: TextView, gameHand: GameHand){
+        txtMi.text = gameHand.getMiPointsSum().toString()
+        txtVi.text = gameHand.getViPointsSum().toString()
     }
 
-    private fun checkPad(gameRound: GameRound){
+    private fun checkPad(gameHand: GameHand){
         TODO()
     }
 }

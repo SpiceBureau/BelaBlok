@@ -1,5 +1,4 @@
 import android.content.Context
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,19 +6,16 @@ import android.widget.ArrayAdapter
 import android.graphics.Color
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat.getColor
-import com.example.belablok.Calculator
-import com.example.belablok.GameRound
+import com.example.belablok.GameHand
 import com.example.belablok.R
 
 
 class MyListAdapter(
     private val mContext: Context,
     private val resourceLayout: Int,
-    private val items: List<GameRound>
+    private val items: List<GameHand>
 ) :
-    ArrayAdapter<GameRound?>(mContext, resourceLayout, items) {
+    ArrayAdapter<GameHand?>(mContext, resourceLayout, items) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var v = convertView
         if (v == null) {
@@ -49,10 +45,15 @@ class MyListAdapter(
 
             if (oneGameRound.matchPointsListItemFlag){
                 tvMi.text = oneGameRound.miMatchPoints.toString()
+                tvMi.setTextAppearance(R.style.boldText)
                 tvMi.setTextColor(Color.parseColor("#03dac6"))
+                tvMi.textSize = 60.0F
+
 
                 tvVi.text = oneGameRound.viMatchPoints.toString()
+                tvVi.setTextAppearance(R.style.boldText)
                 tvVi.setTextColor(Color.parseColor("#da6b03"))
+                tvVi.textSize = 60.0F
 
                 imAdut.setImageResource(0)
                 viewLine.visibility = View.VISIBLE
