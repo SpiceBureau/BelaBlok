@@ -8,10 +8,9 @@ class GameRound {
     var miMatchPoints = 0
     var viMatchPoints = 0
 
-    var miPoints: Int = 0
-    var viPoints: Int = 0
+    var miPoints: String = "0"
+    var viPoints: String = "0"
     var adut: String = "null"
-    val delta = kotlin.math.abs(miPoints - viPoints)
 
     var numOf20CallsMi = 0
     var numOf50CallsMi = 0
@@ -30,9 +29,9 @@ class GameRound {
     var padVi = 0
 
     fun getMiPointsSum(): Int {
-        return miPoints + numOf20CallsMi*20 + numOf50CallsMi*50 + numOf100CallsMi*100 + numOf150CallsMi*150 + numOf200CallsMi*200 + stiljaMi*90
+        return Integer.parseInt(miPoints) + numOf20CallsMi*20 + numOf50CallsMi*50 + numOf100CallsMi*100 + numOf150CallsMi*150 + numOf200CallsMi*200 + stiljaMi*90
     }
     fun getViPointsSum(): Int {
-        return viPoints + numOf20CallsVi*20 + numOf50CallsVi*50 + numOf100CallsVi*100 + numOf150CallsVi*150 + numOf200CallsVi*200 + stiljaVi*90
+        return Integer.parseInt(viPoints) + numOf20CallsVi*20 + numOf50CallsVi*50 + numOf100CallsVi*100 + numOf150CallsVi*150 + numOf200CallsVi*200 + stiljaVi*90
     }
 }

@@ -65,8 +65,7 @@ class Calculator : AppCompatActivity() {
         var pointsDirectionFlag = false // 0 = Mi || 1 = Vi
 
         if (!newGameFlag){
-            txtMi.text = gameRound.getMiPointsSum().toString()
-            txtVi.text = gameRound.getViPointsSum().toString()
+            updatecalculator(txtMi, txtVi, gameRound)
 
             ctv20MI.text = gameRound.numOf20CallsMi.toString()
             if (gameRound.numOf20CallsMi != 0){ showHide(ctv20MI) }
@@ -168,257 +167,202 @@ class Calculator : AppCompatActivity() {
         }
         btn0.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (txtMi.text.toString() == "0") { txtMi.text = "0" }
-                else { txtMi.append("0") }
-
-                val miPoints: Int = Integer.parseInt(txtMi.text.toString())
-                val viPoints = 162 - miPoints
-                if (viPoints < 0){ txtVi.text = "0" }
-                else { txtVi.text = viPoints.toString() }
-
-
+                if (gameRound.miPoints == "0") { gameRound.miPoints = "0" }
+                else { gameRound.miPoints += "0" }
+                
+                val pointDiff = (162 - Integer.parseInt(gameRound.miPoints))
+                gameRound.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             else {
-                if (txtVi.text.toString() == "0"){ txtVi.text = "0" }
-                else { txtVi.append("0") }
+                if (gameRound.viPoints == "0") { gameRound.viPoints = "0" }
+                else { gameRound.viPoints += "0" }
 
-                val viPoints: Int = Integer.parseInt(txtVi.text.toString())
-                val miPoints = 162 - viPoints
-                if (miPoints < 0){ txtMi.text = "0" }
-                else { txtMi.text = miPoints.toString() }
+                val pointDiff = (162 - Integer.parseInt(gameRound.viPoints))
+                gameRound.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
 
-            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
-            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
+            updatecalculator(txtMi, txtVi, gameRound)
         }
         btn1.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (txtMi.text.toString() == "0"){
-                    txtMi.text = "1" }
-                else { txtMi.append("1") }
+                if (gameRound.miPoints == "0") { gameRound.miPoints = "1" }
+                else { gameRound.miPoints += "1" }
 
-                val miPoints: Int = Integer.parseInt(txtMi.text.toString())
-                val viPoints = 162 - miPoints
-                if (viPoints < 0){ txtVi.text = "0" }
-                else { txtVi.text = viPoints.toString() }
+                val pointDiff = (162 - Integer.parseInt(gameRound.miPoints))
+                gameRound.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             else {
-                if (txtVi.text.toString() == "0"){ txtVi.text = "1" }
-                else { txtVi.append("1") }
+                if (gameRound.viPoints == "0") { gameRound.viPoints = "1" }
+                else { gameRound.viPoints += "1" }
 
-                val viPoints: Int = Integer.parseInt(txtVi.text.toString())
-                val miPoints = 162 - viPoints
-                if (miPoints < 0){ txtMi.text = "0" }
-                else { txtMi.text = miPoints.toString() }
+                val pointDiff = (162 - Integer.parseInt(gameRound.viPoints))
+                gameRound.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
-
-            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
-            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
+            
+            updatecalculator(txtMi, txtVi, gameRound)
         }
         btn2.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (txtMi.text.toString() == "0"){ txtMi.text = "2" }
-                else { txtMi.append("2") }
+                if (gameRound.miPoints == "0") { gameRound.miPoints = "2" }
+                else { gameRound.miPoints += "2" }
 
-                val miPoints: Int = Integer.parseInt(txtMi.text.toString())
-                val viPoints = 162 - miPoints
-                if (viPoints < 0){ txtVi.text = "0" }
-                else { txtVi.text = viPoints.toString() }
+                val pointDiff = (162 - Integer.parseInt(gameRound.miPoints))
+                gameRound.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             else {
-                if (txtVi.text.toString() == "0"){ txtVi.text = "2" }
-                else { txtVi.append("2") }
+                if (gameRound.viPoints == "0") { gameRound.viPoints = "2" }
+                else { gameRound.viPoints += "2" }
 
-                val viPoints: Int = Integer.parseInt(txtVi.text.toString())
-                val miPoints = 162 - viPoints
-                if (miPoints < 0){ txtMi.text = "0" }
-                else { txtMi.text = miPoints.toString() }
+                val pointDiff = (162 - Integer.parseInt(gameRound.viPoints))
+                gameRound.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
-
-            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
-            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
+            
+            updatecalculator(txtMi, txtVi, gameRound)
         }
         btn3.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (txtMi.text.toString() == "0"){ txtMi.text = "3" }
-                else { txtMi.append("3") }
+                if (gameRound.miPoints == "0") { gameRound.miPoints = "3" }
+                else { gameRound.miPoints += "3" }
 
-                val miPoints: Int = Integer.parseInt(txtMi.text.toString())
-                val viPoints = 162 - miPoints
-                if (viPoints < 0){ txtVi.text = "0" }
-                else { txtVi.text = viPoints.toString() }
+                val pointDiff = (162 - Integer.parseInt(gameRound.miPoints))
+                gameRound.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             else {
-                if (txtVi.text.toString() == "0"){ txtVi.text = "3" }
-                else { txtVi.append("3") }
+                if (gameRound.viPoints == "0") { gameRound.viPoints = "3" }
+                else { gameRound.viPoints += "3" }
 
-                val viPoints: Int = Integer.parseInt(txtVi.text.toString())
-                val miPoints = 162 - viPoints
-                if (miPoints < 0){ txtMi.text = "0" }
-                else { txtMi.text = miPoints.toString() }
+                val pointDiff = (162 - Integer.parseInt(gameRound.viPoints))
+                gameRound.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
-
-            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
-            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
+            
+            updatecalculator(txtMi, txtVi, gameRound)
         }
         btn4.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (txtMi.text.toString() == "0"){ txtMi.text = "4" }
-                else { txtMi.append("4") }
+                if (gameRound.miPoints == "0") { gameRound.miPoints = "4" }
+                else { gameRound.miPoints += "4" }
 
-                val miPoints: Int = Integer.parseInt(txtMi.text.toString())
-                val viPoints = 162 - miPoints
-                if (viPoints < 0){ txtVi.text = "0" }
-                else { txtVi.text = viPoints.toString() }
+                val pointDiff = (162 - Integer.parseInt(gameRound.miPoints))
+                gameRound.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             else {
-                if (txtVi.text.toString() == "0"){ txtVi.text = "4" }
-                else { txtVi.append("4") }
+                if (gameRound.viPoints == "0") { gameRound.viPoints = "4" }
+                else { gameRound.viPoints += "4" }
 
-                val viPoints: Int = Integer.parseInt(txtVi.text.toString())
-                val miPoints = 162 - viPoints
-                if (miPoints < 0){ txtMi.text = "0" }
-                else { txtMi.text = miPoints.toString() }
+                val pointDiff = (162 - Integer.parseInt(gameRound.viPoints))
+                gameRound.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
-
-            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
-            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
+            
+            updatecalculator(txtMi, txtVi, gameRound)
         }
         btn5.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (txtMi.text.toString() == "0"){ txtMi.text = "5" }
-                else { txtMi.append("5") }
+                if (gameRound.miPoints == "0") { gameRound.miPoints = "5" }
+                else { gameRound.miPoints += "5" }
 
-                val miPoints: Int = Integer.parseInt(txtMi.text.toString())
-                val viPoints = 162 - miPoints
-                if (viPoints < 0){ txtVi.text = "0" }
-                else { txtVi.text = viPoints.toString() }
+                val pointDiff = (162 - Integer.parseInt(gameRound.miPoints))
+                gameRound.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             else {
-                if (txtVi.text.toString() == "0"){ txtVi.text = "5" }
-                else { txtVi.append("5") }
+                if (gameRound.viPoints == "0") { gameRound.viPoints = "5" }
+                else { gameRound.viPoints += "5" }
 
-                val viPoints: Int = Integer.parseInt(txtVi.text.toString())
-                val miPoints = 162 - viPoints
-                if (miPoints < 0){ txtMi.text = "0" }
-                else { txtMi.text = miPoints.toString() }
+                val pointDiff = (162 - Integer.parseInt(gameRound.viPoints))
+                gameRound.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
 
-            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
-            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
+            updatecalculator(txtMi, txtVi, gameRound)
         }
         btn6.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (txtMi.text.toString() == "0"){ txtMi.text = "6" }
-                else { txtMi.append("6") }
+                if (gameRound.miPoints == "0") { gameRound.miPoints = "6" }
+                else { gameRound.miPoints += "6" }
 
-                val miPoints: Int = Integer.parseInt(txtMi.text.toString())
-                val viPoints = 162 - miPoints
-                if (viPoints < 0){ txtVi.text = "0" }
-                else { txtVi.text = viPoints.toString() }
+                val pointDiff = (162 - Integer.parseInt(gameRound.miPoints))
+                gameRound.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             else {
-                if (txtVi.text.toString() == "0"){ txtVi.text = "6" }
-                else { txtVi.append("6") }
+                if (gameRound.viPoints == "0") {
+                    gameRound.viPoints = "6"
+                } else {
+                    gameRound.viPoints += "6"
 
-                val viPoints: Int = Integer.parseInt(txtVi.text.toString())
-                val miPoints = 162 - viPoints
-                if (miPoints < 0){ txtMi.text = "0" }
-                else { txtMi.text = miPoints.toString() }
+                    val pointDiff = (162 - Integer.parseInt(gameRound.viPoints))
+                    gameRound.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
+                }
             }
-
-            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
-            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
+            updatecalculator(txtMi, txtVi, gameRound)
         }
         btn7.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (txtMi.text.toString() == "0"){ txtMi.text = "7" }
-                else { txtMi.append("7") }
+                if (gameRound.miPoints == "0") { gameRound.miPoints = "7" }
+                else { gameRound.miPoints += "7" }
 
-                val miPoints: Int = Integer.parseInt(txtMi.text.toString())
-                val viPoints = 162 - miPoints
-                if (viPoints < 0){ txtVi.text = "0" }
-                else { txtVi.text = viPoints.toString() }
+                val pointDiff = (162 - Integer.parseInt(gameRound.miPoints))
+                gameRound.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             else {
-                if (txtVi.text.toString() == "0"){ txtVi.text = "7" }
-                else { txtVi.append("7") }
+                if (gameRound.viPoints == "0") { gameRound.viPoints = "7" }
+                else { gameRound.viPoints += "7" }
 
-                val viPoints: Int = Integer.parseInt(txtVi.text.toString())
-                val miPoints = 162 - viPoints
-                if (miPoints < 0){ txtMi.text = "0" }
-                else { txtMi.text = miPoints.toString() }
+                val pointDiff = (162 - Integer.parseInt(gameRound.viPoints))
+                gameRound.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
 
-            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
-            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
+            updatecalculator(txtMi, txtVi, gameRound)
         }
         btn8.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (txtMi.text.toString() == "0"){ txtMi.text = "8" }
-                else { txtMi.append("8") }
+                if (gameRound.miPoints == "0") { gameRound.miPoints = "8" }
+                else { gameRound.miPoints += "8" }
 
-                val miPoints: Int = Integer.parseInt(txtMi.text.toString())
-                val viPoints = 162 - miPoints
-                if (viPoints < 0){ txtVi.text = "0" }
-                else { txtVi.text = viPoints.toString() }
+                val pointDiff = (162 - Integer.parseInt(gameRound.miPoints))
+                gameRound.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             else {
-                if (txtVi.text.toString() == "0"){ txtVi.text = "8" }
-                else { txtVi.append("8") }
+                if (gameRound.viPoints == "0") { gameRound.viPoints = "8" }
+                else { gameRound.viPoints += "8" }
 
-                val viPoints: Int = Integer.parseInt(txtVi.text.toString())
-                val miPoints = 162 - viPoints
-                if (miPoints < 0){ txtMi.text = "0" }
-                else { txtMi.text = miPoints.toString() }
+                val pointDiff = (162 - Integer.parseInt(gameRound.viPoints))
+                gameRound.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
 
-            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
-            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
+            updatecalculator(txtMi, txtVi, gameRound)
         }
         btn9.setOnClickListener {
             if (!pointsDirectionFlag) {
-                if (txtMi.text.toString() == "0"){ txtMi.text = "9" }
-                else { txtMi.append("9") }
+                if (gameRound.miPoints == "0") { gameRound.miPoints = "9" }
+                else { gameRound.miPoints += "9" }
 
-                val miPoints: Int = Integer.parseInt(txtMi.text.toString())
-                val viPoints = 162 - miPoints
-                if (viPoints < 0){ txtVi.text = "0" }
-                else { txtVi.text = viPoints.toString() }
+                val pointDiff = (162 - Integer.parseInt(gameRound.miPoints))
+                gameRound.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
             else {
-                if (txtVi.text.toString() == "0"){ txtVi.text = "9" }
-                else { txtVi.append("9") }
+                if (gameRound.viPoints == "0") { gameRound.viPoints = "9" }
+                else { gameRound.viPoints += "9" }
 
-                val viPoints: Int = Integer.parseInt(txtVi.text.toString())
-                val miPoints = 162 - viPoints
-                if (miPoints < 0){ txtMi.text = "0" }
-                else { txtMi.text = miPoints.toString() }
+                val pointDiff = (162 - Integer.parseInt(gameRound.viPoints))
+                gameRound.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
             }
 
-            gameRound.miPoints = Integer.parseInt(txtMi.text.toString())
-            gameRound.viPoints = Integer.parseInt(txtVi.text.toString())
+            updatecalculator(txtMi, txtVi, gameRound)
         }
 
         btnPad.setOnClickListener {
             if (pointsDirectionFlag){
-                txtMi.text = "162"
-                txtVi.text = "0"
                 gameRound.padVi = 1
-                gameRound.miPoints = 162
-                gameRound.viPoints = 0
+                gameRound.miPoints = "162"
+                gameRound.viPoints = "0"
             }
             else{
-                txtMi.text = "0"
-                txtVi.text = "162"
                 gameRound.padMi = 1
-                gameRound.miPoints = 0
-                gameRound.viPoints = 162
+                gameRound.miPoints = "0"
+                gameRound.viPoints = "162"
             }
+            
+            updatecalculator(txtMi, txtVi, gameRound)
         }
         btnClear.setOnClickListener {
-            txtMi.text = "0"
-            txtVi.text = "0"
             btnStiljonz.setTextColor(Color.WHITE)
             btn150.setTextColor(Color.WHITE)
             btn200.setTextColor(Color.WHITE)
@@ -440,20 +384,22 @@ class Calculator : AppCompatActivity() {
             gameRound.stiljaVi = 0
             gameRound.padMi = 0
             gameRound.padVi = 0
-            gameRound.miPoints = 0
-            gameRound.viPoints = 0
+            gameRound.miPoints = "0"
+            gameRound.viPoints = "0"
             if (ctv20MI.visibility == View.VISIBLE){showHide(ctv20MI)}
             if (ctv20VI.visibility == View.VISIBLE){showHide(ctv20VI)}
             if (ctv50MI.visibility == View.VISIBLE){showHide(ctv50MI)}
             if (ctv50VI.visibility == View.VISIBLE){showHide(ctv50VI)}
             if (ctv100MI.visibility == View.VISIBLE){showHide(ctv100MI)}
             if (ctv100VI.visibility == View.VISIBLE){showHide(ctv100VI)}
+            
+            updatecalculator(txtMi, txtVi, gameRound)
         }
 
         btnStiljonz.setOnClickListener {
             val (newMiPoints, newViPoints) = pad(pointsDirectionFlag)
-            gameRound.viPoints = newViPoints
-            gameRound.miPoints = newMiPoints
+            gameRound.viPoints = newViPoints.toString()
+            gameRound.miPoints = newMiPoints.toString()
 
             if (pointsDirectionFlag){
                 gameRound.stiljaMi = 0
@@ -466,8 +412,7 @@ class Calculator : AppCompatActivity() {
                 btnStiljonz.setTextColor(getColor(R.color.miColor))
             }
 
-            txtMi.text = gameRound.getMiPointsSum().toString()
-            txtVi.text = gameRound.getViPointsSum().toString()
+           updatecalculator(txtMi, txtVi, gameRound)
         }
         btn20.setOnClickListener {
             if (pointsDirectionFlag){ // VI
@@ -485,8 +430,7 @@ class Calculator : AppCompatActivity() {
                 ctv20MI.text = gameRound.numOf20CallsMi.toString()
             }
 
-            txtMi.text = gameRound.getMiPointsSum().toString()
-            txtVi.text = gameRound.getViPointsSum().toString()
+            updatecalculator(txtMi, txtVi, gameRound)
         }
         btn50.setOnClickListener {
             if (pointsDirectionFlag){ // VI
@@ -504,8 +448,7 @@ class Calculator : AppCompatActivity() {
                 ctv50MI.text = gameRound.numOf50CallsMi.toString()
             }
 
-            txtMi.text = gameRound.getMiPointsSum().toString()
-            txtVi.text = gameRound.getViPointsSum().toString()
+            updatecalculator(txtMi, txtVi, gameRound)
         }
         btn100.setOnClickListener {
             if (pointsDirectionFlag){ // VI
@@ -523,8 +466,7 @@ class Calculator : AppCompatActivity() {
                 ctv100MI.text = gameRound.numOf100CallsMi.toString()
             }
 
-            txtMi.text = gameRound.getMiPointsSum().toString()
-            txtVi.text = gameRound.getViPointsSum().toString()
+            updatecalculator(txtMi, txtVi, gameRound)
         }
         btn150.setOnClickListener {
             if (pointsDirectionFlag){
@@ -538,8 +480,7 @@ class Calculator : AppCompatActivity() {
                 btn150.setTextColor(getColor(R.color.miColor))
             }
 
-            txtMi.text = gameRound.getMiPointsSum().toString()
-            txtVi.text = gameRound.getViPointsSum().toString()
+            updatecalculator(txtMi, txtVi, gameRound)
         }
         btn200.setOnClickListener {
             if (pointsDirectionFlag){
@@ -553,8 +494,7 @@ class Calculator : AppCompatActivity() {
                 btn200.setTextColor(getColor(R.color.miColor))
             }
 
-            txtMi.text = gameRound.getMiPointsSum().toString()
-            txtVi.text = gameRound.getViPointsSum().toString()
+            updatecalculator(txtMi, txtVi, gameRound)
         }
 
         btnDone.setOnClickListener {
@@ -582,12 +522,18 @@ class Calculator : AppCompatActivity() {
             Pair(162, 0)
         }
     }
+        
     private fun showHide(view: View) {
         view.visibility = if (view.visibility == View.VISIBLE){View.GONE} else{View.VISIBLE}
     }
 
     private fun checkIfNewGame(flag: String): Boolean {
         return flag == "true"
+    }
+
+    private fun updatecalculator(txtMi: TextView, txtVi: TextView, gameRound: GameRound){
+        txtMi.text = gameRound.getMiPointsSum().toString()
+        txtVi.text = gameRound.getViPointsSum().toString()
     }
 
     private fun checkPad(gameRound: GameRound){
