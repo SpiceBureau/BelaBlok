@@ -32,9 +32,8 @@ class ListView : ComponentActivity() {
     lateinit var tvViMatchPoints: TextView
     lateinit var tvMiMatchPoints: TextView
     lateinit var tvNG: TextView
-
-    var miMatchPoints = 0
-    var viMatchPoints = 0
+    var globalMiMatchPoints = 0
+    var globalViMatchPoints = 0
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,7 +75,8 @@ class ListView : ComponentActivity() {
                 // The dialog is automatically dismissed when a dialog button is clicked.
                 .setPositiveButton("Yes",
                     DialogInterface.OnClickListener { dialog, which ->
-                        if (!gameHands[i].matchPointsListItemFlag){
+                        if (i == gameHands.size - 2){
+                            gameHands.removeAt(i)
                             gameHands.removeAt(i)
                             updateScoreBoard()
                             customAdapter.notifyDataSetChanged()
@@ -149,10 +149,16 @@ class ListView : ComponentActivity() {
         var miPointsSum = 0
         var viPointsSum = 0
 
+        var miMatchPoints = 0
+        var viMatchPoints = 0
+
         for (gr in gameHands){
             if (gr.matchPointsListItemFlag){
                 miPointsSum = 0
                 viPointsSum = 0
+
+                miMatchPoints += 1
+                viMatchPoints += 1
             }
             else{
                 miPointsSum += gr.getMiPointsSum()
@@ -167,25 +173,29 @@ class ListView : ComponentActivity() {
 
         tvPointDifference.text = (kotlin.math.abs(miPointsSum - viPointsSum)).toString()
 
-        if ((miPointsSum >= 1001) or (viPointsSum >= 1001)) { setUpNewGame(miPointsSum, viPointsSum) }
+        tvMiMatchPoints.text = miMatchPoints.toString()
+        tvViMatchPoints.text = viMatchPoints.toString()
+
+        if ((miPointsSum >= 1001) or (viPointsSum >= 1001)) { setUpNewGame(miPointsSum) }
     }
 
-    private fun setUpNewGame(miPointsSum: Int, viPointsSum: Int) {
+    private fun setUpNewGame(miPointsSum: Int) {
         val matchPointListItem = GameHand()
-        if (miPointsSum >= 1001) { miMatchPoints += 1 }
-        if (viPointsSum >= 1001) { viMatchPoints += 1 }
 
-        matchPointListItem.miMatchPoints = miMatchPoints
-        matchPointListItem.viMatchPoints = viMatchPoints
+        if (miPointsSum >= 1001){ globalMiMatchPoints += 1}
+        else { globalViMatchPoints += 1 }
+
+        matchPointListItem.miMatchPoints = globalMiMatchPoints
+        matchPointListItem.viMatchPoints = globalViMatchPoints
         matchPointListItem.matchPointsListItemFlag = true
 
         gameHands.add(matchPointListItem)
 
-        tvMiMatchPoints.text = miMatchPoints.toString()
-        tvViMatchPoints.text = viMatchPoints.toString()
-
         tvMiPoints.text = "0"
         tvViPoints.text = "0"
+
+        tvMiMatchPoints.text = globalMiMatchPoints.toString()
+        tvViMatchPoints.text = globalViMatchPoints.toString()
 
         showAlertDialog()
     }
@@ -216,7 +226,7 @@ class ListView : ComponentActivity() {
 
         for (gr in gameHands){
             if (gr.matchPointsListItemFlag){
-                if (miMatchPoints + viMatchPoints <= gr.miMatchPoints + gr.viMatchPoints){ continue }
+                if (globalMiMatchPoints + globalViMatchPoints <= gr.miMatchPoints + gr.viMatchPoints){ continue }
                 miPointsSum = 0
                 miPointsSumNoCalls = 0
                 miPointsSumFromCalls = 0
