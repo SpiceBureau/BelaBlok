@@ -62,6 +62,12 @@ class MyListAdapter(
                 tvMi.text = oneGameRound.getMiPointsSum().toString()
                 tvVi.text = oneGameRound.getViPointsSum().toString()
 
+                tvMi.textSize = 50.0F
+                tvVi.textSize = 50.0F
+
+                tvMi.setTextAppearance(0)
+                tvVi.setTextAppearance(0)
+
                 if (oneGameRound.padMi == 1){ showHide(imPadMi) }
                 if (oneGameRound.padVi == 1){ showHide(imPadVi) }
 
