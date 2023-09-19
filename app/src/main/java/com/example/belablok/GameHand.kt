@@ -1,6 +1,6 @@
 package com.example.belablok
 
-class GameHand {
+class GameHand{
 
     var matchPointsListItemFlag = false
     var miMatchPoints = 0

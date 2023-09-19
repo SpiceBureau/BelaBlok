@@ -4,10 +4,26 @@
     android:layout_height="match_parent"
     android:background="@color/base_background"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:id="@+id/miVSviTv"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:text="SAMPLE TEXT"
+        android:textSize="30sp"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/graph"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="1">
+    </TextView>
 
     <com.jjoe64.graphview.GraphView
         android:layout_width="match_parent"
-        android:layout_height="200dip"
+        android:layout_height="400dip"
         android:id="@+id/graph"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

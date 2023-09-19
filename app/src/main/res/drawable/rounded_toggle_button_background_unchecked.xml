@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#03dac6" /> <!-- Set your desired background color for the unchecked state -->
+    <corners android:radius="20dp" /> <!-- Adjust the "radius" value to control the roundness of corners -->
+</shape>

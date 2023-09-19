@@ -1,112 +1,104 @@
 package com.example.belablok
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.OnBackPressedCallback
+import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import com.google.gson.Gson
 
-
 class Calculator : AppCompatActivity() {
+
+    private val roundPoints = 162
+    private var player1Score = 0
+    private var player2Score = 0
+    private var gameHand = GameHand()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.calculator_activity)
+        setContentView(R.layout.calculator2_activity)
 
         supportActionBar?.hide()
 
-        var gameHand = GameHand()
-        val newGameFlag = intent.getStringExtra("newGameRound")?.let { checkIfNewGame(it) }
+        val miScoreInput = findViewById<EditText>(R.id.etMi )
+        val miScoreSumDisplay = findViewById<TextView>(R.id.etMiSum)
 
-        var roundIndex = "-1"
-        if (!newGameFlag!!){
-            roundIndex = intent.getStringExtra("index").toString()
-            gameHand = Gson().fromJson(intent.getStringExtra("gameRound"), GameHand::class.java)
-        }
+        val viScoreInput = findViewById<EditText>(R.id.etVi)
+        val viScoreSumDisplay = findViewById<TextView>(R.id.etViSum)
 
-        val txtMi: TextView = findViewById(R.id.txtMi)
-        val txtVi: TextView = findViewById(R.id.txtVi)
+
+        val pointDirection = findViewById<ToggleButton>(R.id.pointDirrection)
+
+        val hercButton: ImageView = findViewById(R.id.Herc)
+        val karaButton: ImageView = findViewById(R.id.Kara)
+        val trefButton: ImageView = findViewById(R.id.Tref)
+        val pikButton: ImageView = findViewById(R.id.Pik)
+
+        val btn20: TextView = findViewById(R.id.btn20Calls)
+        val btn50: TextView = findViewById(R.id.btn50Calls)
+        val btn100: TextView = findViewById(R.id.btn100Calls)
+        val btn150: Button = findViewById(R.id.btn150Calls)
+        val btn200: Button = findViewById(R.id.btn200Calls)
+
         val ctv20MI: TextView = findViewById(R.id.ctvMI20)
         val ctv20VI: TextView = findViewById(R.id.ctvVI20)
         val ctv50MI: TextView = findViewById(R.id.ctv50MI)
         val ctv50VI: TextView = findViewById(R.id.ctv50VI)
         val ctv100MI: TextView = findViewById(R.id.ctv100MI)
         val ctv100VI: TextView = findViewById(R.id.ctv100VI)
-        val btn1: Button = findViewById(R.id.btn1)
-        val btn2: Button = findViewById(R.id.btn2)
-        val btn3: Button = findViewById(R.id.btn3)
-        val btn4: Button = findViewById(R.id.btn4)
-        val btn5: Button = findViewById(R.id.btn5)
-        val btn6: Button = findViewById(R.id.btn6)
-        val btn7: Button = findViewById(R.id.btn7)
-        val btn8: Button = findViewById(R.id.btn8)
-        val btn9: Button = findViewById(R.id.btn9)
-        val btn0: Button = findViewById(R.id.btn0)
-        val btnPad: Button = findViewById(R.id.btnPad)
-        val btnClear: Button = findViewById(R.id.btnClear)
-        val btnReturn: Button = findViewById(R.id.btnBack)
-        val btnDone: Button = findViewById(R.id.btnDone)
-        val btn20: TextView = findViewById(R.id.btn20Calls)
-        val btn50: TextView = findViewById(R.id.btn50Calls)
-        val btn100: TextView = findViewById(R.id.btn100Calls)
-        val btn150: Button = findViewById(R.id.btn150Calls)
-        val btn200: Button = findViewById(R.id.btn200Calls)
         val btnStiljonz: Button = findViewById(R.id.btnŠtiljonž)
-        val hercButton: ImageView = findViewById(R.id.Herc)
-        val karaButton: ImageView = findViewById(R.id.Kara)
-        val trefButton: ImageView = findViewById(R.id.Tref)
-        val pikButton: ImageView = findViewById(R.id.Pik)
 
-        var pointsDirectionFlag = false // 0 = Mi || 1 = Vi
+        val btnClear: Button = findViewById(R.id.btnClear)
+        val btnPad: Button = findViewById(R.id.btnPad)
+        val btnDone: Button = findViewById(R.id.btnDone)
 
-        if (!newGameFlag){
-            updatecalculator(txtMi, txtVi, gameHand)
+        miScoreInput.addTextChangedListener {
+            if (currentFocus != miScoreInput) { return@addTextChangedListener }
+            val player1Input = miScoreInput.text.toString().toIntOrNull() ?: return@addTextChangedListener
 
-            ctv20MI.text = gameHand.numOf20CallsMi.toString()
-            if (gameHand.numOf20CallsMi != 0){ showHide(ctv20MI) }
-            ctv20VI.text = gameHand.numOf20CallsVi.toString()
-            if (gameHand.numOf20CallsVi != 0){ showHide(ctv20VI) }
+            player1Score = player1Input
+            val difference = roundPoints - player1Score
+            if (difference >= 0) player2Score = difference
 
-            ctv50MI.text = gameHand.numOf50CallsMi.toString()
-            if (gameHand.numOf50CallsMi != 0){ showHide(ctv50MI) }
-            ctv50VI.text = gameHand.numOf50CallsVi.toString()
-            if (gameHand.numOf50CallsVi != 0){ showHide(ctv50VI) }
+            if (player2Score == 0) viScoreInput.setText("")
+            else viScoreInput.setText(player2Score.toString())
 
-            ctv100MI.text = gameHand.numOf100CallsMi.toString()
-            if (gameHand.numOf100CallsMi != 0){ showHide(ctv100MI) }
-            ctv100VI.text = gameHand.numOf100CallsVi.toString()
-            if (gameHand.numOf100CallsVi != 0){ showHide(ctv100VI) }
+            gameHand.miPoints = player1Score.toString()
+            gameHand.viPoints = player2Score.toString()
 
-            if (gameHand.numOf150CallsMi == 1){ btn150.setTextColor(getColor(R.color.miColor)) }
-            if (gameHand.numOf150CallsVi == 1){ btn150.setTextColor(getColor(R.color.viColor)) }
+            updateDisplay(miScoreSumDisplay, viScoreSumDisplay)
+        }
+        viScoreInput.addTextChangedListener {
+            if (currentFocus != viScoreInput) { return@addTextChangedListener }
+            val player2Input = viScoreInput.text.toString().toIntOrNull() ?: return@addTextChangedListener
 
-            if (gameHand.numOf200CallsMi == 1){ btn200.setTextColor(getColor(R.color.miColor)) }
-            if (gameHand.numOf200CallsVi == 1){ btn200.setTextColor(getColor(R.color.viColor)) }
+            player2Score = player2Input
+            val difference = roundPoints - player2Score
+            if (difference >= 0) player1Score = difference
 
-            if (gameHand.stiljaMi == 1){ btnStiljonz.setTextColor(getColor(R.color.miColor)) }
-            if (gameHand.stiljaVi == 1){ btnStiljonz.setTextColor(getColor(R.color.viColor)) }
+            if (player1Score == 0) miScoreInput.setText("")
+            else miScoreInput.setText(player1Score.toString())
 
-            if(gameHand.adut == "herc"){ hercButton.setImageResource(R.drawable.herc) }
-            if(gameHand.adut == "tref"){ trefButton.setImageResource(R.drawable.tref) }
-            if(gameHand.adut == "kara"){ karaButton.setImageResource(R.drawable.kara) }
-            if(gameHand.adut == "pik"){ pikButton.setImageResource(R.drawable.pik) }
+            miScoreInput.setText(player1Score.toString())
+            gameHand.miPoints = player1Score.toString()
+            gameHand.viPoints = player2Score.toString()
+
+            updateDisplay(miScoreSumDisplay, viScoreSumDisplay)
         }
 
+        miScoreSumDisplay.setOnClickListener {
+            openMiEditText(miScoreInput)
+        }
+        viScoreSumDisplay.setOnClickListener {
+            openViEditText(viScoreInput)
+        }
 
-        txtMi.setOnClickListener{
-            pointsDirectionFlag = false
-            txtMi.setTextColor(getColor(R.color.miColor))
-            txtVi.setTextColor(Color.WHITE)
-        }
-        txtVi.setOnClickListener{
-            pointsDirectionFlag = true
-            txtVi.setTextColor(getColor(R.color.viColor))
-            txtMi.setTextColor(Color.WHITE)
-        }
 
         hercButton.setOnClickListener{
             if (gameHand.adut == "herc"){
@@ -164,378 +156,275 @@ class Calculator : AppCompatActivity() {
                 pikButton.setImageResource(R.drawable.pik_white)
             }
         }
-        btn0.setOnClickListener {
-            if (!pointsDirectionFlag) {
-                if (gameHand.miPoints == "0") { gameHand.miPoints = "0" }
-                else { gameHand.miPoints += "0" }
-                
-                val pointDiff = (162 - Integer.parseInt(gameHand.miPoints))
-                gameHand.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
-            }
-            else {
-                if (gameHand.viPoints == "0") { gameHand.viPoints = "0" }
-                else { gameHand.viPoints += "0" }
 
-                val pointDiff = (162 - Integer.parseInt(gameHand.viPoints))
-                gameHand.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
-            }
-
-            updatecalculator(txtMi, txtVi, gameHand)
-        }
-        btn1.setOnClickListener {
-            if (!pointsDirectionFlag) {
-                if (gameHand.miPoints == "0") { gameHand.miPoints = "1" }
-                else { gameHand.miPoints += "1" }
-
-                val pointDiff = (162 - Integer.parseInt(gameHand.miPoints))
-                gameHand.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
-            }
-            else {
-                if (gameHand.viPoints == "0") { gameHand.viPoints = "1" }
-                else { gameHand.viPoints += "1" }
-
-                val pointDiff = (162 - Integer.parseInt(gameHand.viPoints))
-                gameHand.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
-            }
-            
-            updatecalculator(txtMi, txtVi, gameHand)
-        }
-        btn2.setOnClickListener {
-            if (!pointsDirectionFlag) {
-                if (gameHand.miPoints == "0") { gameHand.miPoints = "2" }
-                else { gameHand.miPoints += "2" }
-
-                val pointDiff = (162 - Integer.parseInt(gameHand.miPoints))
-                gameHand.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
-            }
-            else {
-                if (gameHand.viPoints == "0") { gameHand.viPoints = "2" }
-                else { gameHand.viPoints += "2" }
-
-                val pointDiff = (162 - Integer.parseInt(gameHand.viPoints))
-                gameHand.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
-            }
-            
-            updatecalculator(txtMi, txtVi, gameHand)
-        }
-        btn3.setOnClickListener {
-            if (!pointsDirectionFlag) {
-                if (gameHand.miPoints == "0") { gameHand.miPoints = "3" }
-                else { gameHand.miPoints += "3" }
-
-                val pointDiff = (162 - Integer.parseInt(gameHand.miPoints))
-                gameHand.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
-            }
-            else {
-                if (gameHand.viPoints == "0") { gameHand.viPoints = "3" }
-                else { gameHand.viPoints += "3" }
-
-                val pointDiff = (162 - Integer.parseInt(gameHand.viPoints))
-                gameHand.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
-            }
-            
-            updatecalculator(txtMi, txtVi, gameHand)
-        }
-        btn4.setOnClickListener {
-            if (!pointsDirectionFlag) {
-                if (gameHand.miPoints == "0") { gameHand.miPoints = "4" }
-                else { gameHand.miPoints += "4" }
-
-                val pointDiff = (162 - Integer.parseInt(gameHand.miPoints))
-                gameHand.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
-            }
-            else {
-                if (gameHand.viPoints == "0") { gameHand.viPoints = "4" }
-                else { gameHand.viPoints += "4" }
-
-                val pointDiff = (162 - Integer.parseInt(gameHand.viPoints))
-                gameHand.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
-            }
-            
-            updatecalculator(txtMi, txtVi, gameHand)
-        }
-        btn5.setOnClickListener {
-            if (!pointsDirectionFlag) {
-                if (gameHand.miPoints == "0") { gameHand.miPoints = "5" }
-                else { gameHand.miPoints += "5" }
-
-                val pointDiff = (162 - Integer.parseInt(gameHand.miPoints))
-                gameHand.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
-            }
-            else {
-                if (gameHand.viPoints == "0") { gameHand.viPoints = "5" }
-                else { gameHand.viPoints += "5" }
-
-                val pointDiff = (162 - Integer.parseInt(gameHand.viPoints))
-                gameHand.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
-            }
-
-            updatecalculator(txtMi, txtVi, gameHand)
-        }
-        btn6.setOnClickListener {
-            if (!pointsDirectionFlag) {
-                if (gameHand.miPoints == "0") { gameHand.miPoints = "6" }
-                else { gameHand.miPoints += "6" }
-
-                val pointDiff = (162 - Integer.parseInt(gameHand.miPoints))
-                gameHand.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
-            }
-            else {
-                if (gameHand.viPoints == "0") {
-                    gameHand.viPoints = "6"
-                } else {
-                    gameHand.viPoints += "6"
-
-                    val pointDiff = (162 - Integer.parseInt(gameHand.viPoints))
-                    gameHand.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
-                }
-            }
-            updatecalculator(txtMi, txtVi, gameHand)
-        }
-        btn7.setOnClickListener {
-            if (!pointsDirectionFlag) {
-                if (gameHand.miPoints == "0") { gameHand.miPoints = "7" }
-                else { gameHand.miPoints += "7" }
-
-                val pointDiff = (162 - Integer.parseInt(gameHand.miPoints))
-                gameHand.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
-            }
-            else {
-                if (gameHand.viPoints == "0") { gameHand.viPoints = "7" }
-                else { gameHand.viPoints += "7" }
-
-                val pointDiff = (162 - Integer.parseInt(gameHand.viPoints))
-                gameHand.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
-            }
-
-            updatecalculator(txtMi, txtVi, gameHand)
-        }
-        btn8.setOnClickListener {
-            if (!pointsDirectionFlag) {
-                if (gameHand.miPoints == "0") { gameHand.miPoints = "8" }
-                else { gameHand.miPoints += "8" }
-
-                val pointDiff = (162 - Integer.parseInt(gameHand.miPoints))
-                gameHand.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
-            }
-            else {
-                if (gameHand.viPoints == "0") { gameHand.viPoints = "8" }
-                else { gameHand.viPoints += "8" }
-
-                val pointDiff = (162 - Integer.parseInt(gameHand.viPoints))
-                gameHand.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
-            }
-
-            updatecalculator(txtMi, txtVi, gameHand)
-        }
-        btn9.setOnClickListener {
-            if (!pointsDirectionFlag) {
-                if (gameHand.miPoints == "0") { gameHand.miPoints = "9" }
-                else { gameHand.miPoints += "9" }
-
-                val pointDiff = (162 - Integer.parseInt(gameHand.miPoints))
-                gameHand.viPoints = if (pointDiff < 0) "0" else pointDiff.toString()
-            }
-            else {
-                if (gameHand.viPoints == "0") { gameHand.viPoints = "9" }
-                else { gameHand.viPoints += "9" }
-
-                val pointDiff = (162 - Integer.parseInt(gameHand.viPoints))
-                gameHand.miPoints = if (pointDiff < 0) "0" else pointDiff.toString()
-            }
-
-            updatecalculator(txtMi, txtVi, gameHand)
-        }
-
-        btnPad.setOnClickListener {
-            if (pointsDirectionFlag){
-                gameHand.padVi = 1
-                gameHand.miPoints = "162"
-                gameHand.viPoints = "0"
-            }
-            else{
-                gameHand.padMi = 1
-                gameHand.miPoints = "0"
-                gameHand.viPoints = "162"
-            }
-            
-            updatecalculator(txtMi, txtVi, gameHand)
-        }
-        btnClear.setOnClickListener {
-            btnStiljonz.setTextColor(Color.WHITE)
-            btn150.setTextColor(Color.WHITE)
-            btn200.setTextColor(Color.WHITE)
-            hercButton.setImageResource(R.drawable.herc_white)
-            trefButton.setImageResource(R.drawable.tref_white)
-            pikButton.setImageResource(R.drawable.pik_white)
-            karaButton.setImageResource(R.drawable.kara_white)
-            gameHand.numOf20CallsMi = 0
-            gameHand.numOf20CallsVi = 0
-            gameHand.numOf50CallsMi = 0
-            gameHand.numOf50CallsVi = 0
-            gameHand.numOf100CallsMi = 0
-            gameHand.numOf100CallsVi = 0
-            gameHand.numOf150CallsMi = 0
-            gameHand.numOf150CallsVi = 0
-            gameHand.numOf200CallsMi = 0
-            gameHand.numOf200CallsVi = 0
-            gameHand.stiljaMi = 0
-            gameHand.stiljaVi = 0
-            gameHand.padMi = 0
-            gameHand.padVi = 0
-            gameHand.miPoints = "0"
-            gameHand.viPoints = "0"
-            if (ctv20MI.visibility == View.VISIBLE){showHide(ctv20MI)}
-            if (ctv20VI.visibility == View.VISIBLE){showHide(ctv20VI)}
-            if (ctv50MI.visibility == View.VISIBLE){showHide(ctv50MI)}
-            if (ctv50VI.visibility == View.VISIBLE){showHide(ctv50VI)}
-            if (ctv100MI.visibility == View.VISIBLE){showHide(ctv100MI)}
-            if (ctv100VI.visibility == View.VISIBLE){showHide(ctv100VI)}
-            
-            updatecalculator(txtMi, txtVi, gameHand)
-        }
-
-        btnStiljonz.setOnClickListener {
-            val (newMiPoints, newViPoints) = pad(pointsDirectionFlag)
-            gameHand.viPoints = newViPoints.toString()
-            gameHand.miPoints = newMiPoints.toString()
-
-            if (pointsDirectionFlag){
-                gameHand.stiljaMi = 0
-                gameHand.stiljaVi = 1
-                btnStiljonz.setTextColor(getColor(R.color.viColor))
-            }
-            else{
-                gameHand.stiljaMi = 1
-                gameHand.stiljaVi = 0
-                btnStiljonz.setTextColor(getColor(R.color.miColor))
-            }
-
-           updatecalculator(txtMi, txtVi, gameHand)
-        }
         btn20.setOnClickListener {
-            if (pointsDirectionFlag){ // VI
+            if (pointDirection.isChecked){
                 if (gameHand.numOf20CallsVi == 0){
-                    showHide(ctv20VI)
+                    showHide(ctv20VI, View.VISIBLE)
                 }
                 gameHand.numOf20CallsVi += 1
                 ctv20VI.text = gameHand.numOf20CallsVi.toString()
             }
-            else{ // MI
+            else{
                 if (gameHand.numOf20CallsMi == 0){
-                    showHide(ctv20MI)
+                    showHide(ctv20MI, View.VISIBLE)
                 }
                 gameHand.numOf20CallsMi += 1
                 ctv20MI.text = gameHand.numOf20CallsMi.toString()
             }
 
-            updatecalculator(txtMi, txtVi, gameHand)
+            updateDisplay(miScoreSumDisplay, viScoreSumDisplay)
         }
+        btn20.setOnLongClickListener {
+            if (pointDirection.isChecked){
+                if (gameHand.numOf20CallsVi > 0) { gameHand.numOf20CallsVi -= 1 }
+                ctv20VI.text = gameHand.numOf20CallsVi.toString()
+
+                if (gameHand.numOf20CallsVi == 0){
+                    showHide(ctv20VI, View.GONE)
+                }
+            }
+            else{
+                if (gameHand.numOf20CallsMi > 0) { gameHand.numOf20CallsMi -= 1 }
+                ctv20MI.text = gameHand.numOf20CallsMi.toString()
+
+                if (gameHand.numOf20CallsMi == 0){
+                    showHide(ctv20MI, View.GONE)
+                }
+            }
+            updateDisplay(miScoreSumDisplay, viScoreSumDisplay)
+            true
+        }
+
         btn50.setOnClickListener {
-            if (pointsDirectionFlag){ // VI
+            if (pointDirection.isChecked){
                 if (gameHand.numOf50CallsVi == 0){
-                    showHide(ctv50VI)
+                    showHide(ctv50VI, View.VISIBLE)
                 }
                 gameHand.numOf50CallsVi += 1
                 ctv50VI.text = gameHand.numOf50CallsVi.toString()
             }
-            else{ // MI
+            else{
                 if (gameHand.numOf50CallsMi == 0){
-                    showHide(ctv50MI)
+                    showHide(ctv50MI, View.VISIBLE)
                 }
                 gameHand.numOf50CallsMi += 1
                 ctv50MI.text = gameHand.numOf50CallsMi.toString()
             }
-
-            updatecalculator(txtMi, txtVi, gameHand)
+            updateDisplay(miScoreSumDisplay, viScoreSumDisplay)
         }
+        btn50.setOnLongClickListener {
+            if (pointDirection.isChecked) {
+                if (gameHand.numOf50CallsVi > 0) {
+                    gameHand.numOf50CallsVi -= 1
+                }
+                ctv50VI.text = gameHand.numOf50CallsVi.toString()
+
+                if (gameHand.numOf50CallsVi == 0) {
+                    showHide(ctv50VI, View.GONE)
+                }
+            } else {
+                if (gameHand.numOf50CallsMi > 0) {
+                    gameHand.numOf50CallsMi -= 1
+                }
+                ctv50MI.text = gameHand.numOf50CallsMi.toString()
+
+                if (gameHand.numOf50CallsMi == 0) {
+                    showHide(ctv50MI, View.GONE)
+                }
+            }
+            updateDisplay(miScoreSumDisplay, viScoreSumDisplay)
+            true
+        }
+
         btn100.setOnClickListener {
-            if (pointsDirectionFlag){ // VI
+            if (pointDirection.isChecked){
                 if (gameHand.numOf100CallsVi == 0){
-                    showHide(ctv100VI)
+                    showHide(ctv100VI, View.VISIBLE)
                 }
                 gameHand.numOf100CallsVi += 1
                 ctv100VI.text = gameHand.numOf100CallsVi.toString()
             }
-            else{ // MI
+            else{
                 if (gameHand.numOf100CallsMi == 0){
-                    showHide(ctv100MI)
+                    showHide(ctv100MI, View.VISIBLE)
                 }
                 gameHand.numOf100CallsMi += 1
                 ctv100MI.text = gameHand.numOf100CallsMi.toString()
             }
-
-            updatecalculator(txtMi, txtVi, gameHand)
+            updateDisplay(miScoreSumDisplay, viScoreSumDisplay)
         }
+        btn100.setOnLongClickListener {
+            if (pointDirection.isChecked) {
+                if (gameHand.numOf100CallsVi > 0) {
+                    gameHand.numOf100CallsVi -= 1
+                }
+                ctv100VI.text = gameHand.numOf100CallsVi.toString()
+
+                if (gameHand.numOf100CallsVi == 0) {
+                    showHide(ctv100VI, View.GONE)
+                }
+            } else {
+                if (gameHand.numOf100CallsMi > 0) {
+                    gameHand.numOf100CallsMi -= 1
+                }
+                ctv100MI.text = gameHand.numOf100CallsMi.toString()
+
+                if (gameHand.numOf100CallsMi == 0) {
+                    showHide(ctv100MI, View.GONE)
+                }
+            }
+            updateDisplay(miScoreSumDisplay, viScoreSumDisplay)
+            true
+        }
+
         btn150.setOnClickListener {
-            if (pointsDirectionFlag){
+            if (pointDirection.isChecked){
                 gameHand.numOf150CallsMi = 0
                 gameHand.numOf150CallsVi = 1
                 btn150.setTextColor(getColor(R.color.viColor))
             }
-            else {
+            else{
                 gameHand.numOf150CallsMi = 1
                 gameHand.numOf150CallsVi = 0
                 btn150.setTextColor(getColor(R.color.miColor))
             }
-
-            updatecalculator(txtMi, txtVi, gameHand)
+            updateDisplay(miScoreSumDisplay, viScoreSumDisplay)
         }
+        btn150.setOnLongClickListener {
+            gameHand.numOf150CallsMi = 0
+            gameHand.numOf150CallsVi = 0
+            btn150.setTextColor(getColor(R.color.white))
+            updateDisplay(miScoreSumDisplay, viScoreSumDisplay)
+            true
+        }
+
         btn200.setOnClickListener {
-            if (pointsDirectionFlag){
+            if (pointDirection.isChecked){
                 gameHand.numOf200CallsMi = 0
                 gameHand.numOf200CallsVi = 1
                 btn200.setTextColor(getColor(R.color.viColor))
             }
-            else {
+            else{
                 gameHand.numOf200CallsMi = 1
                 gameHand.numOf200CallsVi = 0
                 btn200.setTextColor(getColor(R.color.miColor))
             }
+            updateDisplay(miScoreSumDisplay, viScoreSumDisplay)
+        }
+        btn200.setOnLongClickListener {
+            gameHand.numOf200CallsMi = 0
+            gameHand.numOf200CallsVi = 0
+            btn200.setTextColor(getColor(R.color.white))
 
-            updatecalculator(txtMi, txtVi, gameHand)
+            updateDisplay(miScoreSumDisplay, viScoreSumDisplay)
+            true
+        }
+
+        btnStiljonz.setOnClickListener {
+            if (pointDirection.isChecked){
+                gameHand.stiljaMi = 0
+                gameHand.miPoints = "0"
+                miScoreInput.setText("")
+
+                gameHand.stiljaVi = 1
+                gameHand.viPoints = "162"
+                viScoreInput.setText("162")
+                btnStiljonz.setTextColor(getColor(R.color.viColor))
+            }
+            else{
+                gameHand.stiljaMi = 1
+                gameHand.miPoints = "162"
+                miScoreInput.setText("162")
+
+                gameHand.stiljaVi = 0
+                gameHand.viPoints = "0"
+                viScoreInput.setText("0")
+                btnStiljonz.setTextColor(getColor(R.color.miColor))
+            }
+            updateDisplay(miScoreSumDisplay, viScoreSumDisplay)
+        }
+        btnStiljonz.setOnLongClickListener {
+            gameHand.stiljaMi = 0
+            gameHand.stiljaVi = 0
+            btnStiljonz.setTextColor(getColor(R.color.white))
+
+            updateDisplay(miScoreSumDisplay, viScoreSumDisplay)
+            true
+        }
+
+        btnClear.setOnClickListener {
+            hercButton.setImageResource(R.drawable.herc_white)
+            trefButton.setImageResource(R.drawable.tref_white)
+            pikButton.setImageResource(R.drawable.pik_white)
+            karaButton.setImageResource(R.drawable.kara_white)
+
+            miScoreInput.setText("")
+            viScoreInput.setText("")
+
+            gameHand = GameHand()
+
+            showHide(ctv20MI, View.GONE)
+            showHide(ctv20VI, View.GONE)
+
+            showHide(ctv50MI, View.GONE)
+            showHide(ctv50VI, View.GONE)
+
+            showHide(ctv100MI, View.GONE)
+            showHide(ctv100VI, View.GONE)
+
+            btn150.setTextColor(getColor(R.color.white))
+            btn200.setTextColor(getColor(R.color.white))
+
+            btnStiljonz.setTextColor(getColor(R.color.white))
+
+            updateDisplay(miScoreSumDisplay, viScoreSumDisplay)
+        }
+
+        btnPad.setOnClickListener {
+            gameHand = GameHand()
+            if (pointDirection.isChecked){
+                gameHand.miPoints = "162"
+                miScoreInput.setText("162")
+
+                gameHand.viPoints = "0"
+                viScoreInput.setText("")
+            }
+            else {
+                gameHand.miPoints = "0"
+                miScoreInput.setText("")
+
+                gameHand.viPoints = "162"
+                viScoreInput.setText("162")
+            }
+            updateDisplay(miScoreSumDisplay, viScoreSumDisplay)
         }
 
         btnDone.setOnClickListener {
             val intent = Intent()
             val data = Gson().toJson(gameHand)
             intent.putExtra("gameRound", data)
-            intent.putExtra("index", roundIndex)
+            intent.putExtra("index", 1)
             setResult(RESULT_OK, intent)
             finish()
             overridePendingTransition(R.anim.nothing, R.anim.left_rigt_exit)
         }
-
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                finish()
-                overridePendingTransition(R.anim.nothing, R.anim.right_left)
-            }
-        })
     }
-
-    private fun pad(pointsDirectionFlag: Boolean): Pair<Int, Int> {
-        return if (pointsDirectionFlag){
-            Pair(0, 162)
-        } else{
-            Pair(162, 0)
-        }
+    private fun showHide(view: View, visibility: Int) {
+        view.visibility = if (visibility == View.GONE) View.GONE else View.VISIBLE
     }
-        
-    private fun showHide(view: View) {
-        view.visibility = if (view.visibility == View.VISIBLE){View.GONE} else{View.VISIBLE}
+    private fun updateDisplay(miScoreDisplay: TextView, viScoreDisplay: TextView) {
+        miScoreDisplay.text = gameHand.getMiPointsSum().toString()
+        viScoreDisplay.text = gameHand.getViPointsSum().toString()
     }
-
-    private fun checkIfNewGame(flag: String): Boolean {
-        return flag == "true"
+    private fun openMiEditText(miScoreInput: EditText) {
+        miScoreInput.requestFocus()
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(miScoreInput, InputMethodManager.SHOW_IMPLICIT)
     }
-
-    private fun updatecalculator(txtMi: TextView, txtVi: TextView, gameHand: GameHand){
-        txtMi.text = gameHand.getMiPointsSum().toString()
-        txtVi.text = gameHand.getViPointsSum().toString()
-    }
-
-    private fun checkPad(gameHand: GameHand){
-        TODO()
+    private fun openViEditText(viScoreInput: EditText) {
+        viScoreInput.requestFocus()
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(viScoreInput, InputMethodManager.SHOW_IMPLICIT)
     }
 }

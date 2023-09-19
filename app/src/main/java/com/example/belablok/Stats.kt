@@ -2,17 +2,21 @@ package com.example.belablok
 
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.MotionEvent
-import android.widget.Toast
+import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.RequiresApi
+import androidx.core.text.HtmlCompat
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 
 
 class Stats : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView( R.layout.stats_layout)
@@ -26,24 +30,48 @@ class Stats : ComponentActivity() {
             }
         })
 
-        val graphView: GraphView = findViewById(R.id.graph)
+        val xValues = intent.getSerializableExtra("xValues") as ArrayList<Double>?
+        val yValuesMi = intent.getSerializableExtra("yValuesMi") as ArrayList<Double>?
+        val yValuesVi = intent.getSerializableExtra("yValuesVi") as ArrayList<Double>?
 
-        graphView.gridLabelRenderer.verticalLabelsColor = Color.WHITE
-        graphView.gridLabelRenderer.horizontalLabelsColor = Color.WHITE
-        graphView.gridLabelRenderer.gridColor = Color.WHITE
-        val series = LineGraphSeries(
-            arrayOf(
-                DataPoint(0.0, 1.0),
-                DataPoint(1.0, 5.0),
-                DataPoint(2.0, 3.0),
-                DataPoint(3.0, 2.0),
-                DataPoint(4.0, 6.0)
-            )
-        )
-        graphView.addSeries(series)
+        val miVSvi = findViewById<TextView>(R.id.miVSviTv)
+        miVSvi.text = HtmlCompat.fromHtml("<font color=${Color.parseColor("#03dac6")}>MI </font>" + "vs" +
+                "<font color=${Color.parseColor("#da6b03")}> VI</font>", HtmlCompat.FROM_HTML_MODE_LEGACY)
+
+
+        var maxYValue = 0.0
+
+        val seriesMi = LineGraphSeries<DataPoint>()
+        seriesMi.color = Color.parseColor("#03dac6")
+        val seriesVi = LineGraphSeries<DataPoint>()
+        seriesVi.color = Color.parseColor("#da6b03")
+        if (xValues != null && yValuesMi != null && yValuesVi != null) {
+            var indexCounter = 0
+            for (xvalue in xValues) {
+                val dataPointMi = DataPoint(xvalue, yValuesMi[indexCounter])
+                val dataPointVi = DataPoint(xvalue, yValuesVi[indexCounter])
+                seriesMi.appendData(dataPointMi, true, 100)
+                seriesVi.appendData(dataPointVi, true, 100)
+
+                maxYValue = if (yValuesMi[indexCounter] > yValuesVi[indexCounter]) yValuesMi[indexCounter] else yValuesVi[indexCounter]
+
+                indexCounter += 1
+            }
+
+            val graphView: GraphView = findViewById(R.id.graph)
+            graphView.gridLabelRenderer.verticalLabelsColor = Color.WHITE
+            graphView.gridLabelRenderer.horizontalLabelsColor = Color.WHITE
+            graphView.gridLabelRenderer.gridColor = Color.WHITE
+
+            graphView.addSeries(seriesMi)
+            graphView.addSeries(seriesVi)
+
+
+            graphView.viewport.setMaxY(maxYValue + 100.0)
+            graphView.viewport.isXAxisBoundsManual = true
+            graphView.viewport.isYAxisBoundsManual = true
+        }
     }
-
-
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         return when (event.action) {
@@ -57,7 +85,4 @@ class Stats : ComponentActivity() {
             else -> super.onTouchEvent(event)
         }
     }
-
-
-
 }

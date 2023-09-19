@@ -13,7 +13,6 @@ import android.view.MotionEvent
 import android.view.Window
 import android.widget.ListView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.gson.Gson
@@ -92,8 +91,7 @@ class ListView : ComponentActivity() {
     override fun onTouchEvent(event: MotionEvent): Boolean {
         return when (event.action) {
             MotionEvent.ACTION_UP -> {
-                val myIntent = Intent(this, Stats::class.java)
-
+                val myIntent = setUpGraphData()
                 resultLauncher.launch(myIntent)
                 overridePendingTransition(R.anim.up_down, R.anim.nothing)
                 true
@@ -176,6 +174,8 @@ class ListView : ComponentActivity() {
         tvMiMatchPoints.text = miMatchPoints.toString()
         tvViMatchPoints.text = viMatchPoints.toString()
 
+        globalMiMatchPoints = miMatchPoints
+        globalViMatchPoints = viMatchPoints
         if ((miPointsSum >= 1001) or (viPointsSum >= 1001)) { setUpNewGame(miPointsSum) }
     }
 
@@ -253,5 +253,46 @@ class ListView : ComponentActivity() {
         viPointsNoCallsTv.text = getString(R.string.popup_igra, viPointsSumNoCalls)
 
         matchWonDialog.show()
+    }
+
+    private fun setUpGraphData(): Intent {
+        val myIntent = Intent(this, Stats::class.java)
+
+        val xValues = ArrayList<Double>() // runde
+        val yValuesMi = ArrayList<Double>() // iznosi rundi (akumulirani)
+        val yValuesVi = ArrayList<Double>()
+        var handIndex = 1.0
+
+        var miPointsSum = 0.0
+        var viPointsSum = 0.0
+
+        xValues.add(0.0)
+        yValuesMi.add(0.0)
+        yValuesVi.add(0.0)
+        for (gr in gameHands){
+            if (gr.matchPointsListItemFlag){
+                handIndex = 0.0
+                xValues.clear()
+                yValuesMi.clear()
+                yValuesVi.clear()
+
+                miPointsSum = 0.0
+                viPointsSum = 0.0
+            }
+            else{
+                miPointsSum += (gr.getMiPointsSum().toDouble())
+                viPointsSum += (gr.getViPointsSum().toDouble())
+                xValues.add(handIndex)
+                yValuesMi.add( miPointsSum )
+                yValuesVi.add( viPointsSum )
+            }
+            handIndex += 1
+        }
+        myIntent.putExtra("xValues", xValues)
+        myIntent.putExtra("yValuesMi", yValuesMi)
+        myIntent.putExtra("yValuesVi", yValuesVi)
+
+        return myIntent
+
     }
 }

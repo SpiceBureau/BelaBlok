@@ -6,4 +6,5 @@
     <string name="title_activity_stats">Stats</string>
     <string name="popup_zvanja">Zvanja: %1$d</string>
     <string name="popup_igra">Igra: %1$d</string>
+    <string name="title_activity_calculator2">Calculator2</string>
 </resources>
