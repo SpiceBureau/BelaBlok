@@ -2,6 +2,8 @@ package com.example.belablok
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.DashPathEffect
+import android.graphics.Paint
 import android.os.Build
 import android.os.Bundle
 import android.view.MotionEvent
@@ -63,13 +65,27 @@ class Stats : ComponentActivity() {
             graphView.gridLabelRenderer.horizontalLabelsColor = Color.WHITE
             graphView.gridLabelRenderer.gridColor = Color.WHITE
 
+
+            graphView.viewport.isScalable = true;
             graphView.addSeries(seriesMi)
             graphView.addSeries(seriesVi)
 
-
             graphView.viewport.setMaxY(maxYValue + 100.0)
+            graphView.viewport.setMaxX(indexCounter.toDouble() - 1.0)
             graphView.viewport.isXAxisBoundsManual = true
             graphView.viewport.isYAxisBoundsManual = true
+
+            val horizontalLineSeries = LineGraphSeries<DataPoint>(
+                arrayOf<DataPoint>(
+                    DataPoint(0.0, 1000.0),
+                    DataPoint(indexCounter.toDouble() - 1.0, 1000.0)
+                )
+            )
+            horizontalLineSeries.color = Color.RED
+            horizontalLineSeries.isDrawDataPoints = false
+            horizontalLineSeries.isDrawBackground = false
+
+            graphView.addSeries(horizontalLineSeries);
         }
     }
 

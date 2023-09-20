@@ -56,7 +56,7 @@ class ListView : ComponentActivity() {
 
 
         tvNG.setOnClickListener {
-            openSomeActivityForResultNG()
+            openCalculatorNewGame()
         }
 
         listView.adapter = customAdapter
@@ -64,7 +64,7 @@ class ListView : ComponentActivity() {
         listView.setOnItemClickListener { adapterView, view, i, l ->
             val data = Gson().toJson(gameHands[i])
             //gameRounds[i] = GameRound()
-            openSomeActivityForResult(data, i)
+            openCalculator(data, i)
         }
         listView.setOnItemLongClickListener { adapterView, view, i, l ->
 
@@ -99,7 +99,7 @@ class ListView : ComponentActivity() {
             else -> super.onTouchEvent(event)
         }
     }
-    private fun openSomeActivityForResult(data: String, i: Int) {
+    private fun openCalculator(data: String, i: Int) {
         val intent = Intent(this, Calculator::class.java)
         intent.putExtra("gameRound", data)
         intent.putExtra("index", i.toString())
@@ -107,7 +107,7 @@ class ListView : ComponentActivity() {
         resultLauncher.launch(intent)
         overridePendingTransition(R.anim.left_right, R.anim.nothing)
     }
-    private fun openSomeActivityForResultNG() {
+    private fun openCalculatorNewGame() {
         val intent = Intent(this, Calculator::class.java)
         intent.putExtra("newGameRound", "true")
         resultLauncherNG.launch(intent)
@@ -266,26 +266,18 @@ class ListView : ComponentActivity() {
         var miPointsSum = 0.0
         var viPointsSum = 0.0
 
-        xValues.add(0.0)
-        yValuesMi.add(0.0)
-        yValuesVi.add(0.0)
         for (gr in gameHands){
-            if (gr.matchPointsListItemFlag){
-                handIndex = 0.0
-                xValues.clear()
-                yValuesMi.clear()
-                yValuesVi.clear()
-
+            if (gr.matchPointsListItemFlag) {
                 miPointsSum = 0.0
                 viPointsSum = 0.0
+                handIndex = 1.0
+                continue
             }
-            else{
-                miPointsSum += (gr.getMiPointsSum().toDouble())
-                viPointsSum += (gr.getViPointsSum().toDouble())
-                xValues.add(handIndex)
-                yValuesMi.add( miPointsSum )
-                yValuesVi.add( viPointsSum )
-            }
+            miPointsSum += (gr.getMiPointsSum().toDouble())
+            viPointsSum += (gr.getViPointsSum().toDouble())
+            xValues.add(handIndex)
+            yValuesMi.add( miPointsSum )
+            yValuesVi.add( viPointsSum )
             handIndex += 1
         }
         myIntent.putExtra("xValues", xValues)
