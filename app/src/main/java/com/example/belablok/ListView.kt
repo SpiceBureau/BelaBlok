@@ -152,11 +152,10 @@ class ListView : ComponentActivity() {
 
         for (gr in gameHands){
             if (gr.matchPointsListItemFlag){
+                miMatchPoints = gr.miMatchPoints
+                viMatchPoints = gr.viMatchPoints
                 miPointsSum = 0
                 viPointsSum = 0
-
-                miMatchPoints += 1
-                viMatchPoints += 1
             }
             else{
                 miPointsSum += gr.getMiPointsSum()
