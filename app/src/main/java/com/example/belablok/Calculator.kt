@@ -28,17 +28,11 @@ class Calculator : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        if (intent.getStringExtra("newGameRoundFlag") == "false") {
-            gameHand = Gson().fromJson(intent.getStringExtra("gameRound"), GameHand::class.java)
-            gameRoundIndex = intent.getStringExtra("index")?.let { Integer.parseInt(it) }!!
-        }
-
         val miScoreInput = findViewById<EditText>(R.id.etMi )
         val miScoreSumDisplay = findViewById<TextView>(R.id.etMiSum)
 
         val viScoreInput = findViewById<EditText>(R.id.etVi)
         val viScoreSumDisplay = findViewById<TextView>(R.id.etViSum)
-
 
         val pointDirection = findViewById<ToggleButton>(R.id.pointDirrection)
 
@@ -64,6 +58,52 @@ class Calculator : AppCompatActivity() {
         val btnClear: Button = findViewById(R.id.btnClear)
         val btnPad: Button = findViewById(R.id.btnPad)
         val btnDone: Button = findViewById(R.id.btnDone)
+
+        if (intent.getStringExtra("newGameRoundFlag") == "false") {
+            gameHand = Gson().fromJson(intent.getStringExtra("gameRound"), GameHand::class.java)
+            gameRoundIndex = intent.getStringExtra("index")?.let { Integer.parseInt(it) }!!
+
+            miScoreInput.setText(gameHand.miPoints)
+            viScoreInput.setText(gameHand.viPoints)
+            updateDisplay(miScoreSumDisplay, viScoreSumDisplay)
+
+            when (gameHand.adut) {
+                "herc" -> hercButton.setImageResource(R.drawable.herc)
+                "tref" -> trefButton.setImageResource(R.drawable.tref)
+                "kara" -> karaButton.setImageResource(R.drawable.kara)
+                "pik" -> pikButton.setImageResource(R.drawable.pik)
+            }
+            if (gameHand.numOf20CallsMi > 0) {
+                showHide(ctv20MI, View.VISIBLE)
+                ctv20MI.text = gameHand.numOf20CallsMi.toString()
+            }
+            if (gameHand.numOf20CallsVi > 0) {
+                showHide(ctv20VI, View.VISIBLE)
+                ctv20VI.text = gameHand.numOf20CallsVi.toString()
+            }
+            if (gameHand.numOf50CallsMi > 0) {
+                showHide(ctv50MI, View.VISIBLE)
+                ctv50MI.text = gameHand.numOf50CallsMi.toString()
+            }
+            if (gameHand.numOf50CallsVi > 0) {
+                showHide(ctv50VI, View.VISIBLE)
+                ctv50VI.text = gameHand.numOf50CallsVi.toString()
+            }
+            if (gameHand.numOf100CallsMi > 0) {
+                showHide(ctv100MI, View.VISIBLE)
+                ctv100MI.text = gameHand.numOf100CallsMi.toString()
+            }
+            if (gameHand.numOf100CallsVi > 0) {
+                showHide(ctv100VI, View.VISIBLE)
+                ctv100VI.text = gameHand.numOf100CallsVi.toString()
+            }
+            if (gameHand.numOf150CallsMi == 1) { btn150.setTextColor(getColor(R.color.miColor)) }
+            if (gameHand.numOf150CallsVi == 1) { btn150.setTextColor(getColor(R.color.viColor)) }
+            if (gameHand.numOf200CallsMi == 1) { btn200.setTextColor(getColor(R.color.miColor)) }
+            if (gameHand.numOf200CallsVi == 1) { btn200.setTextColor(getColor(R.color.viColor)) }
+            if (gameHand.stiljaMi == 1) { btnStiljonz.setTextColor(getColor(R.color.miColor)) }
+            if (gameHand.stiljaVi == 1) { btnStiljonz.setTextColor(getColor(R.color.viColor)) }
+        }
 
         miScoreInput.addTextChangedListener {
             if (currentFocus != miScoreInput) { return@addTextChangedListener }
@@ -389,9 +429,10 @@ class Calculator : AppCompatActivity() {
         }
 
         btnPad.setOnClickListener {
-            gameHand = GameHand()
             if (pointDirection.isChecked){
                 gameHand.miPoints = "162"
+                gameHand.padVi = 1
+                gameHand.padMi = 0
                 miScoreInput.setText("162")
 
                 gameHand.viPoints = "0"
@@ -399,6 +440,8 @@ class Calculator : AppCompatActivity() {
             }
             else {
                 gameHand.miPoints = "0"
+                gameHand.padMi = 1
+                gameHand.padVi = 0
                 miScoreInput.setText("")
 
                 gameHand.viPoints = "162"
@@ -434,4 +477,5 @@ class Calculator : AppCompatActivity() {
         val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(viScoreInput, InputMethodManager.SHOW_IMPLICIT)
     }
+
 }
