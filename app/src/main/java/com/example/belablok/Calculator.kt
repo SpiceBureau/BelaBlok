@@ -2,6 +2,7 @@ package com.example.belablok
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -19,12 +20,18 @@ class Calculator : AppCompatActivity() {
     private var player1Score = 0
     private var player2Score = 0
     private var gameHand = GameHand()
+    private var gameRoundIndex = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.calculator2_activity)
 
         supportActionBar?.hide()
+
+        if (intent.getStringExtra("newGameRoundFlag") == "false") {
+            gameHand = Gson().fromJson(intent.getStringExtra("gameRound"), GameHand::class.java)
+            gameRoundIndex = intent.getStringExtra("index")?.let { Integer.parseInt(it) }!!
+        }
 
         val miScoreInput = findViewById<EditText>(R.id.etMi )
         val miScoreSumDisplay = findViewById<TextView>(R.id.etMiSum)
@@ -404,7 +411,7 @@ class Calculator : AppCompatActivity() {
             val intent = Intent()
             val data = Gson().toJson(gameHand)
             intent.putExtra("gameRound", data)
-            intent.putExtra("index", 1)
+            intent.putExtra("index", gameRoundIndex.toString())
             setResult(RESULT_OK, intent)
             finish()
             overridePendingTransition(R.anim.nothing, R.anim.left_rigt_exit)

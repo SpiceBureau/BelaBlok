@@ -9,6 +9,7 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MotionEvent
 import android.view.Window
 import android.widget.ListView
@@ -103,13 +104,13 @@ class ListView : ComponentActivity() {
         val intent = Intent(this, Calculator::class.java)
         intent.putExtra("gameRound", data)
         intent.putExtra("index", i.toString())
-        intent.putExtra("newGameRound", "false")
+        intent.putExtra("newGameRoundFlag", "false")
         resultLauncher.launch(intent)
         overridePendingTransition(R.anim.left_right, R.anim.nothing)
     }
     private fun openCalculatorNewGame() {
         val intent = Intent(this, Calculator::class.java)
-        intent.putExtra("newGameRound", "true")
+        intent.putExtra("newGameRoundFlag", "true")
         resultLauncherNG.launch(intent)
         overridePendingTransition(R.anim.left_right, R.anim.nothing)
     }
@@ -120,7 +121,6 @@ class ListView : ComponentActivity() {
             val data: Intent? = result.data
 
             val exsistingGameHand = Gson().fromJson(data?.getStringExtra("gameRound"), GameHand::class.java)
-
             gameHands[data?.getStringExtra("index")?.let { Integer.parseInt(it) }!!] = exsistingGameHand
 
             updateScoreBoard()
