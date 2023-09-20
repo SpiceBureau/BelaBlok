@@ -261,16 +261,29 @@ class ListView : ComponentActivity() {
         val xValues = ArrayList<Double>() // runde
         val yValuesMi = ArrayList<Double>() // iznosi rundi (akumulirani)
         val yValuesVi = ArrayList<Double>()
-        var handIndex = 1.0
+        var handIndex = 0.0
 
         var miPointsSum = 0.0
         var viPointsSum = 0.0
 
+        xValues.add(handIndex)
+        yValuesMi.add( miPointsSum )
+        yValuesVi.add( viPointsSum )
+
         for (gr in gameHands){
+            handIndex += 1
             if (gr.matchPointsListItemFlag) {
+                handIndex = 0.0
                 miPointsSum = 0.0
                 viPointsSum = 0.0
-                handIndex = 1.0
+
+                xValues.clear()
+                yValuesMi.clear()
+                yValuesVi.clear()
+
+                xValues.add(handIndex)
+                yValuesMi.add( miPointsSum )
+                yValuesVi.add( viPointsSum )
                 continue
             }
             miPointsSum += (gr.getMiPointsSum().toDouble())
@@ -278,7 +291,6 @@ class ListView : ComponentActivity() {
             xValues.add(handIndex)
             yValuesMi.add( miPointsSum )
             yValuesVi.add( viPointsSum )
-            handIndex += 1
         }
         myIntent.putExtra("xValues", xValues)
         myIntent.putExtra("yValuesMi", yValuesMi)

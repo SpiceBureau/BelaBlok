@@ -42,22 +42,21 @@ class Stats : ComponentActivity() {
 
 
         var maxYValue = 0.0
+        var indexCounter = 0
 
         val seriesMi = LineGraphSeries<DataPoint>()
         seriesMi.color = Color.parseColor("#03dac6")
         val seriesVi = LineGraphSeries<DataPoint>()
         seriesVi.color = Color.parseColor("#da6b03")
         if (xValues != null && yValuesMi != null && yValuesVi != null) {
-            var indexCounter = 0
             for (xvalue in xValues) {
+                indexCounter = xvalue.toInt()
                 val dataPointMi = DataPoint(xvalue, yValuesMi[indexCounter])
                 val dataPointVi = DataPoint(xvalue, yValuesVi[indexCounter])
                 seriesMi.appendData(dataPointMi, true, 100)
                 seriesVi.appendData(dataPointVi, true, 100)
 
                 maxYValue = if (yValuesMi[indexCounter] > yValuesVi[indexCounter]) yValuesMi[indexCounter] else yValuesVi[indexCounter]
-
-                indexCounter += 1
             }
 
             val graphView: GraphView = findViewById(R.id.graph)
@@ -71,11 +70,11 @@ class Stats : ComponentActivity() {
             graphView.addSeries(seriesVi)
 
             graphView.viewport.setMaxY(maxYValue + 100.0)
-            graphView.viewport.setMaxX(indexCounter.toDouble() - 1.0)
+            graphView.viewport.setMaxX(indexCounter.toDouble())
             graphView.viewport.isXAxisBoundsManual = true
             graphView.viewport.isYAxisBoundsManual = true
 
-            val horizontalLineSeries = LineGraphSeries<DataPoint>(
+/*            val horizontalLineSeries = LineGraphSeries<DataPoint>(
                 arrayOf<DataPoint>(
                     DataPoint(0.0, 1000.0),
                     DataPoint(indexCounter.toDouble() - 1.0, 1000.0)
@@ -85,7 +84,7 @@ class Stats : ComponentActivity() {
             horizontalLineSeries.isDrawDataPoints = false
             horizontalLineSeries.isDrawBackground = false
 
-            graphView.addSeries(horizontalLineSeries);
+            graphView.addSeries(horizontalLineSeries);*/
         }
     }
 
