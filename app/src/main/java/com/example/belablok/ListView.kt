@@ -63,9 +63,16 @@ class ListView : ComponentActivity() {
         listView.adapter = customAdapter
         listView.isClickable = true
         listView.setOnItemClickListener { adapterView, view, i, l ->
-            val data = Gson().toJson(gameHands[i])
-            //gameRounds[i] = GameRound()
-            openCalculator(data, i)
+            if (gameHands[i].matchPointsListItemFlag) {
+                val myIntent = setUpGraphData(i)
+                resultLauncher.launch(myIntent)
+                overridePendingTransition(R.anim.up_down, R.anim.nothing)
+            }
+            else {
+                val data = Gson().toJson(gameHands[i])
+                //gameRounds[i] = GameRound()
+                openCalculator(data, i)
+            }
         }
         listView.setOnItemLongClickListener { adapterView, view, i, l ->
 
@@ -92,7 +99,7 @@ class ListView : ComponentActivity() {
     override fun onTouchEvent(event: MotionEvent): Boolean {
         return when (event.action) {
             MotionEvent.ACTION_UP -> {
-                val myIntent = setUpGraphData()
+                val myIntent = setUpGraphData(gameHands.size)
                 resultLauncher.launch(myIntent)
                 overridePendingTransition(R.anim.up_down, R.anim.nothing)
                 true
@@ -254,7 +261,7 @@ class ListView : ComponentActivity() {
         matchWonDialog.show()
     }
 
-    private fun setUpGraphData(): Intent {
+    private fun setUpGraphData(matchIndex: Int): Intent {
         val myIntent = Intent(this, Stats::class.java)
 
         val xValues = ArrayList<Double>() // runde
@@ -270,6 +277,7 @@ class ListView : ComponentActivity() {
         yValuesVi.add( viPointsSum )
 
         for (gr in gameHands){
+            if (gameHands.indexOf(gr) == matchIndex) { break }
             handIndex += 1
             if (gr.matchPointsListItemFlag) {
                 handIndex = 0.0

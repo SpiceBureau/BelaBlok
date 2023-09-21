@@ -66,6 +66,7 @@ class Stats : ComponentActivity() {
 
 
             graphView.viewport.isScalable = true;
+            graphView.viewport.setScalableY(true);
             graphView.addSeries(seriesMi)
             graphView.addSeries(seriesVi)
 
@@ -74,17 +75,17 @@ class Stats : ComponentActivity() {
             graphView.viewport.isXAxisBoundsManual = true
             graphView.viewport.isYAxisBoundsManual = true
 
-/*            val horizontalLineSeries = LineGraphSeries<DataPoint>(
+            val horizontalLineSeries = LineGraphSeries<DataPoint>(
                 arrayOf<DataPoint>(
                     DataPoint(0.0, 1000.0),
-                    DataPoint(indexCounter.toDouble() - 1.0, 1000.0)
+                    DataPoint(indexCounter.toDouble(), 1000.0)
                 )
             )
             horizontalLineSeries.color = Color.RED
             horizontalLineSeries.isDrawDataPoints = false
             horizontalLineSeries.isDrawBackground = false
 
-            graphView.addSeries(horizontalLineSeries);*/
+            graphView.addSeries(horizontalLineSeries);
         }
     }
 
