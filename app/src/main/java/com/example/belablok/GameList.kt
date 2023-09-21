@@ -34,6 +34,10 @@ class GameList : ComponentActivity() {
     lateinit var tvNG: TextView
     var globalMiMatchPoints = 0
     var globalViMatchPoints = 0
+    var player1 = ""
+    var player2 = ""
+    var player3 = ""
+    var player4 = ""
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +46,11 @@ class GameList : ComponentActivity() {
         setContentView(R.layout.listview_activity)
 
         this.actionBar?.hide()
+
+        player1 = intent.getStringExtra("Player1").toString()
+        player2 = intent.getStringExtra("Player2").toString()
+        player3 = intent.getStringExtra("Player3").toString()
+        player4 = intent.getStringExtra("Player4").toString()
 
         tvNG = findViewById(R.id.tvNG)
         tvMiPoints = findViewById(R.id.tvMiPoints)

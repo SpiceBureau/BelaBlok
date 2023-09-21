@@ -13,4 +13,5 @@
     <color name="viColorDisplay">#6C3603</color>
     <color name="background">#755858</color>
     <color name="base_background">#303030</color>
+    <color name="base_background_light">#5c5b5b</color>
 </resources>
