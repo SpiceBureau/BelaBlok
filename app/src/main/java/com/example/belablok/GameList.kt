@@ -9,7 +9,7 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.Window
 import android.widget.ListView
@@ -19,7 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.google.gson.Gson
 
 
-class ListView : ComponentActivity() {
+class GameList : ComponentActivity() {
 
     var gameHands = mutableListOf<GameHand>()
     lateinit var listView: ListView
@@ -94,6 +94,14 @@ class ListView : ComponentActivity() {
                 .show()
             true
         }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            showConfirmationDialog()
+            return true // Consume the event, so the default back button behavior is not triggered
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -305,5 +313,18 @@ class ListView : ComponentActivity() {
 
         return myIntent
 
+    }
+
+    private fun showConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("Do you want to go back to Activity A?")
+            .setPositiveButton("Yes") { dialog, id -> // If the user confirms, finish Activity B and go back to Activity A
+                finish()
+            }
+            .setNegativeButton("No") { dialog, id -> // If the user cancels, dismiss the dialog and stay in Activity B
+                dialog.dismiss()
+            }
+        val dialog = builder.create()
+        dialog.show()
     }
 }
