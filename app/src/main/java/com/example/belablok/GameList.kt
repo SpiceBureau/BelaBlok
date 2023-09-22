@@ -326,7 +326,7 @@ class GameList : ComponentActivity() {
 
     private fun showConfirmationDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setMessage("Do you want to go back to Activity A?")
+        builder.setMessage("Return to title screen?")
             .setPositiveButton("Yes") { dialog, id -> // If the user confirms, finish Activity B and go back to Activity A
                 finish()
             }

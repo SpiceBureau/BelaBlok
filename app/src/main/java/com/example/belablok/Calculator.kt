@@ -55,7 +55,7 @@ class Calculator : AppCompatActivity() {
         val ctv100VI: TextView = findViewById(R.id.ctv100VI)
         val btnStiljonz: Button = findViewById(R.id.btnŠtiljonž)
 
-        val btnClear: Button = findViewById(R.id.btnClear)
+        val btnClear: ImageView = findViewById(R.id.btnClear)
         val btnPad: Button = findViewById(R.id.btnPad)
         val btnDone: Button = findViewById(R.id.btnDone)
 
