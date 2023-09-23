@@ -2,6 +2,8 @@ package com.example.belablok
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -126,47 +128,55 @@ class Calculator : AppCompatActivity() {
             player4Name.text -> player4ShuffleImageView.setImageResource(R.drawable.cards_shufflevmvm)
         }
 
-        miScoreInput.addTextChangedListener {
-            if (currentFocus != miScoreInput) { return@addTextChangedListener }
-            val player1Input = miScoreInput.text.toString().toIntOrNull() ?: return@addTextChangedListener
+        val miScoreTextWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (currentFocus != miScoreInput) { return }
+                val player1Input = miScoreInput.text.toString().toIntOrNull() ?: return
 
-            player1Score = player1Input
-            val difference = roundPoints - player1Score
-            player2Score = if (difference >= 0) difference
-            else 0
+                player1Score = player1Input
+                val difference = roundPoints - player1Score
+                player2Score = if (difference >= 0) difference
+                else 0
 
-            if (player2Score == 0) viScoreInput.setText("")
-            else viScoreInput.setText(player2Score.toString())
+                if (player2Score == 0) viScoreInput.setText("")
+                else viScoreInput.setText(player2Score.toString())
 
-            gameHand.miPoints = player1Score.toString()
-            gameHand.viPoints = player2Score.toString()
-
-            updateDisplay(miScoreInput, viScoreInput)
+                gameHand.miPoints = player1Score.toString()
+                gameHand.viPoints = player2Score.toString()
+            }
+            override fun afterTextChanged(s: Editable?) {}
         }
-        viScoreInput.addTextChangedListener {
-            if (currentFocus != viScoreInput) { return@addTextChangedListener }
-            val player2Input = viScoreInput.text.toString().toIntOrNull() ?: return@addTextChangedListener
 
-            player2Score = player2Input
-            val difference = roundPoints - player2Score
-            player1Score = if (difference >= 0) difference
-            else 0
+        val viScoreTextWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                Log.v("wtf", s.toString())
+                if (currentFocus != viScoreInput) { return }
+                val player2Input = viScoreInput.text.toString().toIntOrNull() ?: return
 
-            if (player1Score == 0) miScoreInput.setText("")
-            else miScoreInput.setText(player1Score.toString())
+                player2Score = player2Input
+                val difference = roundPoints - player2Score
+                player1Score = if (difference >= 0) difference
+                else 0
 
-            miScoreInput.setText(player1Score.toString())
-            gameHand.miPoints = player1Score.toString()
-            gameHand.viPoints = player2Score.toString()
+                if (player1Score == 0) miScoreInput.setText("")
+                else miScoreInput.setText(player1Score.toString())
 
-            updateDisplay(miScoreInput, viScoreInput)
+                gameHand.miPoints = player1Score.toString()
+                gameHand.viPoints = player2Score.toString()
+            }
+            override fun afterTextChanged(s: Editable?) {}
         }
+
+        miScoreInput.addTextChangedListener(miScoreTextWatcher)
+        viScoreInput.addTextChangedListener(viScoreTextWatcher)
 
         miScoreInput.setOnClickListener {
             openMiEditText(miScoreInput)
         }
         viScoreInput.setOnClickListener {
-            openViEditText(viScoreInput)
+            openMiEditText(viScoreInput)
         }
 
 
@@ -243,7 +253,11 @@ class Calculator : AppCompatActivity() {
                 ctv20MI.text = gameHand.numOf20CallsMi.toString()
             }
 
+            miScoreInput.removeTextChangedListener(miScoreTextWatcher)
+            viScoreInput.removeTextChangedListener(viScoreTextWatcher)
             updateDisplay(miScoreInput, viScoreInput)
+            miScoreInput.addTextChangedListener(miScoreTextWatcher)
+            viScoreInput.addTextChangedListener(viScoreTextWatcher)
         }
         btn20.setOnLongClickListener {
             if (pointDirection.isChecked){
@@ -262,7 +276,11 @@ class Calculator : AppCompatActivity() {
                     showHide(ctv20MI, View.GONE)
                 }
             }
+            miScoreInput.removeTextChangedListener(miScoreTextWatcher)
+            viScoreInput.removeTextChangedListener(viScoreTextWatcher)
             updateDisplay(miScoreInput, viScoreInput)
+            miScoreInput.addTextChangedListener(miScoreTextWatcher)
+            viScoreInput.addTextChangedListener(viScoreTextWatcher)
             true
         }
 
@@ -281,7 +299,11 @@ class Calculator : AppCompatActivity() {
                 gameHand.numOf50CallsMi += 1
                 ctv50MI.text = gameHand.numOf50CallsMi.toString()
             }
+            miScoreInput.removeTextChangedListener(miScoreTextWatcher)
+            viScoreInput.removeTextChangedListener(viScoreTextWatcher)
             updateDisplay(miScoreInput, viScoreInput)
+            miScoreInput.addTextChangedListener(miScoreTextWatcher)
+            viScoreInput.addTextChangedListener(viScoreTextWatcher)
         }
         btn50.setOnLongClickListener {
             if (pointDirection.isChecked) {
@@ -303,7 +325,11 @@ class Calculator : AppCompatActivity() {
                     showHide(ctv50MI, View.GONE)
                 }
             }
+            miScoreInput.removeTextChangedListener(miScoreTextWatcher)
+            viScoreInput.removeTextChangedListener(viScoreTextWatcher)
             updateDisplay(miScoreInput, viScoreInput)
+            miScoreInput.addTextChangedListener(miScoreTextWatcher)
+            viScoreInput.addTextChangedListener(viScoreTextWatcher)
             true
         }
 
@@ -322,7 +348,11 @@ class Calculator : AppCompatActivity() {
                 gameHand.numOf100CallsMi += 1
                 ctv100MI.text = gameHand.numOf100CallsMi.toString()
             }
+            miScoreInput.removeTextChangedListener(miScoreTextWatcher)
+            viScoreInput.removeTextChangedListener(viScoreTextWatcher)
             updateDisplay(miScoreInput, viScoreInput)
+            miScoreInput.addTextChangedListener(miScoreTextWatcher)
+            viScoreInput.addTextChangedListener(viScoreTextWatcher)
         }
         btn100.setOnLongClickListener {
             if (pointDirection.isChecked) {
@@ -344,7 +374,11 @@ class Calculator : AppCompatActivity() {
                     showHide(ctv100MI, View.GONE)
                 }
             }
+            miScoreInput.removeTextChangedListener(miScoreTextWatcher)
+            viScoreInput.removeTextChangedListener(viScoreTextWatcher)
             updateDisplay(miScoreInput, viScoreInput)
+            miScoreInput.addTextChangedListener(miScoreTextWatcher)
+            viScoreInput.addTextChangedListener(viScoreTextWatcher)
             true
         }
 
@@ -359,13 +393,21 @@ class Calculator : AppCompatActivity() {
                 gameHand.numOf150CallsVi = 0
                 btn150.setTextColor(getColor(R.color.miColor))
             }
+            miScoreInput.removeTextChangedListener(miScoreTextWatcher)
+            viScoreInput.removeTextChangedListener(viScoreTextWatcher)
             updateDisplay(miScoreInput, viScoreInput)
+            miScoreInput.addTextChangedListener(miScoreTextWatcher)
+            viScoreInput.addTextChangedListener(viScoreTextWatcher)
         }
         btn150.setOnLongClickListener {
             gameHand.numOf150CallsMi = 0
             gameHand.numOf150CallsVi = 0
             btn150.setTextColor(getColor(R.color.white))
+            miScoreInput.removeTextChangedListener(miScoreTextWatcher)
+            viScoreInput.removeTextChangedListener(viScoreTextWatcher)
             updateDisplay(miScoreInput, viScoreInput)
+            miScoreInput.addTextChangedListener(miScoreTextWatcher)
+            viScoreInput.addTextChangedListener(viScoreTextWatcher)
             true
         }
 
@@ -380,14 +422,22 @@ class Calculator : AppCompatActivity() {
                 gameHand.numOf200CallsVi = 0
                 btn200.setTextColor(getColor(R.color.miColor))
             }
+            miScoreInput.removeTextChangedListener(miScoreTextWatcher)
+            viScoreInput.removeTextChangedListener(viScoreTextWatcher)
             updateDisplay(miScoreInput, viScoreInput)
+            miScoreInput.addTextChangedListener(miScoreTextWatcher)
+            viScoreInput.addTextChangedListener(viScoreTextWatcher)
         }
         btn200.setOnLongClickListener {
             gameHand.numOf200CallsMi = 0
             gameHand.numOf200CallsVi = 0
             btn200.setTextColor(getColor(R.color.white))
 
+            miScoreInput.removeTextChangedListener(miScoreTextWatcher)
+            viScoreInput.removeTextChangedListener(viScoreTextWatcher)
             updateDisplay(miScoreInput, viScoreInput)
+            miScoreInput.addTextChangedListener(miScoreTextWatcher)
+            viScoreInput.addTextChangedListener(viScoreTextWatcher)
             true
         }
 
@@ -412,14 +462,22 @@ class Calculator : AppCompatActivity() {
                 viScoreInput.setText("0")
                 btnStiljonz.setTextColor(getColor(R.color.miColor))
             }
+            miScoreInput.removeTextChangedListener(miScoreTextWatcher)
+            viScoreInput.removeTextChangedListener(viScoreTextWatcher)
             updateDisplay(miScoreInput, viScoreInput)
+            miScoreInput.addTextChangedListener(miScoreTextWatcher)
+            viScoreInput.addTextChangedListener(viScoreTextWatcher)
         }
         btnStiljonz.setOnLongClickListener {
             gameHand.stiljaMi = 0
             gameHand.stiljaVi = 0
             btnStiljonz.setTextColor(getColor(R.color.white))
 
+            miScoreInput.removeTextChangedListener(miScoreTextWatcher)
+            viScoreInput.removeTextChangedListener(viScoreTextWatcher)
             updateDisplay(miScoreInput, viScoreInput)
+            miScoreInput.addTextChangedListener(miScoreTextWatcher)
+            viScoreInput.addTextChangedListener(viScoreTextWatcher)
             true
         }
 
@@ -448,8 +506,6 @@ class Calculator : AppCompatActivity() {
 
             btnStiljonz.setTextColor(getColor(R.color.white))
             btnPad.setImageResource(R.drawable.falling_downw)
-
-            updateDisplay(miScoreInput, viScoreInput)
         }
 
         btnPad.setOnClickListener {
@@ -474,7 +530,11 @@ class Calculator : AppCompatActivity() {
                 viScoreInput.setText("162")
                 btnPad.setImageResource(R.drawable.falling_downmi)
             }
+            miScoreInput.removeTextChangedListener(miScoreTextWatcher)
+            viScoreInput.removeTextChangedListener(viScoreTextWatcher)
             updateDisplay(miScoreInput, viScoreInput)
+            miScoreInput.addTextChangedListener(miScoreTextWatcher)
+            viScoreInput.addTextChangedListener(viScoreTextWatcher)
         }
 
         btnDone.setOnClickListener {
@@ -534,9 +594,9 @@ class Calculator : AppCompatActivity() {
     private fun showHide(view: View, visibility: Int) {
         view.visibility = if (visibility == View.GONE) View.GONE else View.VISIBLE
     }
-    private fun updateDisplay(miScoreDisplay: TextView, viScoreDisplay: TextView) {
-        /*miScoreDisplay.text = gameHand.getMiPointsSum().toString()
-        viScoreDisplay.text = gameHand.getViPointsSum().toString()*/
+    private fun updateDisplay(miScoreDisplay: EditText, viScoreDisplay: EditText) {
+        miScoreDisplay.setText(gameHand.getMiPointsSum().toString())
+        viScoreDisplay.setText(gameHand.getViPointsSum().toString())
     }
     private fun openMiEditText(miScoreInput: EditText) {
         miScoreInput.requestFocus()

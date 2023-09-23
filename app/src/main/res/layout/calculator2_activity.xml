@@ -189,6 +189,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minWidth="120dp"
         android:id="@+id/etMi"
         app:layout_constraintTop_toBottomOf="@+id/divider1"
         app:layout_constraintBottom_toTopOf="@+id/divider2"
@@ -201,7 +202,7 @@
         android:background="@null"
         android:textColorHint="@color/miColor"
         android:gravity="center"
-        android:textSize="85sp"
+        android:textSize="80sp"
         android:textStyle="bold"
         android:imeOptions="actionDone"
         android:textColor="@color/miColor">
@@ -210,6 +211,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minWidth="120dp"
         android:id="@+id/etVi"
         app:layout_constraintTop_toBottomOf="@+id/divider1"
         app:layout_constraintBottom_toTopOf="@+id/divider2"
@@ -222,7 +224,7 @@
         android:background="@null"
         android:textColorHint="@color/viColor"
         android:gravity="center"
-        android:textSize="85sp"
+        android:textSize="80sp"
         android:textStyle="bold"
         android:imeOptions="actionDone"
         android:textColor="@color/viColor">
