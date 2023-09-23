@@ -3,12 +3,14 @@ package com.example.belablok
 class GameHand{
 
     var matchPointsListItemFlag = false
+    var matchWin = ""
     var miMatchPoints = 0
     var viMatchPoints = 0
 
     var miPoints: String = "0"
     var viPoints: String = "0"
     var adut: String = "null"
+    var shuffler: String = ""
 
     var numOf20CallsMi = 0
     var numOf50CallsMi = 0

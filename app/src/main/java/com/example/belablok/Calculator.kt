@@ -56,8 +56,18 @@ class Calculator : AppCompatActivity() {
         val btnStiljonz: Button = findViewById(R.id.btnŠtiljonž)
 
         val btnClear: ImageView = findViewById(R.id.btnClear)
-        val btnPad: Button = findViewById(R.id.btnPad)
+        val btnPad: ImageView = findViewById(R.id.btnPad)
         val btnDone: Button = findViewById(R.id.btnDone)
+
+        val player1ShuffleImageView: ImageView = findViewById(R.id.player1ShuffleImg)
+        val player2ShuffleImageView: ImageView = findViewById(R.id.player2ShuffleImg)
+        val player3ShuffleImageView: ImageView = findViewById(R.id.player3ShuffleImg)
+        val player4ShuffleImageView: ImageView = findViewById(R.id.player4ShuffleImg)
+
+        val player1Name: TextView = findViewById(R.id.player1)
+        val player2Name: TextView = findViewById(R.id.player2)
+        val player3Name: TextView = findViewById(R.id.player3)
+        val player4Name: TextView = findViewById(R.id.player4)
 
         if (intent.getStringExtra("newGameRoundFlag") == "false") {
             gameHand = Gson().fromJson(intent.getStringExtra("gameRound"), GameHand::class.java)
@@ -103,6 +113,20 @@ class Calculator : AppCompatActivity() {
             if (gameHand.numOf200CallsVi == 1) { btn200.setTextColor(getColor(R.color.viColor)) }
             if (gameHand.stiljaMi == 1) { btnStiljonz.setTextColor(getColor(R.color.miColor)) }
             if (gameHand.stiljaVi == 1) { btnStiljonz.setTextColor(getColor(R.color.viColor)) }
+        }
+
+        player1Name.text = intent.getStringExtra("Player1")
+        player2Name.text = intent.getStringExtra("Player2")
+        player3Name.text = intent.getStringExtra("Player3")
+        player4Name.text = intent.getStringExtra("Player4")
+
+        gameHand.shuffler = intent.getStringExtra("shuffler").toString()
+
+        when (gameHand.shuffler){
+            player1Name.text -> player1ShuffleImageView.setImageResource(R.drawable.cards_shufflemvmv)
+            player2Name.text -> player2ShuffleImageView.setImageResource(R.drawable.cards_shufflevmvm)
+            player3Name.text -> player3ShuffleImageView.setImageResource(R.drawable.cards_shufflemvmv)
+            player4Name.text -> player4ShuffleImageView.setImageResource(R.drawable.cards_shufflevmvm)
         }
 
         miScoreInput.addTextChangedListener {
@@ -424,6 +448,7 @@ class Calculator : AppCompatActivity() {
             btn200.setTextColor(getColor(R.color.white))
 
             btnStiljonz.setTextColor(getColor(R.color.white))
+            btnPad.setImageResource(R.drawable.falling_downw)
 
             updateDisplay(miScoreSumDisplay, viScoreSumDisplay)
         }
@@ -437,6 +462,8 @@ class Calculator : AppCompatActivity() {
 
                 gameHand.viPoints = "0"
                 viScoreInput.setText("")
+
+                btnPad.setImageResource(R.drawable.falling_downvi)
             }
             else {
                 gameHand.miPoints = "0"
@@ -446,6 +473,7 @@ class Calculator : AppCompatActivity() {
 
                 gameHand.viPoints = "162"
                 viScoreInput.setText("162")
+                btnPad.setImageResource(R.drawable.falling_downmi)
             }
             updateDisplay(miScoreSumDisplay, viScoreSumDisplay)
         }

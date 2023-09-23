@@ -9,6 +9,7 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.Window
@@ -38,6 +39,7 @@ class GameList : ComponentActivity() {
     var player2 = ""
     var player3 = ""
     var player4 = ""
+    var playerToShuffle = ""
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,9 +50,11 @@ class GameList : ComponentActivity() {
         this.actionBar?.hide()
 
         player1 = intent.getStringExtra("Player1").toString()
+        Log.v("player1", player1)
         player2 = intent.getStringExtra("Player2").toString()
         player3 = intent.getStringExtra("Player3").toString()
         player4 = intent.getStringExtra("Player4").toString()
+        playerToShuffle = player1
 
         tvNG = findViewById(R.id.tvNG)
         tvMiPoints = findViewById(R.id.tvMiPoints)
@@ -135,6 +139,44 @@ class GameList : ComponentActivity() {
     private fun openCalculatorNewGame() {
         val intent = Intent(this, Calculator::class.java)
         intent.putExtra("newGameRoundFlag", "true")
+
+        intent.putExtra("Player1", player1)
+        intent.putExtra("Player2", player2)
+        intent.putExtra("Player3", player3)
+        intent.putExtra("Player4", player4)
+
+        if (gameHands.size == 0) { intent.putExtra("shuffler", player1) }
+        else {
+            if (!gameHands.last().matchPointsListItemFlag) {
+                when (gameHands.last().shuffler){
+                    player1 -> intent.putExtra("shuffler", player2)
+                    player2 -> intent.putExtra("shuffler", player3)
+                    player3 -> intent.putExtra("shuffler", player4)
+                    player4 -> intent.putExtra("shuffler", player1)
+                }
+            }
+            else {
+                if (gameHands.last().matchWin == "Mi") {
+                    when (gameHands.elementAt(gameHands.size - 2).shuffler){
+                        player1 -> intent.putExtra("shuffler", player3)
+                        player2 -> intent.putExtra("shuffler", player3)
+                        player3 -> intent.putExtra("shuffler", player1)
+                        player4 -> intent.putExtra("shuffler", player1)
+                    }
+                }
+                else {
+                    when (gameHands.elementAt(gameHands.size - 2).shuffler){
+                        player1 -> intent.putExtra("shuffler", player2)
+                        player2 -> intent.putExtra("shuffler", player4)
+                        player3 -> intent.putExtra("shuffler", player4)
+                        player4 -> intent.putExtra("shuffler", player2)
+                    }
+                }
+            }
+
+        }
+
+
         resultLauncherNG.launch(intent)
         overridePendingTransition(R.anim.left_right, R.anim.nothing)
     }
@@ -205,8 +247,14 @@ class GameList : ComponentActivity() {
     private fun setUpNewGame(miPointsSum: Int) {
         val matchPointListItem = GameHand()
 
-        if (miPointsSum >= 1001){ globalMiMatchPoints += 1}
-        else { globalViMatchPoints += 1 }
+        if (miPointsSum >= 1001){
+            globalMiMatchPoints += 1
+            matchPointListItem.matchWin = "Mi"
+        }
+        else {
+            globalViMatchPoints += 1
+            matchPointListItem.matchWin = "Vi"
+        }
 
         matchPointListItem.miMatchPoints = globalMiMatchPoints
         matchPointListItem.viMatchPoints = globalViMatchPoints

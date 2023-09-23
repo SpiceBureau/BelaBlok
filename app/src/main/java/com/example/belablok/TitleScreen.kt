@@ -32,10 +32,10 @@ class TitleScreen : AppCompatActivity() {
 
         kingsImage.setOnClickListener {
             val intent = Intent(this, GameList::class.java)
-            intent.putExtra("Player1", player1Name.text)
-            intent.putExtra("Player2", player2Name.text)
-            intent.putExtra("Player3", player3Name.text)
-            intent.putExtra("Player4", player4Name.text)
+            intent.putExtra("Player1", player1Name.text.toString())
+            intent.putExtra("Player2", player2Name.text.toString())
+            intent.putExtra("Player3", player3Name.text.toString())
+            intent.putExtra("Player4", player4Name.text.toString())
             startActivity(intent)
 
             overridePendingTransition(R.anim.left_right, R.anim.nothing)
