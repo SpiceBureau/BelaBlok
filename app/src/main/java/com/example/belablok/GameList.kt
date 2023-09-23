@@ -133,6 +133,11 @@ class GameList : ComponentActivity() {
         intent.putExtra("gameRound", data)
         intent.putExtra("index", i.toString())
         intent.putExtra("newGameRoundFlag", "false")
+        intent.putExtra("Player1", player1)
+        intent.putExtra("Player2", player2)
+        intent.putExtra("Player3", player3)
+        intent.putExtra("Player4", player4)
+
         resultLauncher.launch(intent)
         overridePendingTransition(R.anim.left_right, R.anim.nothing)
     }

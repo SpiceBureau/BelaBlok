@@ -68,6 +68,11 @@ class Calculator : AppCompatActivity() {
         val player3Name: TextView = findViewById(R.id.player3)
         val player4Name: TextView = findViewById(R.id.player4)
 
+        player1Name.text = intent.getStringExtra("Player1")
+        player2Name.text = intent.getStringExtra("Player2")
+        player3Name.text = intent.getStringExtra("Player3")
+        player4Name.text = intent.getStringExtra("Player4")
+
         if (intent.getStringExtra("newGameRoundFlag") == "false") {
             gameHand = Gson().fromJson(intent.getStringExtra("gameRound"), GameHand::class.java)
             gameRoundIndex = intent.getStringExtra("index")?.let { Integer.parseInt(it) }!!
@@ -75,6 +80,21 @@ class Calculator : AppCompatActivity() {
             miScoreInput.setText(gameHand.miPoints)
             viScoreInput.setText(gameHand.viPoints)
             updateDisplay(miScoreInput, viScoreInput)
+
+            Log.v("players", gameHand.shuffler)
+            when (gameHand.shuffler){
+                player1Name.text -> player1ShuffleImageView.setImageResource(R.drawable.cards_shufflemvmv)
+                player2Name.text -> player2ShuffleImageView.setImageResource(R.drawable.cards_shufflevmvm)
+                player3Name.text -> player3ShuffleImageView.setImageResource(R.drawable.cards_shufflemvmv)
+                player4Name.text -> player4ShuffleImageView.setImageResource(R.drawable.cards_shufflevmvm)
+            }
+
+            when (gameHand.caller){
+                player1Name.text -> player1Name.setBackgroundResource(R.drawable.rounded_text_mi)
+                player2Name.text -> player2Name.setBackgroundResource(R.drawable.rounded_text_vi)
+                player3Name.text -> player3Name.setBackgroundResource(R.drawable.rounded_text_mi)
+                player4Name.text -> player4Name.setBackgroundResource(R.drawable.rounded_text_vi)
+            }
 
             when (gameHand.adut) {
                 "herc" -> hercButton.setImageResource(R.drawable.herc)
@@ -113,13 +133,7 @@ class Calculator : AppCompatActivity() {
             if (gameHand.stiljaMi == 1) { btnStiljonz.setTextColor(getColor(R.color.miColor)) }
             if (gameHand.stiljaVi == 1) { btnStiljonz.setTextColor(getColor(R.color.viColor)) }
         }
-
-        player1Name.text = intent.getStringExtra("Player1")
-        player2Name.text = intent.getStringExtra("Player2")
-        player3Name.text = intent.getStringExtra("Player3")
-        player4Name.text = intent.getStringExtra("Player4")
-
-        gameHand.shuffler = intent.getStringExtra("shuffler").toString()
+        else { gameHand.shuffler = intent.getStringExtra("shuffler").toString() }
 
         when (gameHand.shuffler){
             player1Name.text -> player1ShuffleImageView.setImageResource(R.drawable.cards_shufflemvmv)
@@ -551,6 +565,9 @@ class Calculator : AppCompatActivity() {
             if (gameHand.caller != player1Name.text.toString()) {
                 gameHand.caller = player1Name.text.toString()
                 player1Name.setBackgroundResource(R.drawable.rounded_text_mi)
+                player2Name.setBackgroundResource(R.drawable.rounded_text_neutral)
+                player3Name.setBackgroundResource(R.drawable.rounded_text_neutral)
+                player4Name.setBackgroundResource(R.drawable.rounded_text_neutral)
             }
             else {
                 gameHand.caller = ""
@@ -561,7 +578,10 @@ class Calculator : AppCompatActivity() {
         player2Name.setOnClickListener {
             if (gameHand.caller != player2Name.text.toString()) {
                 gameHand.caller = player2Name.text.toString()
+                player1Name.setBackgroundResource(R.drawable.rounded_text_neutral)
                 player2Name.setBackgroundResource(R.drawable.rounded_text_vi)
+                player3Name.setBackgroundResource(R.drawable.rounded_text_neutral)
+                player4Name.setBackgroundResource(R.drawable.rounded_text_neutral)
             }
             else {
                 gameHand.caller = ""
@@ -572,7 +592,10 @@ class Calculator : AppCompatActivity() {
         player3Name.setOnClickListener {
             if (gameHand.caller != player3Name.text.toString()) {
                 gameHand.caller = player3Name.text.toString()
+                player1Name.setBackgroundResource(R.drawable.rounded_text_neutral)
+                player2Name.setBackgroundResource(R.drawable.rounded_text_neutral)
                 player3Name.setBackgroundResource(R.drawable.rounded_text_mi)
+                player4Name.setBackgroundResource(R.drawable.rounded_text_neutral)
             }
             else {
                 gameHand.caller = ""
@@ -583,6 +606,9 @@ class Calculator : AppCompatActivity() {
         player4Name.setOnClickListener {
             if (gameHand.caller != player4Name.text.toString()) {
                 gameHand.caller = player4Name.text.toString()
+                player1Name.setBackgroundResource(R.drawable.rounded_text_neutral)
+                player2Name.setBackgroundResource(R.drawable.rounded_text_neutral)
+                player3Name.setBackgroundResource(R.drawable.rounded_text_neutral)
                 player4Name.setBackgroundResource(R.drawable.rounded_text_vi)
             }
             else {
