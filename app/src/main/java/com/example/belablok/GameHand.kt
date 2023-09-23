@@ -11,6 +11,7 @@ class GameHand{
     var viPoints: String = "0"
     var adut: String = "null"
     var shuffler: String = ""
+    var caller: String = ""
 
     var numOf20CallsMi = 0
     var numOf50CallsMi = 0

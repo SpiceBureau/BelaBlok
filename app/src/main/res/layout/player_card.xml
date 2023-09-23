@@ -13,7 +13,7 @@
         android:textSize="25dp"
         android:text="Player"
         android:textColor="@color/white"
-        android:background="@drawable/rounded_text"
+        android:background="@drawable/rounded_text_neutral"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"

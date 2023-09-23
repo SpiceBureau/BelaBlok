@@ -487,6 +487,50 @@ class Calculator : AppCompatActivity() {
             finish()
             overridePendingTransition(R.anim.nothing, R.anim.left_rigt_exit)
         }
+
+        player1Name.setOnClickListener {
+            if (gameHand.caller != player1Name.text.toString()) {
+                gameHand.caller = player1Name.text.toString()
+                player1Name.setBackgroundResource(R.drawable.rounded_text_mi)
+            }
+            else {
+                gameHand.caller = ""
+                player1Name.setBackgroundResource(R.drawable.rounded_text_neutral)
+            }
+        }
+
+        player2Name.setOnClickListener {
+            if (gameHand.caller != player2Name.text.toString()) {
+                gameHand.caller = player2Name.text.toString()
+                player2Name.setBackgroundResource(R.drawable.rounded_text_vi)
+            }
+            else {
+                gameHand.caller = ""
+                player2Name.setBackgroundResource(R.drawable.rounded_text_neutral)
+            }
+        }
+
+        player3Name.setOnClickListener {
+            if (gameHand.caller != player3Name.text.toString()) {
+                gameHand.caller = player3Name.text.toString()
+                player3Name.setBackgroundResource(R.drawable.rounded_text_mi)
+            }
+            else {
+                gameHand.caller = ""
+                player3Name.setBackgroundResource(R.drawable.rounded_text_neutral)
+            }
+        }
+
+        player4Name.setOnClickListener {
+            if (gameHand.caller != player4Name.text.toString()) {
+                gameHand.caller = player4Name.text.toString()
+                player4Name.setBackgroundResource(R.drawable.rounded_text_vi)
+            }
+            else {
+                gameHand.caller = ""
+                player4Name.setBackgroundResource(R.drawable.rounded_text_neutral)
+            }
+        }
     }
     private fun showHide(view: View, visibility: Int) {
         view.visibility = if (visibility == View.GONE) View.GONE else View.VISIBLE
