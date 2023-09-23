@@ -2,8 +2,6 @@ package com.example.belablok
 
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.DashPathEffect
-import android.graphics.Paint
 import android.os.Build
 import android.os.Bundle
 import android.view.MotionEvent
@@ -41,39 +39,47 @@ class Stats : ComponentActivity() {
                 "<font color=${Color.parseColor("#da6b03")}> VI</font>", HtmlCompat.FROM_HTML_MODE_LEGACY)
 
 
-        var maxYValue = 0.0
+        var maxYPoinrsValue = 0.0
+        var maxDiffValue = 0.0
         var indexCounter = 0
 
-        val seriesMi = LineGraphSeries<DataPoint>()
-        seriesMi.color = Color.parseColor("#03dac6")
-        val seriesVi = LineGraphSeries<DataPoint>()
-        seriesVi.color = Color.parseColor("#da6b03")
+        val seriesMiPPR = LineGraphSeries<DataPoint>()
+        seriesMiPPR.color = Color.parseColor("#03dac6")
+        val seriesViPPR = LineGraphSeries<DataPoint>()
+        seriesViPPR.color = Color.parseColor("#da6b03")
+        val seriesDiff = LineGraphSeries<DataPoint>()
+        seriesDiff.color = Color.parseColor("#FF0000")
+
+        var lastDiff = 0.0
         if (xValues != null && yValuesMi != null && yValuesVi != null) {
             for (xvalue in xValues) {
                 indexCounter = xvalue.toInt()
                 val dataPointMi = DataPoint(xvalue, yValuesMi[indexCounter])
                 val dataPointVi = DataPoint(xvalue, yValuesVi[indexCounter])
-                seriesMi.appendData(dataPointMi, true, 100)
-                seriesVi.appendData(dataPointVi, true, 100)
+                val dataPointDiff = DataPoint(xvalue, yValuesMi[indexCounter] - yValuesVi[indexCounter] + lastDiff)
+                lastDiff = yValuesMi[indexCounter] - yValuesVi[indexCounter]
+                seriesMiPPR.appendData(dataPointMi, true, 100)
+                seriesViPPR.appendData(dataPointVi, true, 100)
+                seriesDiff.appendData(dataPointDiff, true, 100)
 
-                maxYValue = if (yValuesMi[indexCounter] > yValuesVi[indexCounter]) yValuesMi[indexCounter] else yValuesVi[indexCounter]
+                maxYPoinrsValue = if (yValuesMi[indexCounter] > yValuesVi[indexCounter]) yValuesMi[indexCounter] else yValuesVi[indexCounter]
+                maxDiffValue = if (dataPointDiff.y > maxDiffValue) dataPointDiff.y else maxDiffValue
             }
 
-            val graphView: GraphView = findViewById(R.id.graph)
-            graphView.gridLabelRenderer.verticalLabelsColor = Color.WHITE
-            graphView.gridLabelRenderer.horizontalLabelsColor = Color.WHITE
-            graphView.gridLabelRenderer.gridColor = Color.WHITE
+            val pointsPerRound: GraphView = findViewById(R.id.pointsPerRound)
+            pointsPerRound.gridLabelRenderer.verticalLabelsColor = Color.WHITE
+            pointsPerRound.gridLabelRenderer.horizontalLabelsColor = Color.WHITE
+            pointsPerRound.gridLabelRenderer.gridColor = Color.WHITE
 
+            pointsPerRound.viewport.isScalable = true;
+            pointsPerRound.viewport.setScalableY(true);
+            pointsPerRound.addSeries(seriesMiPPR)
+            pointsPerRound.addSeries(seriesViPPR)
 
-            graphView.viewport.isScalable = true;
-            graphView.viewport.setScalableY(true);
-            graphView.addSeries(seriesMi)
-            graphView.addSeries(seriesVi)
-
-            graphView.viewport.setMaxY(maxYValue + 100.0)
-            graphView.viewport.setMaxX(indexCounter.toDouble())
-            graphView.viewport.isXAxisBoundsManual = true
-            graphView.viewport.isYAxisBoundsManual = true
+            pointsPerRound.viewport.setMaxY(maxYPoinrsValue + 100.0)
+            pointsPerRound.viewport.setMaxX(indexCounter.toDouble())
+            pointsPerRound.viewport.isXAxisBoundsManual = true
+            pointsPerRound.viewport.isYAxisBoundsManual = true
 
             val horizontalLineSeries = LineGraphSeries<DataPoint>(
                 arrayOf<DataPoint>(
@@ -85,7 +91,22 @@ class Stats : ComponentActivity() {
             horizontalLineSeries.isDrawDataPoints = false
             horizontalLineSeries.isDrawBackground = false
 
-            graphView.addSeries(horizontalLineSeries);
+            pointsPerRound.addSeries(horizontalLineSeries)
+
+            val diffPerRound: GraphView = findViewById(R.id.differencePerRound)
+            diffPerRound.gridLabelRenderer.verticalLabelsColor = Color.WHITE
+            diffPerRound.gridLabelRenderer.horizontalLabelsColor = Color.WHITE
+            diffPerRound.gridLabelRenderer.gridColor = Color.WHITE
+
+            diffPerRound.viewport.isScalable = true;
+            diffPerRound.viewport.setScalableY(true);
+            diffPerRound.addSeries(seriesDiff)
+
+            diffPerRound.viewport.setMaxY(maxDiffValue + 50.0)
+            diffPerRound.viewport.setMinY(-200.0)
+            diffPerRound.viewport.setMaxX(indexCounter.toDouble())
+            diffPerRound.viewport.isXAxisBoundsManual = true
+            diffPerRound.viewport.isYAxisBoundsManual = true
         }
     }
 
