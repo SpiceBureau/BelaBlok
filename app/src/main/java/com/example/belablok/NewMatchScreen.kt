@@ -6,17 +6,16 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.Editable
 import android.util.Log
-import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import kotlin.math.ln
 import kotlin.math.pow
 
-class TitleScreen : AppCompatActivity() {
+class NewMatchScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_title_screen)
+        setContentView(R.layout.activity_new_match)
 
         supportActionBar?.hide()
 
