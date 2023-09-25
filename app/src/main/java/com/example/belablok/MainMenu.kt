@@ -5,9 +5,11 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import java.io.File
 
 class MainMenu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,12 +38,12 @@ class MainMenu : AppCompatActivity() {
             dialogBuilder.setView(dialogView)
 
             dialogBuilder.setPositiveButton("OK") { _: DialogInterface, _: Int ->
-                val newUser = editTextDialog.text.toString()
+                val newUser = User(editTextDialog.text.toString())
 
-                val internalStorageManager = InternalStorageManager(this)
-                val usersList = internalStorageManager.getUsers().toMutableList()
+                val dataStorage = UserStorage(applicationContext)
+                val usersList = dataStorage.loadData().toMutableList()
                 usersList.add(newUser)
-                internalStorageManager.saveUsers(usersList)
+                dataStorage.saveData(usersList)
             }
 
             val alertDialog = dialogBuilder.create()
