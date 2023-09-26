@@ -15,6 +15,7 @@
     </style>
 
     <style name="Theme.AppCompat.NoActionBar" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.AppCompat.IDontEvenKnow" parent="android:Theme.NoTitleBar" />
 
     <style name="Theme.AppCompat.Launcher">
         <item name="android:windowBackground">@drawable/launch_screen</item>
