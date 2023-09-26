@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.example.belablok.R
-import com.example.belablok.storage.Match
+import com.example.belablok.storage.data_classes.Match
 
 
 class MatchesListAdapter(
@@ -25,7 +25,7 @@ class MatchesListAdapter(
         val oneMatch = getItem(position)
         if (oneMatch != null) {
             val tv = v!!.findViewById<TextView>(R.id.matchTextView)
-            tv.text = oneMatch.gamehands.size.toString()
+            tv.text = oneMatch.gameRounds?.size.toString()
         }
         return v!!
     }

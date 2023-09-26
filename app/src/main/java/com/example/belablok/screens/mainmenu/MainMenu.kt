@@ -1,4 +1,4 @@
-package com.example.belablok.mainmenu
+package com.example.belablok.screens.mainmenu
 
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -8,11 +8,10 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import com.example.belablok.newmatch.NewMatchScreen
+import com.example.belablok.screens.newmatch.NewMatchScreen
 import com.example.belablok.R
-import com.example.belablok.roundlist.RoundListScreen
-import com.example.belablok.savedMatches.SavedMatches
-import com.example.belablok.storage.User
+import com.example.belablok.screens.savedMatches.SavedMatches
+import com.example.belablok.storage.data_classes.User
 import com.example.belablok.storage.UserStorage
 
 class MainMenu : AppCompatActivity() {

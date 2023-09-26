@@ -1,4 +1,4 @@
-package com.example.belablok.newmatch
+package com.example.belablok.screens.newmatch
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,8 +10,11 @@ import android.widget.ImageView
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import com.example.belablok.R
-import com.example.belablok.roundlist.RoundListScreen
+import com.example.belablok.screens.roundlist.RoundListScreen
 import com.example.belablok.storage.UserStorage
+import com.example.belablok.storage.data_classes.Match
+import com.example.belablok.storage.data_classes.User
+import com.google.gson.Gson
 
 
 class NewMatchScreen : AppCompatActivity() {
@@ -30,12 +33,7 @@ class NewMatchScreen : AppCompatActivity() {
         val dataStorage  = UserStorage(applicationContext)
         val usersList = dataStorage.loadData().map { it.name }
 
-        Log.v("userList", usersList.size.toString())
-        
-        var player1Name = ""
-        var player2Name = ""
-        var player3Name = ""
-        var player4Name = ""
+        val newMatch = Match(mutableListOf(), User(""), User(""), User(""), User(""))
 
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, usersList)
 
@@ -52,28 +50,26 @@ class NewMatchScreen : AppCompatActivity() {
         player4Spinner.adapter = adapter
 
         player1Spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) { player1Name = parent?.selectedItem as String }
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) { newMatch.player1?.name = parent?.selectedItem as String }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
         player2Spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) { player2Name = parent?.selectedItem as String }
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) { newMatch.player2?.name = parent?.selectedItem as String }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
         player3Spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) { player3Name = parent?.selectedItem as String }
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) { newMatch.player3?.name = parent?.selectedItem as String }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
         player4Spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) { player4Name = parent?.selectedItem as String }
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) { newMatch.player4?.name = parent?.selectedItem as String }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
 
         kingsImage.setOnClickListener {
             val intent = Intent(this, RoundListScreen::class.java)
-            intent.putExtra("Player1", player1Name)
-            intent.putExtra("Player2", player2Name)
-            intent.putExtra("Player3", player3Name)
-            intent.putExtra("Player4", player4Name)
+            val data = Gson().toJson(newMatch)
+            intent.putExtra("Current match", data)
             startActivity(intent)
 
             overridePendingTransition(R.anim.left_right, R.anim.nothing)

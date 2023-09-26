@@ -1,6 +1,6 @@
-package com.example.belablok.storage
+package com.example.belablok.storage.data_classes
 
-class GameHand{
+class GameRound{
 
     var matchPointsListItemFlag = false
     var matchWin = ""

@@ -1,4 +1,4 @@
-package com.example.belablok.calculator
+package com.example.belablok.screens.calculator
 
 import android.content.Intent
 import android.graphics.Color

@@ -1,4 +1,4 @@
-package com.example.belablok.roundlist
+package com.example.belablok.screens.roundlist
 
 import android.R.attr.value
 import android.annotation.SuppressLint
@@ -7,8 +7,8 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.Window
@@ -17,17 +17,19 @@ import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.belablok.R
-import com.example.belablok.calculator.CalculatorScreen
-import com.example.belablok.calculator.StatsScreen
-import com.example.belablok.storage.GameHand
-import com.example.belablok.storage.Match
+import com.example.belablok.screens.calculator.CalculatorScreen
+import com.example.belablok.screens.calculator.StatsScreen
+import com.example.belablok.screens.mainmenu.MainMenu
+import com.example.belablok.screens.savedMatches.SavedMatches
+import com.example.belablok.storage.data_classes.GameRound
+import com.example.belablok.storage.data_classes.Match
 import com.example.belablok.storage.MatchStorage
+import com.example.belablok.storage.data_classes.User
 import com.google.gson.Gson
 
 
 class RoundListScreen : ComponentActivity() {
 
-    var gameHands = mutableListOf<GameHand>()
     lateinit var listView: ListView
     lateinit var customAdapter: RoundListAdapter
     lateinit var tvMiPoints: TextView
@@ -40,11 +42,8 @@ class RoundListScreen : ComponentActivity() {
     lateinit var tvNG: TextView
     var globalMiMatchPoints = 0
     var globalViMatchPoints = 0
-    var player1 = ""
-    var player2 = ""
-    var player3 = ""
-    var player4 = ""
-    var playerToShuffle = ""
+    lateinit var playerToShuffle: User
+    lateinit var currentMatch: Match
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,13 +52,6 @@ class RoundListScreen : ComponentActivity() {
         setContentView(R.layout.round_list_activity)
 
         this.actionBar?.hide()
-
-        player1 = intent.getStringExtra("Player1").toString()
-        Log.v("player1", player1)
-        player2 = intent.getStringExtra("Player2").toString()
-        player3 = intent.getStringExtra("Player3").toString()
-        player4 = intent.getStringExtra("Player4").toString()
-        playerToShuffle = player1
 
         tvNG = findViewById(R.id.tvNG)
         tvMiPoints = findViewById(R.id.tvMiPoints)
@@ -71,24 +63,30 @@ class RoundListScreen : ComponentActivity() {
         tvViMatchPoints = findViewById(R.id.viMatchPoints)
 
         listView = findViewById(R.id.listView)
-        customAdapter = RoundListAdapter(this, R.layout.round_list_item, gameHands)
 
-
-        tvNG.setOnClickListener {
-            openCalculatorNewGame()
+        currentMatch = Gson().fromJson(intent.getStringExtra("Current match"), Match::class.java)
+        playerToShuffle = currentMatch.player1!!
+        if (currentMatch.gameRounds?.isNotEmpty() == true){
+            tvNG.setTextColor(Color.GRAY)
         }
+        else {
+            tvNG.setOnClickListener {
+                openCalculatorNewGame()
+            }
+        }
+
+        customAdapter = RoundListAdapter(this, R.layout.round_list_item, currentMatch.gameRounds!!)
 
         listView.adapter = customAdapter
         listView.isClickable = true
         listView.setOnItemClickListener { adapterView, view, i, l ->
-            if (gameHands[i].matchPointsListItemFlag) {
+            if (currentMatch.gameRounds!![i].matchPointsListItemFlag) {
                 val myIntent = setUpGraphData(i)
                 resultLauncher.launch(myIntent)
                 overridePendingTransition(R.anim.up_down, R.anim.nothing)
             }
             else {
-                val data = Gson().toJson(gameHands[i])
-                //gameRounds[i] = GameRound()
+                val data = Gson().toJson(currentMatch.gameRounds!![i])
                 openCalculator(data, i)
             }
         }
@@ -100,9 +98,8 @@ class RoundListScreen : ComponentActivity() {
                 // The dialog is automatically dismissed when a dialog button is clicked.
                 .setPositiveButton("Yes",
                     DialogInterface.OnClickListener { dialog, which ->
-                        if (i == gameHands.size - 2){
-                            gameHands.removeAt(i)
-                            gameHands.removeAt(i)
+                        if (i == currentMatch.gameRounds!!.size - 2){
+                            currentMatch.gameRounds!!.filter { currentMatch.gameRounds!!.indexOf(it) != i }
                             updateScoreBoard()
                             customAdapter.notifyDataSetChanged()
                         }
@@ -116,6 +113,12 @@ class RoundListScreen : ComponentActivity() {
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (intent.getBooleanExtra("Archived", false)) {
+                val intent = Intent(this, SavedMatches::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
+                return true
+            }
             showConfirmationDialog()
             return true // Consume the event, so the default back button behavior is not triggered
         }
@@ -125,7 +128,7 @@ class RoundListScreen : ComponentActivity() {
     override fun onTouchEvent(event: MotionEvent): Boolean {
         return when (event.action) {
             MotionEvent.ACTION_UP -> {
-                val myIntent = setUpGraphData(gameHands.size)
+                val myIntent = setUpGraphData(currentMatch.gameRounds!!.size)
                 resultLauncher.launch(myIntent)
                 overridePendingTransition(R.anim.up_down, R.anim.nothing)
                 true
@@ -138,10 +141,10 @@ class RoundListScreen : ComponentActivity() {
         intent.putExtra("gameRound", data)
         intent.putExtra("index", i.toString())
         intent.putExtra("newGameRoundFlag", "false")
-        intent.putExtra("Player1", player1)
-        intent.putExtra("Player2", player2)
-        intent.putExtra("Player3", player3)
-        intent.putExtra("Player4", player4)
+        intent.putExtra("Player1", currentMatch.player1?.name)
+        intent.putExtra("Player2", currentMatch.player2?.name)
+        intent.putExtra("Player3", currentMatch.player3?.name)
+        intent.putExtra("Player4", currentMatch.player4?.name)
 
         resultLauncher.launch(intent)
         overridePendingTransition(R.anim.left_right, R.anim.nothing)
@@ -150,36 +153,36 @@ class RoundListScreen : ComponentActivity() {
         val intent = Intent(this, CalculatorScreen::class.java)
         intent.putExtra("newGameRoundFlag", "true")
 
-        intent.putExtra("Player1", player1)
-        intent.putExtra("Player2", player2)
-        intent.putExtra("Player3", player3)
-        intent.putExtra("Player4", player4)
+        intent.putExtra("Player1", currentMatch.player1?.name)
+        intent.putExtra("Player2", currentMatch.player2?.name)
+        intent.putExtra("Player3", currentMatch.player3?.name)
+        intent.putExtra("Player4", currentMatch.player4?.name)
 
-        if (gameHands.size == 0) { intent.putExtra("shuffler", player1) }
+        if (currentMatch.gameRounds!!.size == 0) { intent.putExtra("shuffler", currentMatch.player1?.name) }
         else {
-            if (!gameHands.last().matchPointsListItemFlag) {
-                when (gameHands.last().shuffler){
-                    player1 -> intent.putExtra("shuffler", player2)
-                    player2 -> intent.putExtra("shuffler", player3)
-                    player3 -> intent.putExtra("shuffler", player4)
-                    player4 -> intent.putExtra("shuffler", player1)
+            if (!currentMatch.gameRounds!!.last().matchPointsListItemFlag) {
+                when (currentMatch.gameRounds!!.last().shuffler){
+                    currentMatch.player1?.name -> intent.putExtra("shuffler", currentMatch.player2?.name)
+                    currentMatch.player2?.name -> intent.putExtra("shuffler", currentMatch.player3?.name)
+                    currentMatch.player3?.name -> intent.putExtra("shuffler", currentMatch.player4?.name)
+                    currentMatch.player4?.name -> intent.putExtra("shuffler", currentMatch.player1?.name)
                 }
             }
             else {
-                if (gameHands.last().matchWin == "Mi") {
-                    when (gameHands.elementAt(gameHands.size - 2).shuffler){
-                        player1 -> intent.putExtra("shuffler", player3)
-                        player2 -> intent.putExtra("shuffler", player3)
-                        player3 -> intent.putExtra("shuffler", player1)
-                        player4 -> intent.putExtra("shuffler", player1)
+                if (currentMatch.gameRounds!!.last().matchWin == "Mi") {
+                    when (currentMatch.gameRounds!!.elementAt(currentMatch.gameRounds!!.size - 2).shuffler){
+                        currentMatch.player1?.name -> intent.putExtra("shuffler", currentMatch.player3?.name)
+                        currentMatch.player2?.name -> intent.putExtra("shuffler", currentMatch.player3?.name)
+                        currentMatch.player3?.name -> intent.putExtra("shuffler", currentMatch.player1?.name)
+                        currentMatch.player4?.name -> intent.putExtra("shuffler", currentMatch.player1?.name)
                     }
                 }
                 else {
-                    when (gameHands.elementAt(gameHands.size - 2).shuffler){
-                        player1 -> intent.putExtra("shuffler", player2)
-                        player2 -> intent.putExtra("shuffler", player4)
-                        player3 -> intent.putExtra("shuffler", player4)
-                        player4 -> intent.putExtra("shuffler", player2)
+                    when (currentMatch.gameRounds!!.elementAt(currentMatch.gameRounds!!.size - 2).shuffler){
+                        currentMatch.player1?.name -> intent.putExtra("shuffler", currentMatch.player2?.name)
+                        currentMatch.player2?.name -> intent.putExtra("shuffler", currentMatch.player4?.name)
+                        currentMatch.player3?.name -> intent.putExtra("shuffler", currentMatch.player4?.name)
+                        currentMatch.player4?.name -> intent.putExtra("shuffler", currentMatch.player2?.name)
                     }
                 }
             }
@@ -196,8 +199,8 @@ class RoundListScreen : ComponentActivity() {
             // There are no request codes
             val data: Intent? = result.data
 
-            val exsistingGameHand = Gson().fromJson(data?.getStringExtra("gameRound"), GameHand::class.java)
-            gameHands[data?.getStringExtra("index")?.let { Integer.parseInt(it) }!!] = exsistingGameHand
+            val exsistingGameRound = Gson().fromJson(data?.getStringExtra("gameRound"), GameRound::class.java)
+            currentMatch.gameRounds!![data?.getStringExtra("index")?.let { Integer.parseInt(it) }!!] = exsistingGameRound
 
             updateScoreBoard()
 
@@ -210,8 +213,8 @@ class RoundListScreen : ComponentActivity() {
             // There are no request codes
             val data: Intent? = result.data
 
-            val newGameHand = Gson().fromJson(data?.getStringExtra("gameRound"), GameHand::class.java)
-            gameHands.add(newGameHand)
+            val newGameRound = Gson().fromJson(data?.getStringExtra("gameRound"), GameRound::class.java)
+            currentMatch.gameRounds!!.add(newGameRound)
 
             updateScoreBoard()
 
@@ -226,7 +229,7 @@ class RoundListScreen : ComponentActivity() {
         var miMatchPoints = 0
         var viMatchPoints = 0
 
-        for (gr in gameHands){
+        for (gr in currentMatch.gameRounds!!){
             if (gr.matchPointsListItemFlag){
                 miMatchPoints = gr.miMatchPoints
                 viMatchPoints = gr.viMatchPoints
@@ -255,7 +258,7 @@ class RoundListScreen : ComponentActivity() {
     }
 
     private fun setUpNewGame(miPointsSum: Int) {
-        val matchPointListItem = GameHand()
+        val matchPointListItem = GameRound()
 
         if (miPointsSum >= 1001){
             globalMiMatchPoints += 1
@@ -270,7 +273,7 @@ class RoundListScreen : ComponentActivity() {
         matchPointListItem.viMatchPoints = globalViMatchPoints
         matchPointListItem.matchPointsListItemFlag = true
 
-        gameHands.add(matchPointListItem)
+        currentMatch.gameRounds!!.add(matchPointListItem)
 
         tvMiPoints.text = "0"
         tvViPoints.text = "0"
@@ -305,7 +308,7 @@ class RoundListScreen : ComponentActivity() {
         val viPointsNoCallsTv = matchWonDialog.findViewById<TextView>(R.id.viPointsNoCalls)
         val viPointsFromCallsTv = matchWonDialog.findViewById<TextView>(R.id.viPointsFromCalls)
 
-        for (gr in gameHands){
+        for (gr in currentMatch.gameRounds!!){
             if (gr.matchPointsListItemFlag){
                 if (globalMiMatchPoints + globalViMatchPoints <= gr.miMatchPoints + gr.viMatchPoints){ continue }
                 miPointsSum = 0
@@ -351,8 +354,8 @@ class RoundListScreen : ComponentActivity() {
         yValuesMi.add( miPointsSum )
         yValuesVi.add( viPointsSum )
 
-        for (gr in gameHands){
-            if (gameHands.indexOf(gr) == matchIndex) { break }
+        for (gr in currentMatch.gameRounds!!){
+            if (currentMatch.gameRounds!!.indexOf(gr) == matchIndex) { break }
             handIndex += 1
             if (gr.matchPointsListItemFlag) {
                 handIndex = 0.0
@@ -386,16 +389,20 @@ class RoundListScreen : ComponentActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setMessage("Save and Exit?")
             .setPositiveButton("Yes") { dialog, id ->
-                val newMatch = Match(gameHands)
+                val newMatch = currentMatch
                 val dataStorage = MatchStorage(applicationContext)
                 val storedMatches = dataStorage.loadData()?.toMutableList()
                 storedMatches?.add(newMatch)
                 dataStorage.saveData(storedMatches)
 
-                finish()
+                val intent = Intent(this, MainMenu::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
             }
             .setNegativeButton("No (Don't save)") { dialog, id ->
-                finish()
+                val intent = Intent(this, MainMenu::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(intent)
             }
             .setNeutralButton("Cancel") {dialog, id ->
                 dialog.dismiss()

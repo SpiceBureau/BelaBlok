@@ -19,8 +19,9 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".mainmenu.MainMenu"
+            android:name=".screens.mainmenu.MainMenu"
             android:exported="true"
+            android:launchMode="singleTop"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,26 +30,27 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".newmatch.NewMatchScreen"
+            android:name=".screens.newmatch.NewMatchScreen"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"/>
         <activity
-            android:name=".calculator.CalculatorScreen"
+            android:name=".screens.calculator.CalculatorScreen"
             android:exported="false"
             android:label="@string/title_activity_calculator2"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
         <activity
-            android:name=".calculator.StatsScreen"
+            android:name=".screens.calculator.StatsScreen"
             android:exported="false"
             android:label="@string/title_activity_stats"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".roundlist.RoundListScreen"
+            android:name=".screens.roundlist.RoundListScreen"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".savedMatches.SavedMatches"
+            android:name=".screens.savedMatches.SavedMatches"
             android:exported="false"
+            android:launchMode="singleTop"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
     </application>
 

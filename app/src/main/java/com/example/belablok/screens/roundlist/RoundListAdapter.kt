@@ -1,4 +1,4 @@
-package com.example.belablok.roundlist
+package com.example.belablok.screens.roundlist
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,16 +8,16 @@ import android.widget.ArrayAdapter
 import android.graphics.Color
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.belablok.storage.GameHand
+import com.example.belablok.storage.data_classes.GameRound
 import com.example.belablok.R
 
 
 class RoundListAdapter(
     private val mContext: Context,
     private val resourceLayout: Int,
-    private val items: List<GameHand>
+    private val items: List<GameRound>
 ) :
-    ArrayAdapter<GameHand?>(mContext, resourceLayout, items) {
+    ArrayAdapter<GameRound?>(mContext, resourceLayout, items) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var v = convertView
         if (v == null) {

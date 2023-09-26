@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/base_background"
-    tools:context=".calculator.CalculatorScreen">
+    tools:context=".screens.calculator.CalculatorScreen">
 
     <ImageView
         android:id="@+id/Herc"
