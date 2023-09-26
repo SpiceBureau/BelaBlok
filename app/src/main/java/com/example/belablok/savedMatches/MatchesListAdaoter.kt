@@ -12,7 +12,7 @@ import com.example.belablok.storage.GameHand
 import com.example.belablok.R
 
 
-class MyListAdapter(
+class MatchesListAdaoter(
     private val mContext: Context,
     private val resourceLayout: Int,
     private val items: List<GameHand>

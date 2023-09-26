@@ -15,15 +15,15 @@ class MatchStorage(context: Context) {
         gson = Gson()
     }
 
-    fun saveData(data: List<List<User?>>?) {
+    fun saveData(data: List<List<GameHand?>>?) {
         val dataJson = gson.toJson(data)
         preferences.edit().putString(DATA_KEY, dataJson).apply()
     }
 
-    fun loadData(): List<List<User?>>? {
+    fun loadData(): List<List<GameHand?>>? {
         val dataJson = preferences.getString(DATA_KEY, null)
         return if (dataJson != null) {
-            val dataType = object : TypeToken<List<List<User?>>?>() {}.type
+            val dataType = object : TypeToken<List<List<GameHand?>>?>() {}.type
             gson.fromJson(dataJson, dataType)
         } else {
             ArrayList()

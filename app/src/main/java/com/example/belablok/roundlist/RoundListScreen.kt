@@ -20,6 +20,7 @@ import com.example.belablok.R
 import com.example.belablok.calculator.CalculatorScreen
 import com.example.belablok.calculator.StatsScreen
 import com.example.belablok.storage.GameHand
+import com.example.belablok.storage.MatchStorage
 import com.google.gson.Gson
 
 
@@ -27,7 +28,7 @@ class RoundListScreen : ComponentActivity() {
 
     var gameHands = mutableListOf<GameHand>()
     lateinit var listView: ListView
-    lateinit var customAdapter: MyListAdapter
+    lateinit var customAdapter: RoundListAdapter
     lateinit var tvMiPoints: TextView
     lateinit var tvViPoints: TextView
     lateinit var tvMiPointsToWin: TextView
@@ -48,7 +49,7 @@ class RoundListScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(com.google.android.material.R.style.Theme_AppCompat_DayNight_DarkActionBar)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.listview_activity)
+        setContentView(R.layout.round_list_activity)
 
         this.actionBar?.hide()
 
@@ -69,7 +70,7 @@ class RoundListScreen : ComponentActivity() {
         tvViMatchPoints = findViewById(R.id.viMatchPoints)
 
         listView = findViewById(R.id.listView)
-        customAdapter = MyListAdapter(this, R.layout.listview_item, gameHands)
+        customAdapter = RoundListAdapter(this, R.layout.round_list_item, gameHands)
 
 
         tvNG.setOnClickListener {
@@ -382,11 +383,19 @@ class RoundListScreen : ComponentActivity() {
 
     private fun showConfirmationDialog() {
         val builder = AlertDialog.Builder(this)
-        builder.setMessage("Return?")
-            .setPositiveButton("Yes") { dialog, id -> // If the user confirms, finish Activity B and go back to Activity A
+        builder.setMessage("Save and Exit?")
+            .setPositiveButton("Yes") { dialog, id ->
+                val dataStorage = MatchStorage(applicationContext)
+                val storedMatches = dataStorage.loadData()?.toMutableList()
+                storedMatches?.add(gameHands)
+                dataStorage.saveData(storedMatches)
+
                 finish()
             }
-            .setNegativeButton("No") { dialog, id -> // If the user cancels, dismiss the dialog and stay in Activity B
+            .setNegativeButton("No (Don't save)") { dialog, id ->
+                finish()
+            }
+            .setNeutralButton("Cancel") {dialog, id ->
                 dialog.dismiss()
             }
         val dialog = builder.create()

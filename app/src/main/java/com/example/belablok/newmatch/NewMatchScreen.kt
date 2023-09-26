@@ -17,7 +17,7 @@ import com.example.belablok.storage.UserStorage
 class NewMatchScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_new_match)
+        setContentView(R.layout.new_match_activity)
 
         supportActionBar?.hide()
 
