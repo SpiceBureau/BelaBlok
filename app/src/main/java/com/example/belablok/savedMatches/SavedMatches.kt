@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ListView
 import com.example.belablok.R
+import com.example.belablok.roundlist.MatchesListAdapter
 import com.example.belablok.storage.MatchStorage
 
 class SavedMatches : AppCompatActivity() {
@@ -15,6 +16,10 @@ class SavedMatches : AppCompatActivity() {
         val listView: ListView = findViewById(R.id.matchListView)
 
         val dataStorage = MatchStorage(applicationContext)
-        var savedMatches = dataStorage.loadData()?.toMutableList()
+        var savedMatches = dataStorage.loadData()
+
+        val customAdapter = MatchesListAdapter(this, R.layout.saved_match_item, savedMatches)
+        listView.adapter = customAdapter
+        listView.isClickable = true
     }
 }

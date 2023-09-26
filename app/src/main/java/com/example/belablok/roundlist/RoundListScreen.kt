@@ -20,6 +20,7 @@ import com.example.belablok.R
 import com.example.belablok.calculator.CalculatorScreen
 import com.example.belablok.calculator.StatsScreen
 import com.example.belablok.storage.GameHand
+import com.example.belablok.storage.Match
 import com.example.belablok.storage.MatchStorage
 import com.google.gson.Gson
 
@@ -385,9 +386,10 @@ class RoundListScreen : ComponentActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setMessage("Save and Exit?")
             .setPositiveButton("Yes") { dialog, id ->
+                val newMatch = Match(gameHands)
                 val dataStorage = MatchStorage(applicationContext)
                 val storedMatches = dataStorage.loadData()?.toMutableList()
-                storedMatches?.add(gameHands)
+                storedMatches?.add(newMatch)
                 dataStorage.saveData(storedMatches)
 
                 finish()
