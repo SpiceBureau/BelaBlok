@@ -1,4 +1,4 @@
-package com.example.belablok
+package com.example.belablok.storage
 
 class GameHand{
 

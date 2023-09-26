@@ -1,4 +1,4 @@
-package com.example.belablok
+package com.example.belablok.newmatch
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +9,9 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
+import com.example.belablok.R
+import com.example.belablok.roundlist.RoundListScreen
+import com.example.belablok.storage.UserStorage
 
 
 class NewMatchScreen : AppCompatActivity() {
@@ -66,7 +69,7 @@ class NewMatchScreen : AppCompatActivity() {
         }
 
         kingsImage.setOnClickListener {
-            val intent = Intent(this, GameList::class.java)
+            val intent = Intent(this, RoundListScreen::class.java)
             intent.putExtra("Player1", player1Name)
             intent.putExtra("Player2", player2Name)
             intent.putExtra("Player3", player3Name)

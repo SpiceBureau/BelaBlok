@@ -1,15 +1,17 @@
-package com.example.belablok
+package com.example.belablok.mainmenu
 
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
-import java.io.File
+import com.example.belablok.newmatch.NewMatchScreen
+import com.example.belablok.R
+import com.example.belablok.storage.User
+import com.example.belablok.storage.UserStorage
 
 class MainMenu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

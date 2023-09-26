@@ -1,3 +1,5 @@
+package com.example.belablok.roundlist
+
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +8,7 @@ import android.widget.ArrayAdapter
 import android.graphics.Color
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.belablok.GameHand
+import com.example.belablok.storage.GameHand
 import com.example.belablok.R
 
 

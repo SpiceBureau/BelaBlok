@@ -16,7 +16,7 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:targetApi="31" >
         <activity
-            android:name=".MainMenu"
+            android:name=".mainmenu.MainMenu"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" >
             <intent-filter>
@@ -26,22 +26,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NewMatchScreen"
+            android:name=".newmatch.NewMatchScreen"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" >
         </activity>
         <activity
-            android:name=".Calculator"
+            android:name=".calculator.CalculatorScreen"
             android:exported="false"
             android:label="@string/title_activity_calculator2"
             android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar" />
         <activity
-            android:name=".Stats"
+            android:name=".calculator.StatsScreen"
             android:exported="false"
             android:label="@string/title_activity_stats"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".GameList"
+            android:name=".roundlist.RoundListScreen"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Launcher" />
     </application>

@@ -1,4 +1,4 @@
-package com.example.belablok
+package com.example.belablok.storage
 
 import android.content.Context
 import android.content.SharedPreferences

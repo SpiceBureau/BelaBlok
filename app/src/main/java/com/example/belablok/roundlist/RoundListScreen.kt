@@ -1,6 +1,5 @@
-package com.example.belablok
+package com.example.belablok.roundlist
 
-import MyListAdapter
 import android.R.attr.value
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -17,10 +16,14 @@ import android.widget.ListView
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
+import com.example.belablok.R
+import com.example.belablok.calculator.CalculatorScreen
+import com.example.belablok.calculator.StatsScreen
+import com.example.belablok.storage.GameHand
 import com.google.gson.Gson
 
 
-class GameList : ComponentActivity() {
+class RoundListScreen : ComponentActivity() {
 
     var gameHands = mutableListOf<GameHand>()
     lateinit var listView: ListView
@@ -129,7 +132,7 @@ class GameList : ComponentActivity() {
         }
     }
     private fun openCalculator(data: String, i: Int) {
-        val intent = Intent(this, Calculator::class.java)
+        val intent = Intent(this, CalculatorScreen::class.java)
         intent.putExtra("gameRound", data)
         intent.putExtra("index", i.toString())
         intent.putExtra("newGameRoundFlag", "false")
@@ -142,7 +145,7 @@ class GameList : ComponentActivity() {
         overridePendingTransition(R.anim.left_right, R.anim.nothing)
     }
     private fun openCalculatorNewGame() {
-        val intent = Intent(this, Calculator::class.java)
+        val intent = Intent(this, CalculatorScreen::class.java)
         intent.putExtra("newGameRoundFlag", "true")
 
         intent.putExtra("Player1", player1)
@@ -332,7 +335,7 @@ class GameList : ComponentActivity() {
     }
 
     private fun setUpGraphData(matchIndex: Int): Intent {
-        val myIntent = Intent(this, Stats::class.java)
+        val myIntent = Intent(this, StatsScreen::class.java)
 
         val xValues = ArrayList<Double>() // runde
         val yValuesMi = ArrayList<Double>() // iznosi rundi (akumulirani)

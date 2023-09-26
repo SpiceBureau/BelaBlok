@@ -1,4 +1,4 @@
-package com.example.belablok
+package com.example.belablok.calculator
 
 import android.content.Intent
 import android.graphics.Color
@@ -10,16 +10,17 @@ import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.core.text.HtmlCompat
+import com.example.belablok.R
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 
 
-class Stats : ComponentActivity() {
+class StatsScreen : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView( R.layout.stats_layout)
+        setContentView(R.layout.stats_layout)
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

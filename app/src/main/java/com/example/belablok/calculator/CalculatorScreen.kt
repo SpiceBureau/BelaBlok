@@ -1,4 +1,4 @@
-package com.example.belablok
+package com.example.belablok.calculator
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,10 +13,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
+import com.example.belablok.R
+import com.example.belablok.storage.GameHand
 import com.google.gson.Gson
 
-class Calculator : AppCompatActivity() {
+class CalculatorScreen : AppCompatActivity() {
 
     private val roundPoints = 162
     private var player1Score = 0
@@ -30,7 +31,7 @@ class Calculator : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        val miScoreInput = findViewById<EditText>(R.id.etMi )
+        val miScoreInput = findViewById<EditText>(R.id.etMi)
         val viScoreInput = findViewById<EditText>(R.id.etVi)
 
         val pointDirection = findViewById<ToggleButton>(R.id.pointDirrection)
