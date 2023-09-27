@@ -1,11 +1,11 @@
 package com.example.belablok.screens.newmatch
 
+import UserSpinnerAdapter
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
@@ -35,7 +35,7 @@ class NewMatchScreen : AppCompatActivity() {
 
         val newMatch = Match(mutableListOf(), User(""), User(""), User(""), User(""))
 
-        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, usersList)
+        val adapter = UserSpinnerAdapter(this, R.layout.user_spinner_item, usersList)
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         player1Spinner.adapter = adapter

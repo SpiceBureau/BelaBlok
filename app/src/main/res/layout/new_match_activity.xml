@@ -22,8 +22,8 @@
 
     <View
         android:id="@+id/table"
-        android:layout_width="230dp"
-        android:layout_height="160dp"
+        android:layout_width="200dp"
+        android:layout_height="140dp"
         android:background="@drawable/ellipse"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,6 +35,7 @@
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@null"
         android:id="@+id/player1Name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,6 +47,7 @@
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@null"
         android:id="@+id/player2Name"
         app:layout_constraintStart_toEndOf="@id/table"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,17 +58,20 @@
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@null"
         android:id="@+id/player3Name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/kingsImage"
         app:layout_constraintBottom_toTopOf="@id/table"
+        app:layout_constraintVertical_bias="0.7"
         android:textAlignment="center">
     </Spinner>
 
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@null"
         android:id="@+id/player4Name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/table"
