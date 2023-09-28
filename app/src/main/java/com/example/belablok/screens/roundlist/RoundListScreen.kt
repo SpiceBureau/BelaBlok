@@ -40,8 +40,6 @@ class RoundListScreen : ComponentActivity() {
     lateinit var tvViMatchPoints: TextView
     lateinit var tvMiMatchPoints: TextView
     lateinit var tvNG: TextView
-    var globalMiMatchPoints = 0
-    var globalViMatchPoints = 0
     lateinit var playerToShuffle: User
     lateinit var currentMatch: Match
 
@@ -252,8 +250,8 @@ class RoundListScreen : ComponentActivity() {
         tvMiMatchPoints.text = miMatchPoints.toString()
         tvViMatchPoints.text = viMatchPoints.toString()
 
-        globalMiMatchPoints = miMatchPoints
-        globalViMatchPoints = viMatchPoints
+        currentMatch.miMatchPoints = miMatchPoints
+        currentMatch.viMatchPoints = viMatchPoints
         if ((miPointsSum >= 1001) or (viPointsSum >= 1001)) { setUpNewGame(miPointsSum) }
     }
 
@@ -261,16 +259,16 @@ class RoundListScreen : ComponentActivity() {
         val matchPointListItem = GameRound()
 
         if (miPointsSum >= 1001){
-            globalMiMatchPoints += 1
+            currentMatch.miMatchPoints += 1
             matchPointListItem.matchWin = "Mi"
         }
         else {
-            globalViMatchPoints += 1
+            currentMatch.viMatchPoints += 1
             matchPointListItem.matchWin = "Vi"
         }
 
-        matchPointListItem.miMatchPoints = globalMiMatchPoints
-        matchPointListItem.viMatchPoints = globalViMatchPoints
+        matchPointListItem.miMatchPoints = currentMatch.miMatchPoints
+        matchPointListItem.viMatchPoints = currentMatch.viMatchPoints
         matchPointListItem.matchPointsListItemFlag = true
 
         currentMatch.gameRounds!!.add(matchPointListItem)
@@ -278,8 +276,8 @@ class RoundListScreen : ComponentActivity() {
         tvMiPoints.text = "0"
         tvViPoints.text = "0"
 
-        tvMiMatchPoints.text = globalMiMatchPoints.toString()
-        tvViMatchPoints.text = globalViMatchPoints.toString()
+        tvMiMatchPoints.text = currentMatch.miMatchPoints.toString()
+        tvViMatchPoints.text = currentMatch.viMatchPoints.toString()
 
         showAlertDialog()
     }
@@ -310,7 +308,7 @@ class RoundListScreen : ComponentActivity() {
 
         for (gr in currentMatch.gameRounds!!){
             if (gr.matchPointsListItemFlag){
-                if (globalMiMatchPoints + globalViMatchPoints <= gr.miMatchPoints + gr.viMatchPoints){ continue }
+                if (currentMatch.miMatchPoints + currentMatch.viMatchPoints <= gr.miMatchPoints + gr.viMatchPoints){ continue }
                 miPointsSum = 0
                 miPointsSumNoCalls = 0
                 miPointsSumFromCalls = 0

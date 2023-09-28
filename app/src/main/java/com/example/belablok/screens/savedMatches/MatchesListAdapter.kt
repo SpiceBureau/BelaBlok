@@ -24,8 +24,15 @@ class MatchesListAdapter(
         }
         val oneMatch = getItem(position)
         if (oneMatch != null) {
-            val tv = v!!.findViewById<TextView>(R.id.matchTextView)
-            tv.text = oneMatch.gameRounds?.size.toString()
+            val player1 = v!!.findViewById<TextView>(R.id.player1)
+            val player2 = v.findViewById<TextView>(R.id.player2)
+            val player3 = v.findViewById<TextView>(R.id.player3)
+            val player4 = v.findViewById<TextView>(R.id.player4)
+
+            player1.text = oneMatch.player1?.name ?: ""
+            player2.text = oneMatch.player2?.name ?: ""
+            player3.text = oneMatch.player3?.name ?: ""
+            player4.text = oneMatch.player4?.name ?: ""
         }
         return v!!
     }
