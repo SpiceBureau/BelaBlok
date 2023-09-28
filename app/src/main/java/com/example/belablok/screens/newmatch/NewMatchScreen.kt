@@ -15,6 +15,9 @@ import com.example.belablok.storage.UserStorage
 import com.example.belablok.storage.data_classes.Match
 import com.example.belablok.storage.data_classes.User
 import com.google.gson.Gson
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
 
 
 class NewMatchScreen : AppCompatActivity() {
@@ -34,6 +37,10 @@ class NewMatchScreen : AppCompatActivity() {
         val usersList = dataStorage.loadData().map { it.name }
 
         val newMatch = Match(mutableListOf(), User(""), User(""), User(""), User(""))
+        val c = Calendar.getInstance()
+        newMatch.year = c.get(Calendar.YEAR)
+        newMatch.month = c.get(Calendar.MONTH) + 1
+        newMatch.day = c.get(Calendar.DAY_OF_MONTH)
 
         val adapter = UserSpinnerAdapter(this, R.layout.user_spinner_item, usersList)
 

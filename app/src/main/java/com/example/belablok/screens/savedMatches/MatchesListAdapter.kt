@@ -28,11 +28,21 @@ class MatchesListAdapter(
             val player2 = v.findViewById<TextView>(R.id.player2)
             val player3 = v.findViewById<TextView>(R.id.player3)
             val player4 = v.findViewById<TextView>(R.id.player4)
+            val miMatchPoints = v.findViewById<TextView>(R.id.miMatchPoints)
+            val viMatchPoints = v.findViewById<TextView>(R.id.viMatchPoints)
+            val timePlayed = v.findViewById<TextView>(R.id.timePlayed)
+            val datePlayed = v.findViewById<TextView>(R.id.datePlayed)
 
             player1.text = oneMatch.player1?.name ?: ""
             player2.text = oneMatch.player2?.name ?: ""
             player3.text = oneMatch.player3?.name ?: ""
             player4.text = oneMatch.player4?.name ?: ""
+
+            miMatchPoints.text = oneMatch.miMatchPoints.toString()
+            viMatchPoints.text = oneMatch.viMatchPoints.toString()
+
+            timePlayed.text = "${oneMatch.hoursPlayed} h ${oneMatch.minutesPlayed} min"
+            datePlayed.text = "${oneMatch.day}/${oneMatch.month}/${oneMatch.year}"
         }
         return v!!
     }

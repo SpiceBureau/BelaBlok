@@ -18,7 +18,7 @@
         android:text="Lorem Ipsum"
         android:textAlignment="center"
         app:layout_constraintVertical_bias="0.25"
-        app:layout_constraintHorizontal_bias="0.05">
+        app:layout_constraintHorizontal_bias="0.04">
     </TextView>
 
     <TextView
@@ -33,7 +33,7 @@
         android:text="Lorem Ipsum"
         android:textAlignment="center"
         app:layout_constraintVertical_bias="0.75"
-        app:layout_constraintHorizontal_bias="0.05">
+        app:layout_constraintHorizontal_bias="0.04">
     </TextView>
 
     <TextView
@@ -48,7 +48,7 @@
         android:text="Lorem Ipsum"
         android:textAlignment="center"
         app:layout_constraintVertical_bias="0.25"
-        app:layout_constraintHorizontal_bias="0.35">
+        app:layout_constraintHorizontal_bias="0.28">
     </TextView>
 
     <TextView
@@ -63,7 +63,7 @@
         android:text="Lorem Ipsum"
         android:textAlignment="center"
         app:layout_constraintVertical_bias="0.75"
-        app:layout_constraintHorizontal_bias="0.35">
+        app:layout_constraintHorizontal_bias="0.28">
     </TextView>
 
     <TextView
@@ -79,6 +79,101 @@
         android:textAlignment="center">
     </TextView>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/miMatchPoints"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/miColor"
+        android:text="0"
+        android:textSize="60dp"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_bias="0.44">
+    </TextView>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:id="@+id/divider"
+        android:scaleY="0.8"
+        android:background="@color/white"
+        app:layout_constraintStart_toEndOf="@id/miMatchPoints"
+        app:layout_constraintEnd_toStartOf="@id/viMatchPoints"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+    </View>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/viMatchPoints"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/viColor"
+        android:text="0"
+        android:textSize="60dp"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_bias="0.64">
+    </TextView>
+    
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/clockImage"
+        android:src="@drawable/clock"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/viMatchPoints"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.25"
+        app:layout_constraintHorizontal_bias="0.2">
+    </ImageView>
+    
+    <TextView
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/timePlayed"
+        android:text="No data"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="@id/clockImage"
+        app:layout_constraintBottom_toBottomOf="@id/clockImage"
+        app:layout_constraintStart_toEndOf="@id/clockImage"
+        app:layout_constraintEnd_toEndOf="parent">
+    </TextView>
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/calendarImage"
+        android:src="@drawable/calendar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/viMatchPoints"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.75"
+        app:layout_constraintHorizontal_bias="0.2">
+    </ImageView>
+
+    <TextView
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/datePlayed"
+        android:text="No data"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="@id/calendarImage"
+        app:layout_constraintBottom_toBottomOf="@id/calendarImage"
+        app:layout_constraintStart_toEndOf="@id/calendarImage"
+        app:layout_constraintEnd_toEndOf="parent">
+    </TextView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -387,10 +387,10 @@ class RoundListScreen : ComponentActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setMessage("Save and Exit?")
             .setPositiveButton("Yes") { dialog, id ->
-                val newMatch = currentMatch
+                currentMatch.caluclatetimePlayed(System.currentTimeMillis())
                 val dataStorage = MatchStorage(applicationContext)
                 val storedMatches = dataStorage.loadData()?.toMutableList()
-                storedMatches?.add(newMatch)
+                storedMatches?.add(currentMatch)
                 dataStorage.saveData(storedMatches)
 
                 val intent = Intent(this, MainMenu::class.java)
