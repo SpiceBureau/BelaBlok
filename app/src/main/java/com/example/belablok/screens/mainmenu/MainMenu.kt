@@ -11,6 +11,7 @@ import android.widget.ImageView
 import com.example.belablok.screens.newmatch.NewMatchScreen
 import com.example.belablok.R
 import com.example.belablok.screens.savedMatches.SavedMatches
+import com.example.belablok.screens.savedUsers.SavedUsers
 import com.example.belablok.storage.data_classes.User
 import com.example.belablok.storage.UserStorage
 
@@ -23,6 +24,7 @@ class MainMenu : AppCompatActivity() {
 
         val newMatchButton: Button = findViewById(R.id.newMatchButton)
         val savedMatchesButton: Button = findViewById(R.id.savedMatchesButton)
+        val savedUsersButton: Button = findViewById(R.id.savedUsersButton)
         val addPlayer: ImageView = findViewById(R.id.addPlayerButton)
 
         newMatchButton.setOnClickListener {
@@ -53,6 +55,12 @@ class MainMenu : AppCompatActivity() {
         }
         savedMatchesButton.setOnClickListener {
             val intent = Intent(this, SavedMatches::class.java)
+            startActivity(intent)
+
+            overridePendingTransition(R.anim.left_right, R.anim.nothing)
+        }
+        savedUsersButton.setOnClickListener {
+            val intent = Intent(this, SavedUsers::class.java)
             startActivity(intent)
 
             overridePendingTransition(R.anim.left_right, R.anim.nothing)

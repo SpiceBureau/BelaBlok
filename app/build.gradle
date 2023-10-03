@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+
 android {
     namespace 'com.example.belablok'
     compileSdk 33
@@ -69,10 +70,6 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
     implementation 'com.google.code.gson:gson:2.10.1'
-    implementation 'com.google.api-client:google-api-client-android:1.31.0'
-    implementation 'com.google.apis:google-api-services-drive:v3-rev305-1.25.0'
-    implementation 'com.google.http-client:google-http-client-gson:1.31.0'
-
 
     implementation 'com.jjoe64:graphview:4.2.2'
 }
