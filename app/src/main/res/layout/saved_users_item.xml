@@ -7,15 +7,31 @@
     android:background="@color/base_background">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:id="@+id/userImage"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1">
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintVertical_bias="0.5"
+        >
     </ImageView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="name"
+        android:id="@+id/userName"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/userImage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/userImage"
+        app:layout_constraintStart_toStartOf="@id/userImage"
+        app:layout_constraintVertical_bias="0.5"
+        >
+    </TextView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
