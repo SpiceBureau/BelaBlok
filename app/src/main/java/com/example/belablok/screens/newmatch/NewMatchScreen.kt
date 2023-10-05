@@ -13,11 +13,9 @@ import com.example.belablok.R
 import com.example.belablok.screens.roundlist.RoundListScreen
 import com.example.belablok.storage.UserStorage
 import com.example.belablok.storage.data_classes.Match
-import com.example.belablok.storage.data_classes.User
+import com.example.belablok.storage.data_classes.Player
 import com.google.gson.Gson
-import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 
 
 class NewMatchScreen : AppCompatActivity() {
@@ -36,7 +34,7 @@ class NewMatchScreen : AppCompatActivity() {
         val dataStorage  = UserStorage(applicationContext)
         val usersList = dataStorage.loadData().map { it.name }
 
-        val newMatch = Match(mutableListOf(), User(""), User(""), User(""), User(""))
+        val newMatch = Match(mutableListOf(), Player(""), Player(""), Player(""), Player(""))
         val c = Calendar.getInstance()
         newMatch.year = c.get(Calendar.YEAR)
         newMatch.month = c.get(Calendar.MONTH) + 1

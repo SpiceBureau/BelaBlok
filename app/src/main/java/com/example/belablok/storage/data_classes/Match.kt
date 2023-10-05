@@ -1,9 +1,6 @@
 package com.example.belablok.storage.data_classes
 
-import android.icu.text.SimpleDateFormat
-import java.util.Date
-
-class Match(var gameRounds: MutableList<GameRound>?, var player1: User?, var player2: User?, var player3: User?, var player4: User?) {
+class Match(var gameRounds: MutableList<GameRound>?, var player1: Player?, var player2: Player?, var player3: Player?, var player4: Player?) {
     var miMatchPoints = 0
     var viMatchPoints = 0
     var startTime = System.currentTimeMillis()

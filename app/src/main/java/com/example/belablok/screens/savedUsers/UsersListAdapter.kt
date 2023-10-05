@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.example.belablok.R
-import com.example.belablok.storage.data_classes.User
+import com.example.belablok.storage.data_classes.Player
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -22,9 +22,9 @@ import java.io.IOException
 class UsersListAdapter(
     private val mContext: Context,
     private val resourceLayout: Int,
-    private val items: List<User>
+    private val items: List<Player>
 ) :
-    ArrayAdapter<User>(mContext, resourceLayout, items) {
+    ArrayAdapter<Player>(mContext, resourceLayout, items) {
     @OptIn(DelicateCoroutinesApi::class)
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var v = convertView

@@ -2,7 +2,7 @@ package com.example.belablok.storage
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.belablok.storage.data_classes.User
+import com.example.belablok.storage.data_classes.Player
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -16,15 +16,15 @@ class UserStorage(context: Context) {
         gson = Gson()
     }
 
-    fun saveData(data: List<User?>?) {
+    fun saveData(data: List<Player?>?) {
         val dataJson = gson.toJson(data)
         preferences.edit().putString(DATA_KEY, dataJson).apply()
     }
 
-    fun loadData(): List<User> {
+    fun loadData(): List<Player> {
         val dataJson = preferences.getString(DATA_KEY, null)
         return if (dataJson != null) {
-            val dataType = object : TypeToken<List<User?>?>() {}.type
+            val dataType = object : TypeToken<List<Player?>?>() {}.type
             gson.fromJson(dataJson, dataType)
         } else {
             ArrayList()

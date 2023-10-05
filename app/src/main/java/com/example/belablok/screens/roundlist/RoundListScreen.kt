@@ -24,7 +24,7 @@ import com.example.belablok.screens.savedMatches.SavedMatches
 import com.example.belablok.storage.data_classes.GameRound
 import com.example.belablok.storage.data_classes.Match
 import com.example.belablok.storage.MatchStorage
-import com.example.belablok.storage.data_classes.User
+import com.example.belablok.storage.data_classes.Player
 import com.google.gson.Gson
 
 
@@ -40,8 +40,9 @@ class RoundListScreen : ComponentActivity() {
     lateinit var tvViMatchPoints: TextView
     lateinit var tvMiMatchPoints: TextView
     lateinit var tvNG: TextView
-    lateinit var playerToShuffle: User
+    lateinit var playerToShuffle: Player
     lateinit var currentMatch: Match
+    lateinit var playersAsList: List<Player?>
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +64,7 @@ class RoundListScreen : ComponentActivity() {
         listView = findViewById(R.id.listView)
 
         currentMatch = Gson().fromJson(intent.getStringExtra("Current match"), Match::class.java)
+        playersAsList = listOf(currentMatch.player1, currentMatch.player2, currentMatch.player3, currentMatch.player4)
         playerToShuffle = currentMatch.player1!!
         if (currentMatch.gameRounds?.isNotEmpty() == true){
             tvNG.setTextColor(Color.GRAY)
@@ -407,5 +409,42 @@ class RoundListScreen : ComponentActivity() {
             }
         val dialog = builder.create()
         dialog.show()
+    }
+
+    private fun saveUserData(){
+        for (player in playersAsList){
+            player?.gamesPlayed = player?.gamesPlayed?.plus((currentMatch.miMatchPoints + currentMatch.viMatchPoints))!!
+
+            if (playersAsList.indexOf(player) == 0 || playersAsList.indexOf(player) == 2){
+                player.gamesWon += currentMatch.miMatchPoints
+            }
+            else{
+                player.gamesWon += currentMatch.viMatchPoints
+            }
+        }
+        for (round in currentMatch.gameRounds!!){
+            for (player in playersAsList){
+                player?.roundsPlayed = player?.roundsPlayed?.plus(1)!!
+                val adutCounts = player.adutCounts.toMutableMap()
+                if (round.caller == player.name) {
+                    val adut = round.adut
+                    adutCounts[adut] = (adutCounts[adut] ?: 0) + 1
+
+                    player.numOfTimesAsCaller += 1
+                    if (round.padMi == 1 || round.padVi == 1)
+                        player.padovi += 1
+                    if (round.shuffler == player.name)
+                        player.numOfTimesAsMus += 1
+
+                    if (playersAsList.indexOf(player) == 0 || playersAsList.indexOf(player) == 2){
+                        player.pointsEarnedWhenCalling += round.getMiPointsSum()
+                    }
+                    else{
+                        player.pointsEarnedWhenCalling += round.getViPointsSum()
+                    }
+                }
+                player.adutCounts = adutCounts
+            }
+        }
     }
 }

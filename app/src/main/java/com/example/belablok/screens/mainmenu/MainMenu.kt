@@ -12,7 +12,7 @@ import com.example.belablok.screens.newmatch.NewMatchScreen
 import com.example.belablok.R
 import com.example.belablok.screens.savedMatches.SavedMatches
 import com.example.belablok.screens.savedUsers.SavedUsers
-import com.example.belablok.storage.data_classes.User
+import com.example.belablok.storage.data_classes.Player
 import com.example.belablok.storage.UserStorage
 
 class MainMenu : AppCompatActivity() {
@@ -42,11 +42,11 @@ class MainMenu : AppCompatActivity() {
             dialogBuilder.setView(dialogView)
 
             dialogBuilder.setPositiveButton("OK") { _: DialogInterface, _: Int ->
-                val newUser = User(editTextDialog.text.toString())
+                val newPlayer = Player(editTextDialog.text.toString())
 
                 val dataStorage = UserStorage(applicationContext)
                 val usersList = dataStorage.loadData().toMutableList()
-                usersList.add(newUser)
+                usersList.add(newPlayer)
                 dataStorage.saveData(usersList)
             }
 
