@@ -9,6 +9,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.Window
@@ -24,6 +25,7 @@ import com.example.belablok.screens.savedMatches.SavedMatches
 import com.example.belablok.storage.data_classes.GameRound
 import com.example.belablok.storage.data_classes.Match
 import com.example.belablok.storage.MatchStorage
+import com.example.belablok.storage.UserStorage
 import com.example.belablok.storage.data_classes.Player
 import com.google.gson.Gson
 
@@ -161,6 +163,7 @@ class RoundListScreen : ComponentActivity() {
         if (currentMatch.gameRounds!!.size == 0) { intent.putExtra("shuffler", currentMatch.player1?.name) }
         else {
             if (!currentMatch.gameRounds!!.last().matchPointsListItemFlag) {
+                Log.v("kurac", "HERE")
                 when (currentMatch.gameRounds!!.last().shuffler){
                     currentMatch.player1?.name -> intent.putExtra("shuffler", currentMatch.player2?.name)
                     currentMatch.player2?.name -> intent.putExtra("shuffler", currentMatch.player3?.name)
@@ -389,6 +392,9 @@ class RoundListScreen : ComponentActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setMessage("Save and Exit?")
             .setPositiveButton("Yes") { dialog, id ->
+                saveUserData()
+                Log.v("kurac", "${currentMatch.player1?.numOfTimesAsCaller}")
+
                 currentMatch.caluclatetimePlayed(System.currentTimeMillis())
                 val dataStorage = MatchStorage(applicationContext)
                 val storedMatches = dataStorage.loadData()?.toMutableList()
@@ -444,6 +450,19 @@ class RoundListScreen : ComponentActivity() {
                     }
                 }
                 player.adutCounts = adutCounts
+            }
+        }
+
+        val dataStorage = UserStorage(applicationContext)
+        val storedPlayers = dataStorage.loadData().toMutableList()
+
+        val mapOfPlayers: Map<String?, Player?> = playersAsList.associateBy { it?.name }
+
+        for (i in 0 until storedPlayers.size) {
+            val playerInStorage = storedPlayers[i]
+            val updatedPlayer = mapOfPlayers[playerInStorage.name]
+            if (updatedPlayer != null) {
+                storedPlayers[i] = updatedPlayer
             }
         }
     }

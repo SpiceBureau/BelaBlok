@@ -11,6 +11,7 @@ import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import com.example.belablok.R
 import com.example.belablok.screens.roundlist.RoundListScreen
+import com.example.belablok.storage.MatchStorage
 import com.example.belablok.storage.UserStorage
 import com.example.belablok.storage.data_classes.Match
 import com.example.belablok.storage.data_classes.Player
@@ -32,7 +33,8 @@ class NewMatchScreen : AppCompatActivity() {
         val player3Spinner = findViewById<Spinner>(R.id.player3Name)
         val player4Spinner = findViewById<Spinner>(R.id.player4Name)
         val dataStorage  = UserStorage(applicationContext)
-        val usersList = dataStorage.loadData().map { it.name }
+        val usersList = dataStorage.loadData()
+        /*dataStorage.saveData(listOf())*/
 
         val newMatch = Match(mutableListOf(), Player(""), Player(""), Player(""), Player(""))
         val c = Calendar.getInstance()
@@ -40,7 +42,7 @@ class NewMatchScreen : AppCompatActivity() {
         newMatch.month = c.get(Calendar.MONTH) + 1
         newMatch.day = c.get(Calendar.DAY_OF_MONTH)
 
-        val adapter = UserSpinnerAdapter(this, R.layout.user_spinner_item, usersList)
+        val adapter = UserSpinnerAdapter(this, R.layout.user_spinner_item, usersList.map { it.name })
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         player1Spinner.adapter = adapter
@@ -55,19 +57,19 @@ class NewMatchScreen : AppCompatActivity() {
         player4Spinner.adapter = adapter
 
         player1Spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) { newMatch.player1?.name = parent?.selectedItem as String }
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) { newMatch.player1 = usersList[position] }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
         player2Spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) { newMatch.player2?.name = parent?.selectedItem as String }
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) { newMatch.player2 = usersList[position] }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
         player3Spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) { newMatch.player3?.name = parent?.selectedItem as String }
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) { newMatch.player3 = usersList[position] }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
         player4Spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) { newMatch.player4?.name = parent?.selectedItem as String }
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) { newMatch.player4 = usersList[position] }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
 
@@ -78,10 +80,6 @@ class NewMatchScreen : AppCompatActivity() {
             startActivity(intent)
 
             overridePendingTransition(R.anim.left_right, R.anim.nothing)
-        }
-
-        for (usr in usersList) {
-            Log.v("userList", usr!!)
         }
     }
 }

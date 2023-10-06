@@ -82,7 +82,6 @@ class CalculatorScreen : AppCompatActivity() {
             viScoreInput.setText(gameRound.viPoints)
             updateDisplay(miScoreInput, viScoreInput)
 
-            Log.v("players", gameRound.shuffler)
             when (gameRound.shuffler){
                 player1Name.text -> player1ShuffleImageView.setImageResource(R.drawable.cards_shufflemvmv)
                 player2Name.text -> player2ShuffleImageView.setImageResource(R.drawable.cards_shufflevmvm)
@@ -136,6 +135,7 @@ class CalculatorScreen : AppCompatActivity() {
         }
         else { gameRound.shuffler = intent.getStringExtra("shuffler").toString() }
 
+
         when (gameRound.shuffler){
             player1Name.text -> player1ShuffleImageView.setImageResource(R.drawable.cards_shufflemvmv)
             player2Name.text -> player2ShuffleImageView.setImageResource(R.drawable.cards_shufflevmvm)
@@ -166,7 +166,6 @@ class CalculatorScreen : AppCompatActivity() {
         val viScoreTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                Log.v("wtf", s.toString())
                 if (currentFocus != viScoreInput) { return }
                 val player2Input = viScoreInput.text.toString().toIntOrNull() ?: return
 
@@ -505,7 +504,9 @@ class CalculatorScreen : AppCompatActivity() {
             miScoreInput.setText("")
             viScoreInput.setText("")
 
+            var currentShuffler = gameRound.shuffler
             gameRound = GameRound()
+            gameRound.shuffler = currentShuffler
 
             showHide(ctv20MI, View.GONE)
             showHide(ctv20VI, View.GONE)

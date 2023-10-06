@@ -1,6 +1,7 @@
 package com.example.belablok.roundlist
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,11 +37,15 @@ class UsersListAdapter(
         if (oneUser != null) {
             val userImageIV = v!!.findViewById<ImageView>(R.id.userImage)
             val userNameTV = v.findViewById<TextView>(R.id.userName)
+            val winRate = v.findViewById<TextView>(R.id.winrateTag)
+            val timesAsCaller = v.findViewById<TextView>(R.id.timeAsCaller)
+            val avgPntTag = v.findViewById<TextView>(R.id.avgPntTag)
+            val fallPercent = v.findViewById<TextView>(R.id.fallPercnt)
+
             val userName = oneUser.name
 
             userNameTV.text = userName
             val imageUrl = "https://api.dicebear.com/7.x/initials/png?seed=$userName?size=16"
-
             GlobalScope.launch(Dispatchers.IO) {
                 try {
                     val imageData = fetchImageData(imageUrl)
@@ -54,6 +59,16 @@ class UsersListAdapter(
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
+            }
+
+            Log.v("kurac", "${oneUser.gamesPlayed} ${oneUser.numOfTimesAsCaller}")
+            if (oneUser.gamesPlayed != 0 && oneUser.numOfTimesAsCaller != 0) {
+                winRate.text =
+                    "W / L = ${oneUser.gamesWon} / ${oneUser.gamesPlayed} (${oneUser.gamesWon / oneUser.gamesPlayed})"
+                timesAsCaller.text = "Num of times as caller = ${oneUser.numOfTimesAsCaller}"
+                avgPntTag.text =
+                    "Avg. Pts (On Call) = ${oneUser.pointsEarnedWhenCalling / oneUser.numOfTimesAsCaller}"
+                fallPercent.text = "=  ${oneUser.padovi / oneUser.numOfTimesAsCaller}"
             }
         }
         return v!!

@@ -22,7 +22,7 @@ class UserStorage(context: Context) {
     }
 
     fun loadData(): List<Player> {
-        val dataJson = preferences.getString(DATA_KEY, null)
+        var dataJson = preferences.getString(DATA_KEY, null)
         return if (dataJson != null) {
             val dataType = object : TypeToken<List<Player?>?>() {}.type
             gson.fromJson(dataJson, dataType)
