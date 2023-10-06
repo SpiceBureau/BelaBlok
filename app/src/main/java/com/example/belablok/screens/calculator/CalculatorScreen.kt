@@ -132,6 +132,13 @@ class CalculatorScreen : AppCompatActivity() {
             if (gameRound.numOf200CallsVi == 1) { btn200.setTextColor(getColor(R.color.viColor)) }
             if (gameRound.stiljaMi == 1) { btnStiljonz.setTextColor(getColor(R.color.miColor)) }
             if (gameRound.stiljaVi == 1) { btnStiljonz.setTextColor(getColor(R.color.viColor)) }
+
+            when (gameRound.caller) {
+                player1Name.text -> player1Name.setBackgroundResource(R.drawable.rounded_text_mi)
+                player2Name.text -> player2Name.setBackgroundResource(R.drawable.rounded_text_vi)
+                player3Name.text -> player3Name.setBackgroundResource(R.drawable.rounded_text_mi)
+                player4Name.text -> player4Name.setBackgroundResource(R.drawable.rounded_text_vi)
+            }
         }
         else { gameRound.shuffler = intent.getStringExtra("shuffler").toString() }
 
