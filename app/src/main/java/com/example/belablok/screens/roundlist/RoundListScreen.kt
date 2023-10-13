@@ -163,7 +163,6 @@ class RoundListScreen : ComponentActivity() {
         if (currentMatch.gameRounds!!.size == 0) { intent.putExtra("shuffler", currentMatch.player1?.name) }
         else {
             if (!currentMatch.gameRounds!!.last().matchPointsListItemFlag) {
-                Log.v("kurac", "HERE")
                 when (currentMatch.gameRounds!!.last().shuffler){
                     currentMatch.player1?.name -> intent.putExtra("shuffler", currentMatch.player2?.name)
                     currentMatch.player2?.name -> intent.putExtra("shuffler", currentMatch.player3?.name)
@@ -393,7 +392,6 @@ class RoundListScreen : ComponentActivity() {
         builder.setMessage("Save and Exit?")
             .setPositiveButton("Yes") { dialog, id ->
                 saveUserData()
-                Log.v("kurac", "${currentMatch.player1?.numOfTimesAsCaller}")
 
                 currentMatch.caluclatetimePlayed(System.currentTimeMillis())
                 val dataStorage = MatchStorage(applicationContext)

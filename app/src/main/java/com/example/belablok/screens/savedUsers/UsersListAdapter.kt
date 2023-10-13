@@ -61,7 +61,6 @@ class UsersListAdapter(
                 }
             }
 
-            Log.v("kurac", "${oneUser.gamesPlayed} ${oneUser.numOfTimesAsCaller}")
             if (oneUser.gamesPlayed != 0 && oneUser.numOfTimesAsCaller != 0) {
                 winRate.text =
                     "W / L = ${oneUser.gamesWon} / ${oneUser.gamesPlayed} (${oneUser.gamesWon / oneUser.gamesPlayed})"
