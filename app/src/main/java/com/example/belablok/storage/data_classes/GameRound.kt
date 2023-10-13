@@ -36,7 +36,7 @@ class GameRound{
         return Integer.parseInt(viPoints) + numOf20CallsVi*20 + numOf50CallsVi*50 + numOf100CallsVi*100 + numOf150CallsVi*150 + numOf200CallsVi*200 + stiljaVi*90
     }
 
-    fun geMiPointsFromCalls(): Int{
+    fun getMiPointsFromCalls(): Int{
         return numOf20CallsMi*20 + numOf50CallsMi*50 + numOf100CallsMi*100 + numOf150CallsMi*150 + numOf200CallsMi*200 + stiljaMi*90
     }
 

@@ -324,7 +324,7 @@ class RoundListScreen : ComponentActivity() {
             else{
                 miPointsSum += gr.getMiPointsSum()
                 miPointsSumNoCalls += Integer.parseInt(gr.miPoints)
-                miPointsSumFromCalls += gr.geMiPointsFromCalls()
+                miPointsSumFromCalls += gr.getMiPointsFromCalls()
                 viPointsSum += gr.getViPointsSum()
                 viPointsSumNoCalls += Integer.parseInt(gr.viPoints)
                 viPointsSumFromCalls += gr.getViPointsFromCalls()

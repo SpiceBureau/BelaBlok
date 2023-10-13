@@ -33,6 +33,8 @@ class CalculatorScreen : AppCompatActivity() {
 
         val miScoreInput = findViewById<EditText>(R.id.etMi)
         val viScoreInput = findViewById<EditText>(R.id.etVi)
+        lateinit var miScoreTextWatcher: TextWatcher
+        lateinit var viScoreTextWatcher: TextWatcher
 
         val pointDirection = findViewById<ToggleButton>(R.id.pointDirrection)
 
@@ -150,7 +152,7 @@ class CalculatorScreen : AppCompatActivity() {
             player4Name.text -> player4ShuffleImageView.setImageResource(R.drawable.cards_shufflevmvm)
         }
 
-        val miScoreTextWatcher = object : TextWatcher {
+        miScoreTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (currentFocus != miScoreInput) { return }
@@ -170,7 +172,7 @@ class CalculatorScreen : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {}
         }
 
-        val viScoreTextWatcher = object : TextWatcher {
+        viScoreTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (currentFocus != viScoreInput) { return }
@@ -190,16 +192,17 @@ class CalculatorScreen : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {}
         }
 
-        miScoreInput.addTextChangedListener(miScoreTextWatcher)
-        viScoreInput.addTextChangedListener(viScoreTextWatcher)
-
         miScoreInput.setOnClickListener {
             openMiEditText(miScoreInput)
+            miScoreInput.placeCursorToEnd()
         }
         viScoreInput.setOnClickListener {
-            openMiEditText(viScoreInput)
+            openViEditText(viScoreInput)
+            viScoreInput.placeCursorToEnd()
         }
 
+        miScoreInput.addTextChangedListener(miScoreTextWatcher)
+        viScoreInput.addTextChangedListener(viScoreTextWatcher)
 
         hercButton.setOnClickListener{
             if (gameRound.adut == "herc"){
@@ -642,6 +645,10 @@ class CalculatorScreen : AppCompatActivity() {
         viScoreInput.requestFocus()
         val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(viScoreInput, InputMethodManager.SHOW_IMPLICIT)
+    }
+
+    fun EditText.placeCursorToEnd() {
+        this.setSelection(this.text.length)
     }
 
 }
