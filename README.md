@@ -1,11 +1,11 @@
 ## Screenshots
 
-[Main Menu](readme_imgs/mainscreen.jpg)
+<img loading="lazy" src="./readme_imgs/mainscreen.jpg" alt="mainmenu" />
 
-[Round List](readme_imgs/roundlist.jpg)
+<img loading="lazy" src="./readme_imgs/roundlist.jpg" alt="roundlist" />
 
-[Calculator](readme_imgs/calculator.jpg)
+<img loading="lazy" src="./readme_imgs/calculator.jpg" alt="calculator" />
 
-[Game End](readme_imgs/gameend.jpg)
+<img loading="lazy" src="./readme_imgs/gameend.jpg" alt="gameend" />
 
-[Graphs](readme_imgs/graph.jpg)
+<img loading="lazy" src="./readme_imgs/graph.jpg" alt="graph" /> 
